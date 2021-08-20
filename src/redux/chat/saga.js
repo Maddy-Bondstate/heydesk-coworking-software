@@ -69,12 +69,8 @@ const loadConversationsAsync = async ({ payload }) => {
 
 function* addMessageToConversation({ payload }) {
   try {
-    const {
-      currentUserId,
-      selectedUserId,
-      message,
-      allConversations,
-    } = payload;
+    const { currentUserId, selectedUserId, message, allConversations } =
+      payload;
 
     const response = yield call(
       // eslint-disable-next-line no-use-before-define

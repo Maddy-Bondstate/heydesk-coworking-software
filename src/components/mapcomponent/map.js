@@ -8,7 +8,7 @@ import Graphic from '@arcgis/core/Graphic';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import Point from '@arcgis/core/geometry/Point';
 import MultiPoint from '@arcgis/core/geometry/Multipoint';
-import Search from '@arcgis/core/widgets/Search'
+import Search from '@arcgis/core/widgets/Search';
 
 import '../../assets/css/map.css';
 
@@ -58,20 +58,18 @@ const Map = () => {
       });
 
       const searchWidget = new Search({
-        view: view
+        view: view,
       });
 
-      view.ui.add(searchWidget, "top-right");
+      view.ui.add(searchWidget, 'top-right');
 
       const stateFeatureLayer = new FeatureLayer({
-        url:
-          'https://services2.arcgis.com/JoecHEvChY6qFe2m/arcgis/rest/services/USA_States/FeatureServer/0',
+        url: 'https://services2.arcgis.com/JoecHEvChY6qFe2m/arcgis/rest/services/USA_States/FeatureServer/0',
         outFields: ['*'],
       });
 
       const cityFeatureLayer = new FeatureLayer({
-        url:
-          'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0',
+        url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0',
         outFields: ['*'],
       });
 
@@ -148,7 +146,7 @@ const Map = () => {
           }
         });
         view.focus();
-      }
+      };
 
       function selectStates() {
         console.log('in selectstate');
@@ -165,7 +163,7 @@ const Map = () => {
         id="point-button"
         className="esri-widget esri-widget--button esri-interactive"
         title="Select Countries"
-        onClick={()=>click_ref.current()}
+        onClick={() => click_ref.current()}
       >
         <span className="esri-icon-map-pin"></span>
       </button>

@@ -7,8 +7,7 @@ function MyFeatureLayer(props) {
   useEffect(() => {
     // eslint-disable-next-line no-shadow
     const myFeatureLayer = new FeatureLayer({
-      url:
-        'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2',
+      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2',
     });
 
     setMyFeatureLayer(myFeatureLayer);

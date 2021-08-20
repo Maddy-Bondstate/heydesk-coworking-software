@@ -133,8 +133,7 @@ const BlogDetail = ({ match }) => {
                 poster="/assets/img/video/poster.jpg"
                 sources={[
                   {
-                    src:
-                      'https://github.com/bower-media-samples/big-buck-bunny-1080p-60fps-30s/raw/master/video.mp4',
+                    src: 'https://github.com/bower-media-samples/big-buck-bunny-1080p-60fps-30s/raw/master/video.mp4',
                     type: 'video/mp4',
                   },
                 ]}
