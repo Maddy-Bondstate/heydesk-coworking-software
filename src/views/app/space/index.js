@@ -14,7 +14,7 @@ const SpaceConferenceRoom = React.lazy(() =>
   import(/* webpackChunkName: "space-conference-room" */ './conference-room')
 );
 
-const Dashboards = ({ match }) => (
+const Space = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/desks`} />
@@ -38,4 +38,4 @@ const Dashboards = ({ match }) => (
     </Switch>
   </Suspense>
 );
-export default Dashboards;
+export default Space;

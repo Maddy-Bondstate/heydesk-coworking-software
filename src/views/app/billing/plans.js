@@ -3,13 +3,13 @@ import { injectIntl } from 'react-intl';
 import { Row } from 'reactstrap';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 
-const SpaceDesks = () => {
+const BillingPlans = () => {
   return (
     <>
       <Row>
-        <Colxx xxs="12">Desks</Colxx>
+        <Colxx xxs="12">Plans</Colxx>
       </Row>
     </>
   );
 };
-export default injectIntl(SpaceDesks);
+export default injectIntl(BillingPlans);

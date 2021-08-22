@@ -11,6 +11,15 @@ const Dashboards = React.lazy(() =>
 const Space = React.lazy(() =>
   import(/* webpackChunkName: "space" */ './space')
 );
+const Client = React.lazy(() =>
+  import(/* webpackChunkName: "client" */ './client')
+);
+const Billing = React.lazy(() =>
+  import(/* webpackChunkName: "billing" */ './billing')
+);
+const Collaboration = React.lazy(() =>
+  import(/* webpackChunkName: "collaboration" */ './collaboration')
+);
 // const Pages = React.lazy(() =>
 //   import(/* webpackChunkName: "pages" */ './pages')
 // );
@@ -41,6 +50,18 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/space`}
               render={(props) => <Space {...props} />}
+            />
+            <Route
+              path={`${match.url}/client`}
+              render={(props) => <Client {...props} />}
+            />
+            <Route
+              path={`${match.url}/billing`}
+              render={(props) => <Billing {...props} />}
+            />
+            <Route
+              path={`${match.url}/collaboration`}
+              render={(props) => <Collaboration {...props} />}
             />
             {/* <Route
               path={`${match.url}/applications`}
