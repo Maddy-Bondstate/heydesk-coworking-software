@@ -6,7 +6,6 @@ import {
   NavItem,
   TabContent,
   TabPane,
-  // CustomInput,
   Button,
   Modal,
   ModalHeader,
@@ -14,42 +13,24 @@ import {
   ModalFooter,
   Input,
   Label,
-  // Form,
 } from 'reactstrap';
 import Switch from 'rc-switch';
 import 'rc-switch/assets/index.css';
 
 import moment from 'moment';
-// import Select from 'react-select';
-// import CustomSelectInput from '../../components/common/CustomSelectInput';
 import IntlMessages from '../../helpers/IntlMessages';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { Colxx } from '../../components/common/CustomBootstrap';
-// import TagsInput from 'react-tagsinput';
 import DatePicker from 'react-datepicker';
 import TimezoneSelect from 'react-timezone-select';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-// const selectData = [
-//   { label: 'Cake', value: 'cake', key: 0 },
-//   { label: 'Cupcake', value: 'cupcake', key: 1 },
-//   { label: 'Dessert', value: 'dessert', key: 2 },
-// ];
-
-const AddNewModal = ({
-  modelTitle,
-  modalOpen,
-  toggleModal,
-  // categories,
-  intl,
-}) => {
+const AddNewModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
   const { messages } = intl;
 
   const [activeFirstTab, setActiveFirstTab] = useState('1');
-  // const [tagsLO, setTagsLO] = useState([]);
-  // const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [startBusinessHour, setStartBusinessHour] = useState(
     new Date(moment().format('YYYY-MM-DDT09:00'))
   );
@@ -62,34 +43,16 @@ const AddNewModal = ({
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
 
   const onChangeImage = (e) => {
-    // var files1 = e.target.files[0];
-    // console.log(URL.createObjectURL(files1));
-    // var filesArr = Array.prototype.slice.call(files1);
-    // console.log(filesArr);
     setFiles(e.target.files[0]);
-    // const reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onloadend = () => {
-    //   that.setState({
-    //     image: URL.createObjectURL(file),
-    //     userImage: reader.result,
-    //   });
-    // };
   };
 
-  const removeFile = (f) => {
+  const removeFile = () => {
     setFiles('');
-    // setFiles(files.filter((x) => x !== f));
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
   return (
-    <Modal
-      isOpen={modalOpen}
-      toggle={toggleModal}
-      // wrapClassName="modal-right"
-      backdrop="static"
-    >
+    <Modal isOpen={modalOpen} toggle={toggleModal} backdrop="static">
       <ModalHeader toggle={toggleModal}>
         <IntlMessages id={modelTitle} />
       </ModalHeader>
@@ -131,7 +94,6 @@ const AddNewModal = ({
 
             <TabContent activeTab={activeFirstTab}>
               <TabPane tabId="1">
-                {/* <Form> */}
                 <Row>
                   <Colxx sm="8">
                     <Label className="form-group has-float-label">
@@ -256,7 +218,6 @@ const AddNewModal = ({
                     <IntlMessages id="label.isopen" />
                   </Colxx>
                 </Row>
-                {/* </Form> */}
               </TabPane>
               <TabPane tabId="2">
                 <Row>

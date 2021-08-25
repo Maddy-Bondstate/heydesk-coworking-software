@@ -191,6 +191,10 @@ module.exports = {
   'label.edit': 'Edit',
   'label.add_floor': 'Add Floor',
   'label.delete': 'Delete',
+  'label.location': 'Location',
+  'label.floor': 'Floor',
+  'label.area': 'Area',
+  'label.target': 'Target',
 
   /* 04.Dashboards */
   'dashboards.bookings': 'Bookings',

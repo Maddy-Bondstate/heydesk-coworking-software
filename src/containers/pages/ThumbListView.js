@@ -12,7 +12,7 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from '../../components/common/CustomBootstrap';
 import IntlMessages from '../../helpers/IntlMessages';
 
-const ThumbListView = ({ product, collect }) => {
+const ThumbListView = ({ product, collect, toggleModal, toggleFloor }) => {
   return (
     <Colxx xxs="12" key={product.id} className="mb-3">
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
@@ -45,11 +45,11 @@ const ThumbListView = ({ product, collect }) => {
                         <i className="fa fa-cog fa-2x text-muted" />
                       </DropdownToggle>
                       <DropdownMenu>
-                        <DropdownItem>
+                        <DropdownItem onClick={() => toggleModal()}>
                           <i className="fa fa-pencil text-muted mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem onClick={() => toggleFloor()}>
                           <i className="fa fa-plus text-muted mr-2" />
                           <IntlMessages id="label.add_floor" />
                         </DropdownItem>
@@ -86,22 +86,14 @@ const ThumbListView = ({ product, collect }) => {
                             <Badge color="success badge-small mb-0">Open</Badge>
                           </div>
                         )}
-                        {/* <p className="text-muted text-small mb-0 ml-2">
-                          <i className="fa fa-cog fa-lg cursor-pointer" />
-                        </p> */}
-
                         <UncontrolledDropdown className="ml-3">
                           <DropdownToggle color="none">
                             <i className="fa fa-cog fa-lg text-muted" />
                           </DropdownToggle>
                           <DropdownMenu>
-                            <DropdownItem>
+                            <DropdownItem onClick={() => toggleFloor()}>
                               <i className="fa fa-pencil text-muted mr-2" />
                               <IntlMessages id="label.edit" />
-                            </DropdownItem>
-                            <DropdownItem>
-                              <i className="fa fa-plus text-muted mr-2" />
-                              <IntlMessages id="label.add_floor" />
                             </DropdownItem>
                             <DropdownItem divider />
                             <DropdownItem>

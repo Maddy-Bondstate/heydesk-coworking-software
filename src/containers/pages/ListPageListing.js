@@ -19,6 +19,8 @@ const ListPageListing = ({
   totalPage,
   // onContextMenuClick,
   // onContextMenu,
+  toggleModal,
+  toggleFloor,
   onChangePage,
 }) => {
   return (
@@ -42,6 +44,8 @@ const ListPageListing = ({
             product={product}
             // isSelect={selectedItems.includes(product.id)}
             collect={collect}
+            toggleModal={toggleModal}
+            toggleFloor={toggleFloor}
             // onCheckItem={onCheckItem}
           />
         );
