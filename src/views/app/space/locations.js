@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
-import ListPageHeading from '../../../containers/pages/ListPageHeading';
-import AddNewModal from '../../../containers/pages/AddNewModal';
-import AddFloorModal from '../../../containers/pages/AddFloorModal';
-import ListPageListing from '../../../containers/pages/ListPageListing';
+import ListLocationHeading from '../../../containers/space/ListLocationHeading';
+import AddLocationModal from '../../../containers/space/AddLocationModal';
+import AddFloorModal from '../../../containers/space/AddFloorModal';
+import ListLocationListing from '../../../containers/space/ListLocationListing';
 
 const pageSizes = [4, 8, 12, 20];
 
@@ -128,7 +128,7 @@ const SpaceLocations = ({ match }) => {
   ) : (
     <>
       <div className="disable-text-selection">
-        <ListPageHeading
+        <ListLocationHeading
           heading="menu.locations"
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
@@ -146,7 +146,7 @@ const SpaceLocations = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           toggleFloor={() => setFloorModalOpen(!floorOpen)}
         />
-        <AddNewModal
+        <AddLocationModal
           modelTitle="space.add-location"
           modalOpen={modalOpen}
           toggleModal={() => setModalOpen(!modalOpen)}
@@ -158,7 +158,7 @@ const SpaceLocations = ({ match }) => {
           toggleModal={() => setFloorModalOpen(!floorOpen)}
         />
 
-        <ListPageListing
+        <ListLocationListing
           items={items}
           currentPage={currentPage}
           totalPage={totalPage}
