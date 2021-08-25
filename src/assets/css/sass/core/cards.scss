@@ -37,9 +37,9 @@
   }
 
   .card-title {
-    margin-bottom: 1.0rem;
+    margin-bottom: 1rem;
     @include respond-below(sm) {
-      margin-bottom: 1.0rem;
+      margin-bottom: 1rem;
     }
   }
 }
@@ -127,8 +127,12 @@
   height: auto;
   max-width: unset;
   height: 85px;
-  object-fit: cover;
-  width: unset !important;
+  object-fit: contain;
+  width: 130px;
+
+  &-small {
+    height: 42px;
+  }
 
   @include respond-below(md) {
     height: 80px;

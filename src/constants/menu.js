@@ -30,6 +30,12 @@ const data = [
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       {
+        icon: 'iconsminds-map-marker-2',
+        label: 'menu.locations',
+        to: `${adminRoot}/space/locations`,
+        // roles: [UserRole.Admin],
+      },
+      {
         icon: 'iconsminds-monitor',
         label: 'menu.desks',
         to: `${adminRoot}/space/desks`,

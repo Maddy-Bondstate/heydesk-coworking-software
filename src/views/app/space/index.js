@@ -1,6 +1,9 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+const SpaceLocations = React.lazy(() =>
+  import(/* webpackChunkName: "space-locations" */ './locations')
+);
 const SpaceDesks = React.lazy(() =>
   import(/* webpackChunkName: "space-desks" */ './desks')
 );
@@ -17,7 +20,11 @@ const SpaceConferenceRoom = React.lazy(() =>
 const Space = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
-      <Redirect exact from={`${match.url}/`} to={`${match.url}/desks`} />
+      <Redirect exact from={`${match.url}/`} to={`${match.url}/locations`} />
+      <Route
+        path={`${match.url}/locations`}
+        render={(props) => <SpaceLocations {...props} />}
+      />
       <Route
         path={`${match.url}/desks`}
         render={(props) => <SpaceDesks {...props} />}

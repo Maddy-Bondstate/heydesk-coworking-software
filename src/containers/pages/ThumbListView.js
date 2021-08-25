@@ -1,55 +1,127 @@
 import React from 'react';
-import { Card, CustomInput, Badge } from 'reactstrap';
+import {
+  Card,
+  Badge,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu,
+  UncontrolledDropdown,
+} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from '../../components/common/CustomBootstrap';
+import IntlMessages from '../../helpers/IntlMessages';
 
-const ThumbListView = ({ product, isSelect, collect, onCheckItem }) => {
+const ThumbListView = ({ product, collect }) => {
   return (
     <Colxx xxs="12" key={product.id} className="mb-3">
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
-        <Card
-          onClick={(event) => onCheckItem(event, product.id)}
-          className={classnames('d-flex flex-row', {
-            active: isSelect,
-          })}
-        >
-          <NavLink to={`?p=${product.id}`} className="d-flex">
-            <img
-              alt={product.title}
-              src={product.img}
-              className="list-thumbnail responsive border-0 card-img-left"
-            />
-          </NavLink>
-          <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`?p=${product.id}`} className="w-40 w-sm-100">
-                <p className="list-item-heading mb-1 truncate">
-                  {product.title}
-                </p>
-              </NavLink>
-              <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                {product.category}
-              </p>
-              <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                {product.date}
-              </p>
-              <div className="w-15 w-sm-100">
-                <Badge color={product.statusColor} pill>
-                  {product.status}
-                </Badge>
+        <Card className="d-flex flex-row">
+          <div className="pl-2 flex-grow-1 min-width-zero">
+            <div className="card-body">
+              <div className="d-flex mb-4">
+                <NavLink to={`?p=${product.id}`} className="d-flex">
+                  <img
+                    alt={product.general.name}
+                    src={product.general.image}
+                    className="list-thumbnail responsive border-0 card-img-left"
+                  />
+                </NavLink>
+                <div className="ml-4 d-flex justify-content-center flex-column">
+                  <NavLink to={`?p=${product.id}`}>
+                    <p className="list-item-heading truncate mb-3">
+                      {product.general.name}
+                    </p>
+                  </NavLink>
+                  <div className="d-flex align-items-center">
+                    {product.general.isOpen && (
+                      <Badge color="success badge-pill">Open</Badge>
+                    )}
+                    {product.isPublic && (
+                      <Badge color="primary badge-pill ml-2">Public</Badge>
+                    )}
+                    <UncontrolledDropdown className="ml-3">
+                      <DropdownToggle color="none">
+                        <i className="fa fa-cog fa-2x text-muted" />
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem>
+                          <i className="fa fa-pencil text-muted mr-2" />
+                          <IntlMessages id="label.edit" />
+                        </DropdownItem>
+                        <DropdownItem>
+                          <i className="fa fa-plus text-muted mr-2" />
+                          <IntlMessages id="label.add_floor" />
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>
+                          <i className="fa fa-trash text-muted mr-2" />
+                          <IntlMessages id="label.delete" />
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
-              <CustomInput
-                className="item-check mb-0"
-                type="checkbox"
-                id={`check_${product.id}`}
-                checked={isSelect}
-                onChange={() => {}}
-                label=""
-              />
+
+              {product.floor?.length > 0 ? (
+                product.floor.map((floor, i) => (
+                  <div className="d-flex ml-4 mt-3" key={i}>
+                    <NavLink to={`?p=${floor.id}`} className="d-flex">
+                      <img
+                        alt={floor.name}
+                        src={floor.image}
+                        className="list-thumbnail-small responsive border-0 card-img-left"
+                      />
+                    </NavLink>
+                    <div>
+                      <div className="d-flex align-items-center ml-4 mb-1">
+                        <NavLink to={`?p=${floor.id}`}>
+                          <p className="list-item-heading text-sm truncate mb-0">
+                            {floor.name}
+                          </p>
+                        </NavLink>
+                        {floor.isOpen && (
+                          <div className="ml-2">
+                            <Badge color="success badge-small mb-0">Open</Badge>
+                          </div>
+                        )}
+                        {/* <p className="text-muted text-small mb-0 ml-2">
+                          <i className="fa fa-cog fa-lg cursor-pointer" />
+                        </p> */}
+
+                        <UncontrolledDropdown className="ml-3">
+                          <DropdownToggle color="none">
+                            <i className="fa fa-cog fa-lg text-muted" />
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            <DropdownItem>
+                              <i className="fa fa-pencil text-muted mr-2" />
+                              <IntlMessages id="label.edit" />
+                            </DropdownItem>
+                            <DropdownItem>
+                              <i className="fa fa-plus text-muted mr-2" />
+                              <IntlMessages id="label.add_floor" />
+                            </DropdownItem>
+                            <DropdownItem divider />
+                            <DropdownItem>
+                              <i className="fa fa-trash text-muted mr-2" />
+                              <IntlMessages id="label.delete" />
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </div>
+                      <div className="d-flex align-items-center ml-4">
+                        <p className="text-muted text-small mb-0">
+                          Floor {floor.floor}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-muted">No floors to show</div>
+              )}
             </div>
           </div>
         </Card>

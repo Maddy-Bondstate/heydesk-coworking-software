@@ -63,8 +63,9 @@ module.exports = {
   /* 03.Menú */
   'menu.home': 'Inicio',
   'menu.app': 'Inicio',
-  'menu.dashboards': 'Tableros',
+  'menu.dashboards': 'Tablero',
   'menu.space': 'Espacio',
+  'menu.locations': 'Locations',
   'menu.desks': 'Escritorios',
   'menu.meeting-room': 'Sala de Reuniones',
   'menu.private-cabins': 'Cabañas Privadas',
@@ -166,6 +167,31 @@ module.exports = {
   'menu.layouts': 'Diseños',
   'menu.validations': 'Validaciones',
   'menu.wizard': 'Mago',
+
+  /* Model */
+  'model.close': 'Close',
+  'model.add': 'Add',
+
+  /* SPACE */
+  'space.add-location': 'Add Location',
+  'space.add-floor': 'Add Floor',
+
+  /* LABEL */
+  'label.name': 'Name',
+  'label.unique_code': 'Unique code',
+  'label.description': 'Description',
+  'label.business_hours': 'Business hours',
+  'label.timezone': 'Timezone',
+  'label.image': 'Image',
+  'label.isopen': 'Is Open',
+  'label.address': 'Address',
+  'label.city': 'City',
+  'label.state': 'State',
+  'label.zip': 'Zip',
+  'label.country': 'Country',
+  'label.edit': 'Edit',
+  'label.add_floor': 'Add Floor',
+  'label.delete': 'Delete',
 
   /* 04.Tableros */
   'dashboards.bookings': 'Reservaciones',

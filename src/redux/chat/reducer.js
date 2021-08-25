@@ -24,7 +24,7 @@ const INIT_STATE = {
   selectedUserId: null,
 };
 
-export default (state = INIT_STATE, action) => {
+const reducer = (state = INIT_STATE, action) => {
   switch (action.type) {
     case CHAT_GET_CONTACTS:
       return { ...state, loadingContacts: false };
@@ -83,3 +83,5 @@ export default (state = INIT_STATE, action) => {
       return { ...state };
   }
 };
+
+export default reducer;

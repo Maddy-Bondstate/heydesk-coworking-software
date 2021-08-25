@@ -25,7 +25,7 @@ const INIT_STATE = {
   error: '',
 };
 
-export default (state = INIT_STATE, action) => {
+const reducer = (state = INIT_STATE, action) => {
   switch (action.type) {
     case LOGIN_USER:
       return { ...state, loading: true, error: '' };
@@ -99,3 +99,5 @@ export default (state = INIT_STATE, action) => {
       return { ...state };
   }
 };
+
+export default reducer;

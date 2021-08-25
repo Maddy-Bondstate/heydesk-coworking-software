@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
  * @param  {(string | string[])} handlerKey - A key, key combo or array of combos according to Mousetrap documentation.
  * @param  { function } handlerCallback - A function that is triggered on key combo catch.
  */
-export default (handlerKey, handlerCallback) => {
+const useMousetrap = (handlerKey, handlerCallback) => {
   const actionRef = useRef(null);
   actionRef.current = handlerCallback;
 
@@ -22,3 +22,5 @@ export default (handlerKey, handlerCallback) => {
     };
   }, [handlerKey]);
 };
+
+export default useMousetrap;

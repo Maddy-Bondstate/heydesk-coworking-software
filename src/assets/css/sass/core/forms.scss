@@ -663,3 +663,25 @@ select:-webkit-autofill:focus {
     }
   }
 }
+
+.custom-image-attach-inline {
+  display: inline-block;
+  cursor: pointer;
+  background-color: $input-background;
+  border: $separator-color;
+  font-size: 0.8rem;
+  border: 1px solid $separator-color;
+  border-radius: 0.1rem;
+  // width: 100%;
+  outline: initial;
+  padding: 0.688rem 0.75rem;
+  line-height: 1;
+
+  input[type='file'] {
+    display: none;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

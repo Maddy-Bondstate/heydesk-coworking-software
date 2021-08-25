@@ -62,8 +62,9 @@ module.exports = {
   /* 03.Menu */
   'menu.home': 'Home',
   'menu.app': 'Home',
-  'menu.dashboards': 'Dashboards',
+  'menu.dashboards': 'Dashboard',
   'menu.space': 'Space',
+  'menu.locations': 'Locations',
   'menu.desks': 'Desks',
   'menu.meeting-room': 'Meeting Room',
   'menu.private-cabins': 'Private Cabins',
@@ -165,6 +166,31 @@ module.exports = {
   'menu.layouts': 'Layouts',
   'menu.validations': 'Validations',
   'menu.wizard': 'Wizard',
+
+  /* Model */
+  'model.close': 'Close',
+  'model.add': 'Add',
+
+  /* SPACE */
+  'space.add-location': 'Add Location',
+  'space.add-floor': 'Add Floor',
+
+  /* LABEL */
+  'label.name': 'Name',
+  'label.unique_code': 'Unique code',
+  'label.description': 'Description',
+  'label.business_hours': 'Business hours',
+  'label.timezone': 'Timezone',
+  'label.image': 'Image',
+  'label.isopen': 'Is Open',
+  'label.address': 'Address',
+  'label.city': 'City',
+  'label.state': 'State',
+  'label.zip': 'Zip',
+  'label.country': 'Country',
+  'label.edit': 'Edit',
+  'label.add_floor': 'Add Floor',
+  'label.delete': 'Delete',
 
   /* 04.Dashboards */
   'dashboards.bookings': 'Bookings',
