@@ -14,7 +14,7 @@ import IntlMessages from '../../helpers/IntlMessages';
 
 const ThumbListView = ({ product, collect, toggleModal, toggleFloor }) => {
   return (
-    <Colxx xxs="12" key={product.id} className="mb-3">
+    <Colxx xxs="12" key={product.id} className="mb-4">
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
         <Card className="d-flex flex-row">
           <div className="pl-2 flex-grow-1 min-width-zero">
