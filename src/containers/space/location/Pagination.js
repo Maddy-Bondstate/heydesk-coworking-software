@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import { Colxx } from '../../components/common/CustomBootstrap';
+import { Colxx } from '../../../components/common/CustomBootstrap';
 
 const Pagination = ({
   totalPage = 0,

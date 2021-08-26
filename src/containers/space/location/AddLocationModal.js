@@ -18,10 +18,10 @@ import Switch from 'rc-switch';
 import 'rc-switch/assets/index.css';
 
 import moment from 'moment';
-import IntlMessages from '../../helpers/IntlMessages';
+import IntlMessages from '../../../helpers/IntlMessages';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
-import { Colxx } from '../../components/common/CustomBootstrap';
+import { Colxx } from '../../../components/common/CustomBootstrap';
 import DatePicker from 'react-datepicker';
 import TimezoneSelect from 'react-timezone-select';
 

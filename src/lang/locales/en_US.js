@@ -67,6 +67,7 @@ module.exports = {
   'menu.locations': 'Locations',
   'menu.desks': 'Desks',
   'menu.meeting-room': 'Meeting Room',
+  'menu.meeting-rooms': 'Meeting Rooms',
   'menu.private-cabins': 'Private Cabins',
   'menu.conference-room': 'Conference Room',
   'menu.client': 'Client',
@@ -174,6 +175,7 @@ module.exports = {
   /* SPACE */
   'space.add-location': 'Add Location',
   'space.add-floor': 'Add Floor',
+  'space.add-meeting-room': 'Add Meeting Room',
 
   /* LABEL */
   'label.name': 'Name',
@@ -195,6 +197,9 @@ module.exports = {
   'label.floor': 'Floor',
   'label.area': 'Area',
   'label.target': 'Target',
+  'label.size': 'Size',
+  'label.available_from': 'Available From',
+  'label.today': 'Today',
 
   /* 04.Dashboards */
   'dashboards.bookings': 'Bookings',

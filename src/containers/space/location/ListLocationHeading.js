@@ -11,9 +11,9 @@ import {
 } from 'reactstrap';
 import { injectIntl } from 'react-intl';
 
-import { Colxx, Separator } from '../../components/common/CustomBootstrap';
-import Breadcrumb from '../navs/Breadcrumb';
-import IntlMessages from '../../helpers/IntlMessages';
+import { Colxx, Separator } from '../../../components/common/CustomBootstrap';
+import Breadcrumb from '../../navs/Breadcrumb';
+import IntlMessages from '../../../helpers/IntlMessages';
 
 const ListLocationHeading = ({
   intl,

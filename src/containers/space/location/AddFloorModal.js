@@ -13,12 +13,12 @@ import {
   InputGroupAddon,
 } from 'reactstrap';
 import Select from 'react-select';
-import CustomSelectInput from '../../components/common/CustomSelectInput';
+import CustomSelectInput from '../../../components/common/CustomSelectInput';
 import Switch from 'rc-switch';
 import 'rc-switch/assets/index.css';
 
-import IntlMessages from '../../helpers/IntlMessages';
-import { Colxx } from '../../components/common/CustomBootstrap';
+import IntlMessages from '../../../helpers/IntlMessages';
+import { Colxx } from '../../../components/common/CustomBootstrap';
 
 const selectData = [
   { label: 'Bondstate', value: 'bondstate' },

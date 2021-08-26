@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
-import ListLocationHeading from '../../../containers/space/ListLocationHeading';
-import AddLocationModal from '../../../containers/space/AddLocationModal';
-import AddFloorModal from '../../../containers/space/AddFloorModal';
-import ListLocationListing from '../../../containers/space/ListLocationListing';
+import ListLocationHeading from '../../../containers/space/location/ListLocationHeading';
+import AddLocationModal from '../../../containers/space/location/AddLocationModal';
+import AddFloorModal from '../../../containers/space/location/AddFloorModal';
+import ListLocationListing from '../../../containers/space/location/ListLocationListing';
 
 const pageSizes = [4, 8, 12, 20];
 
@@ -89,7 +89,7 @@ const SpaceLocations = ({ match }) => {
             area: 0,
             target: 0,
             image:
-              'https://lh5.googleusercontent.com/p/AF1QipOQ-K_tlQaYFBwGx8NuQDtGbdM-lOhU00xttRjp=w1080-k-no',
+              'https://www.heydesk.com/assets/images/top_slider.jpg?v=1.10',
             isOpen: true,
           },
         ],

@@ -74,7 +74,6 @@
 
 .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle {
   border-bottom-color: $foreground-color !important;
-
 }
 
 .react-datepicker-popper[data-placement^='bottom']
@@ -87,10 +86,13 @@
   color: $primary-color !important;
 }
 
-.react-datepicker__day-name,
-.react-datepicker__day,
-.react-datepicker__time-name {
-  color: $primary-color !important;
+// .react-datepicker__day-name,
+// .react-datepicker__day,
+// .react-datepicker__time-name {
+//   color: $primary-color !important;
+// }
+.react-datepicker__day.react-datepicker__day--outside-month {
+  color: $muted-color !important;
 }
 
 .react-datepicker__input-container input {

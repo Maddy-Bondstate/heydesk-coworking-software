@@ -9,8 +9,8 @@ import {
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { ContextMenuTrigger } from 'react-contextmenu';
-import { Colxx } from '../../components/common/CustomBootstrap';
-import IntlMessages from '../../helpers/IntlMessages';
+import { Colxx } from '../../../components/common/CustomBootstrap';
+import IntlMessages from '../../../helpers/IntlMessages';
 
 const LocationListView = ({ product, collect, toggleModal, toggleFloor }) => {
   return (
