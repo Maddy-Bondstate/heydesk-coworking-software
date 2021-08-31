@@ -52,66 +52,46 @@ const SpaceMeetingRoom = ({ match }) => {
       {
         id: 1,
         general: {
-          name: 'Bondstate IT Solutions',
-          uniqueCode: 'HYCS100',
-          description: 'Bondstate Soln',
-          businessHour: ['09:00', '17:00'],
-          timezone: '',
+          name: 'Large Meeting Room',
+          location: '',
+          floor: '',
+          size: 5,
+          area: 22.6,
+          available: {
+            from: '27/08/2021',
+            to: '30/08/2021',
+          },
+        },
+        calendar: {
+          rate: '',
+          description: '',
           image:
-            'https://www.bondstate.com/wp-content/uploads/2014/10/bond_log_center_2.png',
-          isOpen: true,
+            'https://dzrjcxtasfoip.cloudfront.net/user-resources/organization/small-meeting-room-1587244392084.png',
+          color: '#FFFFFF',
+          privacy: 1,
         },
-        address: {
-          address: '2, Rajaji street',
-          city: 'Puducherry',
-          state: 'Puducherry',
-          zip: '605005',
-          country: 'India',
-        },
-        isPublic: true,
-        floor: [
-          {
-            id: 20,
-            name: 'Ground Floor',
-            floor: 'Office',
-            area: 0,
-            target: 0,
-            image:
-              'https://www.heydesk.com/listimage/5d7f24b359b6bf2019055915_16672_400x400.jpg?v=1206843142',
-            isOpen: false,
-          },
-          {
-            id: 22,
-            name: '2nd Floor',
-            floor: 'Coworking Space',
-            area: 0,
-            target: 0,
-            image:
-              'https://www.heydesk.com/assets/images/top_slider.jpg?v=1.10',
-            isOpen: true,
-          },
-        ],
       },
       {
         id: 2,
         general: {
-          name: 'Heydesk - Coworking Space',
-          uniqueCode: 'HYCS101',
-          description: 'Heydesk Coworking space',
-          businessHour: ['09:00', '17:00'],
-          timezone: '',
-          image: 'https://www.heydesk.com/assets/images/top_slider.jpg?v=1.10',
-          isOpen: true,
+          name: 'Small Meeting Room',
+          location: '',
+          floor: '',
+          size: 3,
+          area: 12.5,
+          available: {
+            from: '28/08/2021',
+            to: '',
+          },
         },
-        address: {
-          address: '32, Kuselan street',
-          city: 'Puducherry',
-          state: 'Puducherry',
-          zip: '605001',
-          country: 'India',
+        calendar: {
+          rate: '',
+          description: '',
+          image:
+            'https://dzrjcxtasfoip.cloudfront.net/user-resources/organization/large-meeting-room-1587244372271.png',
+          color: '#FF00AA',
+          privacy: 1,
         },
-        isPublic: false,
-        floor: [],
       },
     ];
     setItems(items3);

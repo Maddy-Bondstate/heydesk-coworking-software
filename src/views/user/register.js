@@ -1,96 +1,182 @@
-import React, { useState } from 'react';
-import {
-  Row,
-  Card,
-  CardTitle,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-} from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import { Formik, Form, Field } from 'formik';
+import { NotificationManager } from '../../components/common/react-notifications';
+
 import { registerUser } from '../../redux/actions';
-
-import IntlMessages from '../../helpers/IntlMessages';
 import { Colxx } from '../../components/common/CustomBootstrap';
-import { adminRoot } from '../../constants/defaultValues';
+import IntlMessages from '../../helpers/IntlMessages';
 
-const Register = ({ history }) => {
-  const [email] = useState('demo@heydesk.com');
-  const [password] = useState('demo123');
-  const [name] = useState('Maddy BS');
+const validateFirstName = (value) => {
+  let error;
+  if (!value) {
+    error = 'Please enter firstname';
+  } else if (value.length < 3) {
+    error = 'Firstname must be atleast 3 character';
+  }
+  return error;
+};
 
-  const onUserRegister = () => {
-    if (email !== '' && password !== '') {
-      history.push(adminRoot);
+const validateLastName = (value) => {
+  let error;
+  if (!value) {
+    error = 'Please enter lastname';
+  }
+  return error;
+};
+
+const validatePassword = (value) => {
+  let error;
+  if (!value) {
+    error = 'Please enter your password';
+  } else if (value.length < 6) {
+    error = 'Password must be atleast 6 characters';
+  }
+  return error;
+};
+
+const Register = ({ history, loading, error, registerUserAction }) => {
+  const [firstName] = useState('');
+  const [lastName] = useState('');
+  const [password] = useState('');
+
+  useEffect(() => {
+    if (error) {
+      NotificationManager.warning(
+        error,
+        'Register Error',
+        3000,
+        null,
+        null,
+        ''
+      );
     }
-    // call registerUserAction()
+  }, [error]);
+
+  const onUserRegister = (values) => {
+    if (!loading) {
+      if (
+        values.firstName !== '' &&
+        values.lastName !== '' &&
+        values.password !== ''
+      ) {
+        registerUserAction(values, history);
+      }
+    }
   };
+
+  const initialValues = { firstName, lastName, password };
 
   return (
     <Row className="h-100">
-      <Colxx xxs="12" md="10" className="mx-auto my-auto">
+      <Colxx xxs="12" md="7" className="mx-auto my-auto">
         <Card className="auth-card">
-          <div className="position-relative image-side ">
-            <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
+          <div className="position-relative image-side">
+            <p className="text-white h4">COWORKING PORTAL</p>
             <p className="white mb-0">
               Please use this form to register. <br />
               If you are a member, please{' '}
-              <NavLink to="/user/login" className="white">
+              <NavLink to="/user/login" className="white separator">
                 login
               </NavLink>
               .
             </p>
           </div>
           <div className="form-side">
-            <NavLink to="/" className="white">
-              <span className="logo-single" />
-            </NavLink>
+            {/* <NavLink to="/" className="white"> */}
+            <span className="logo-single" />
+            {/* </NavLink> */}
             <CardTitle className="mb-4">
-              <IntlMessages id="user.register" />
+              <IntlMessages id="label.register" />
             </CardTitle>
-            <Form>
-              <FormGroup className="form-group has-float-label  mb-4">
-                <Label>
-                  <IntlMessages id="user.fullname" />
-                </Label>
-                <Input type="name" defaultValue={name} />
-              </FormGroup>
 
-              <FormGroup className="form-group has-float-label  mb-4">
-                <Label>
-                  <IntlMessages id="user.email" />
-                </Label>
-                <Input type="email" defaultValue={email} />
-              </FormGroup>
-
-              <FormGroup className="form-group has-float-label  mb-4">
-                <Label>
-                  <IntlMessages id="user.password" defaultValue={password} />
-                </Label>
-                <Input type="password" />
-              </FormGroup>
-
-              <div className="d-flex justify-content-end align-items-center">
-                <Button
-                  color="primary"
-                  className="btn-shadow"
-                  size="lg"
-                  onClick={() => onUserRegister()}
-                >
-                  <IntlMessages id="user.register-button" />
-                </Button>
-              </div>
-            </Form>
+            <Formik initialValues={initialValues} onSubmit={onUserRegister}>
+              {({ errors, touched }) => (
+                <Form className="av-tooltip tooltip-label-bottom">
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="label.firstName" />
+                    </Label>
+                    <Field
+                      className="form-control"
+                      name="firstName"
+                      validate={validateFirstName}
+                    />
+                    {errors.firstName && touched.firstName && (
+                      <div className="invalid-feedback d-block">
+                        {errors.firstName}
+                      </div>
+                    )}
+                  </FormGroup>
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="label.lastName" />
+                    </Label>
+                    <Field
+                      className="form-control"
+                      name="lastName"
+                      validate={validateLastName}
+                    />
+                    {errors.lastName && touched.lastName && (
+                      <div className="invalid-feedback d-block">
+                        {errors.lastName}
+                      </div>
+                    )}
+                  </FormGroup>
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="label.password" />
+                    </Label>
+                    <Field
+                      className="form-control"
+                      type="password"
+                      name="password"
+                      validate={validatePassword}
+                      autoComplete="new-password"
+                    />
+                    {errors.password && touched.password && (
+                      <div className="invalid-feedback d-block">
+                        {errors.password}
+                      </div>
+                    )}
+                  </FormGroup>
+                  <div className="d-flex justify-content-end align-items-center">
+                    {/* <NavLink to="/user/forgot-password">
+                      <IntlMessages id="label.forgot-password" />
+                    </NavLink> */}
+                    <Button
+                      color="primary"
+                      className={`btn-shadow btn-multiple-state ${
+                        loading ? 'show-spinner' : ''
+                      }`}
+                      size="lg"
+                    >
+                      <span className="spinner d-inline-block">
+                        <span className="bounce1" />
+                        <span className="bounce2" />
+                        <span className="bounce3" />
+                      </span>
+                      <span className="label">
+                        <IntlMessages id="label.register" />
+                      </span>
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </div>
         </Card>
       </Colxx>
     </Row>
   );
 };
-const mapStateToProps = () => {};
+const mapStateToProps = ({ authUser }) => {
+  const { loading, error } = authUser;
+  return { loading, error };
+};
 
 export default connect(mapStateToProps, {
   registerUserAction: registerUser,

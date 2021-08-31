@@ -200,6 +200,16 @@ module.exports = {
   'label.size': 'Size',
   'label.available_from': 'Available From',
   'label.today': 'Today',
+  'label.rate': 'Rate',
+  'label.color': 'Color',
+  'label.privacy': 'Privacy',
+  'label.login': 'Login',
+  'label.register': 'Register',
+  'label.forgot-password': 'Forgot password?',
+  'label.firstName': 'First Name',
+  'label.lastName': 'Last Name',
+  'label.email': 'Email',
+  'label.password': 'Password',
 
   /* 04.Dashboards */
   'dashboards.bookings': 'Bookings',

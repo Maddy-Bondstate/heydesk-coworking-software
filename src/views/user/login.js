@@ -31,8 +31,8 @@ const validateEmail = (value) => {
 };
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('demo@heydesk.com');
-  const [password] = useState('demo123');
+  const [email] = useState('demo@gogo.com');
+  const [password] = useState('gogo123');
 
   useEffect(() => {
     if (error) {
@@ -52,26 +52,26 @@ const Login = ({ history, loading, error, loginUserAction }) => {
 
   return (
     <Row className="h-100">
-      <Colxx xxs="12" md="10" className="mx-auto my-auto">
+      <Colxx xxs="12" md="7" className="mx-auto my-auto">
         <Card className="auth-card">
-          <div className="position-relative image-side ">
-            <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
+          <div className="position-relative image-side">
+            <p className="text-white h4">COWORKING PORTAL</p>
             <p className="white mb-0">
               Please use your credentials to login.
               <br />
               If you are not a member, please{' '}
-              <NavLink to="/user/register" className="white">
+              <NavLink to="/user/register" className="white separator">
                 register
               </NavLink>
               .
             </p>
           </div>
           <div className="form-side">
-            <NavLink to="/" className="white">
-              <span className="logo-single" />
-            </NavLink>
+            {/* <NavLink to="/" className="white"> */}
+            <span className="logo-single" />
+            {/* </NavLink> */}
             <CardTitle className="mb-4">
-              <IntlMessages id="user.login-title" />
+              <IntlMessages id="label.login" />
             </CardTitle>
 
             <Formik initialValues={initialValues} onSubmit={onUserLogin}>
@@ -79,7 +79,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                 <Form className="av-tooltip tooltip-label-bottom">
                   <FormGroup className="form-group has-float-label">
                     <Label>
-                      <IntlMessages id="user.email" />
+                      <IntlMessages id="label.email" />
                     </Label>
                     <Field
                       className="form-control"
@@ -94,13 +94,14 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                   </FormGroup>
                   <FormGroup className="form-group has-float-label">
                     <Label>
-                      <IntlMessages id="user.password" />
+                      <IntlMessages id="label.password" />
                     </Label>
                     <Field
                       className="form-control"
                       type="password"
                       name="password"
                       validate={validatePassword}
+                      autoComplete="new-password"
                     />
                     {errors.password && touched.password && (
                       <div className="invalid-feedback d-block">
@@ -108,10 +109,10 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       </div>
                     )}
                   </FormGroup>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <NavLink to="/user/forgot-password">
-                      <IntlMessages id="user.forgot-password-question" />
-                    </NavLink>
+                  <div className="d-flex justify-content-end align-items-center">
+                    {/* <NavLink to="/user/forgot-password">
+                      <IntlMessages id="label.forgot-password" />
+                    </NavLink> */}
                     <Button
                       color="primary"
                       className={`btn-shadow btn-multiple-state ${
@@ -125,7 +126,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                         <span className="bounce3" />
                       </span>
                       <span className="label">
-                        <IntlMessages id="user.login-button" />
+                        <IntlMessages id="label.login" />
                       </span>
                     </Button>
                   </div>

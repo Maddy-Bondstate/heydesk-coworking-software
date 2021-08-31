@@ -1,5 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from '../../helpers/Firebase';
+import axios from 'axios';
+
 import {
   LOGIN_USER,
   REGISTER_USER,
@@ -29,8 +31,16 @@ export function* watchLoginUser() {
 
 const loginWithEmailPasswordAsync = async (email, password) =>
   // eslint-disable-next-line no-return-await
-  await auth
-    .signInWithEmailAndPassword(email, password)
+  // await auth
+  //   .signInWithEmailAndPassword(email, password)
+  //   .then((user) => user)
+  //   .catch((error) => error);
+
+  await axios
+    .post('https://hd-coworking.herokuapp.com/api/auth/login/', {
+      email,
+      password,
+    })
     .then((user) => user)
     .catch((error) => error);
 
@@ -39,6 +49,7 @@ function* loginWithEmailPassword({ payload }) {
   const { history } = payload;
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
+    console.log(loginUser);
     if (!loginUser.message) {
       const item = { uid: loginUser.user.uid, ...currentUser };
       setCurrentUser(item);
@@ -57,22 +68,33 @@ export function* watchRegisterUser() {
   yield takeEvery(REGISTER_USER, registerWithEmailPassword);
 }
 
-const registerWithEmailPasswordAsync = async (email, password) =>
+const registerWithEmailPasswordAsync = async (firstName, lastName, password) =>
   // eslint-disable-next-line no-return-await
-  await auth
-    .createUserWithEmailAndPassword(email, password)
+  // await auth
+  //   .createUserWithEmailAndPassword(email, password)
+  //   .then((user) => user)
+  //   .catch((error) => error);
+
+  await axios
+    .post('https://hd-coworking.herokuapp.com/api/auth/registration/', {
+      first_name: firstName,
+      last_name: lastName,
+      password1: password,
+    })
     .then((user) => user)
     .catch((error) => error);
 
 function* registerWithEmailPassword({ payload }) {
-  const { email, password } = payload.user;
+  const { firstName, lastName, password } = payload.user;
   const { history } = payload;
   try {
     const registerUser = yield call(
       registerWithEmailPasswordAsync,
-      email,
+      firstName,
+      lastName,
       password
     );
+    console.log(registerUser);
     if (!registerUser.message) {
       const item = { uid: registerUser.user.uid, ...currentUser };
       setCurrentUser(item);

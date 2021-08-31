@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  Row,
   Card,
+  Label,
   Badge,
   DropdownToggle,
   DropdownItem,
@@ -13,36 +15,88 @@ import { Colxx } from '../../../components/common/CustomBootstrap';
 import IntlMessages from '../../../helpers/IntlMessages';
 
 const MeetingRoomListView = ({
-  product,
+  meeting_room,
   collect,
   toggleModal,
   toggleFloor,
 }) => {
   return (
-    <Colxx xxs="12" key={product.id} className="mb-4">
-      <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
+    <Colxx xxs="12" key={meeting_room.id} className="mb-2">
+      <ContextMenuTrigger id="menu_id" data={meeting_room.id} collect={collect}>
         <Card className="d-flex flex-row">
-          <div className="pl-2 flex-grow-1 min-width-zero">
-            <div className="card-body">
-              <div className="d-flex mb-4">
-                <NavLink to={`?p=${product.id}`} className="d-flex">
+          <div className="card-body">
+            <Row>
+              <Colxx sm="6" className="d-flex">
+                <NavLink to={`?p=${meeting_room.id}`} className="d-flex">
                   <img
-                    alt={product.general.name}
-                    src={product.general.image}
+                    alt={meeting_room.general.name}
+                    src={meeting_room.calendar.image}
                     className="list-thumbnail responsive border-0 card-img-left"
                   />
                 </NavLink>
                 <div className="ml-4 d-flex justify-content-center flex-column">
-                  <NavLink to={`?p=${product.id}`}>
+                  <div className="d-flex align-items-center">
+                    <Badge
+                      color="success badge-pill"
+                      style={{
+                        background: `${meeting_room.calendar.color}`,
+                        padding: '2px 6px',
+                      }}
+                    >
+                      &nbsp;
+                    </Badge>
+                    <NavLink to={`?p=${meeting_room.id}`}>
+                      <p className="font-weight-bold truncate mb-0 ml-2">
+                        {meeting_room.general.name}
+                      </p>
+                    </NavLink>
+                    <UncontrolledDropdown className="ml-2">
+                      <DropdownToggle color="none">
+                        <i className="fa fa-cog fa-lg text-muted" />
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem onClick={() => toggleModal()}>
+                          <i className="fa fa-pencil text-muted mr-2" />
+                          <IntlMessages id="label.edit" />
+                        </DropdownItem>
+                        <DropdownItem onClick={() => toggleFloor()}>
+                          <i className="fa fa-plus text-muted mr-2" />
+                          <IntlMessages id="label.add_floor" />
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>
+                          <i className="fa fa-trash text-muted mr-2" />
+                          <IntlMessages id="label.delete" />
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                    <Label className="ml-2 mb-0">
+                      <i className="fa fa-users fa-lg1 text-muted" /> 8
+                    </Label>
+                  </div>
+
+                  <div className="d-flex align-items-center"></div>
+                </div>
+              </Colxx>
+              <Colxx sm="6" className="d-flex">
+                <NavLink to={`?p=${meeting_room.id}`} className="d-flex">
+                  <img
+                    alt={meeting_room.general.name}
+                    src={meeting_room.general.image}
+                    className="list-thumbnail responsive border-0 card-img-left"
+                  />
+                </NavLink>
+                <div className="ml-4 d-flex justify-content-center flex-column">
+                  <NavLink to={`?p=${meeting_room.id}`}>
                     <p className="list-item-heading truncate mb-3">
-                      {product.general.name}
+                      {meeting_room.general.name}
                     </p>
                   </NavLink>
                   <div className="d-flex align-items-center">
-                    {product.general.isOpen && (
+                    {meeting_room.general.isOpen && (
                       <Badge color="success badge-pill">Open</Badge>
                     )}
-                    {product.isPublic && (
+                    {meeting_room.isPublic && (
                       <Badge color="primary badge-pill ml-2">Public</Badge>
                     )}
                     <UncontrolledDropdown className="ml-3">
@@ -67,59 +121,8 @@ const MeetingRoomListView = ({
                     </UncontrolledDropdown>
                   </div>
                 </div>
-              </div>
-
-              {product.floor?.length > 0 ? (
-                product.floor.map((floor, i) => (
-                  <div className="d-flex ml-4 mt-3" key={i}>
-                    <NavLink to={`?p=${floor.id}`} className="d-flex">
-                      <img
-                        alt={floor.name}
-                        src={floor.image}
-                        className="list-thumbnail-small responsive border-0 card-img-left"
-                      />
-                    </NavLink>
-                    <div>
-                      <div className="d-flex align-items-center ml-4 mb-1">
-                        <NavLink to={`?p=${floor.id}`}>
-                          <p className="list-item-heading text-sm truncate mb-0">
-                            {floor.name}
-                          </p>
-                        </NavLink>
-                        {floor.isOpen && (
-                          <div className="ml-2">
-                            <Badge color="success badge-small mb-0">Open</Badge>
-                          </div>
-                        )}
-                        <UncontrolledDropdown className="ml-3">
-                          <DropdownToggle color="none">
-                            <i className="fa fa-cog fa-lg text-muted" />
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <DropdownItem onClick={() => toggleFloor()}>
-                              <i className="fa fa-pencil text-muted mr-2" />
-                              <IntlMessages id="label.edit" />
-                            </DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem>
-                              <i className="fa fa-trash text-muted mr-2" />
-                              <IntlMessages id="label.delete" />
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                      <div className="d-flex align-items-center ml-4">
-                        <p className="text-muted text-small mb-0">
-                          Floor {floor.floor}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-muted">No floors to show</div>
-              )}
-            </div>
+              </Colxx>
+            </Row>
           </div>
         </Card>
       </ContextMenuTrigger>

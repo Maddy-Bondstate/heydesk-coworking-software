@@ -7,7 +7,7 @@
     width: 40%;
     background: url('/assets/img/login/balloon.jpg') no-repeat center top;
     background-size: cover;
-    padding: 80px 40px;
+    padding: 30px;
 
     .h3 {
       line-height: 0.8rem;
@@ -16,7 +16,7 @@
 
   .form-side {
     width: 60%;
-    padding: 80px;
+    padding: 30px;
   }
 
   @include respond-below(md) {
@@ -24,12 +24,12 @@
 
     .image-side {
       width: 100%;
-      padding: 60px;
+      padding: 20px;
     }
 
     .form-side {
       width: 100%;
-      padding: 60px;
+      padding: 20px;
     }
   }
 
@@ -43,11 +43,11 @@
     flex-direction: column;
 
     .image-side {
-      padding: 35px 30px;
+      padding: 15px;
     }
 
     .form-side {
-      padding: 35px 30px;
+      padding: 15px;
     }
 
     .logo-single {

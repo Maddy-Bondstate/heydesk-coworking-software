@@ -6,6 +6,7 @@ import {
   NavItem,
   TabContent,
   TabPane,
+  FormGroup,
   Button,
   Modal,
   ModalHeader,
@@ -18,8 +19,6 @@ import {
 } from 'reactstrap';
 import Select from 'react-select';
 import CustomSelectInput from '../../../components/common/CustomSelectInput';
-import Switch from 'rc-switch';
-import 'rc-switch/assets/index.css';
 
 import moment from 'moment';
 import IntlMessages from '../../../helpers/IntlMessages';
@@ -27,8 +26,6 @@ import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 import DatePicker from 'react-datepicker';
-import TimezoneSelect from 'react-timezone-select';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
 const selectData = [
@@ -41,18 +38,21 @@ const floorData = [
   { label: 'Floor2', value: 'floor2' },
 ];
 
+const rateData = [
+  { label: 'Large Meeting Room $30', value: 'Large Meeting Room $30' },
+  { label: 'Small Meeting Room $20', value: 'Small Meeting Room $20' },
+];
+
 const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
   const { messages } = intl;
 
   const [selectedOption, setSelectedOption] = useState('');
   const [floorOption, setFloorOption] = useState('');
+  const [rateOption, setRateOption] = useState('');
   const [activeFirstTab, setActiveFirstTab] = useState('1');
   const [availableFrom, setAvailableFrom] = useState(new Date());
   const [availableTo, setAvailableTo] = useState();
-  const [selectedTimezone, setSelectedTimezone] = useState({});
   const [files, setFiles] = useState('');
-
-  const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
@@ -207,63 +207,103 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
               </TabPane>
 
               <TabPane tabId="2">
+                <Label className="form-group has-float-label">
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-name"
+                    value={rateOption}
+                    onChange={setRateOption}
+                    options={rateData}
+                  />
+                  <span>
+                    <IntlMessages id="label.rate" />
+                  </span>
+                </Label>
+
+                <Label className="form-group has-float-label">
+                  <Input
+                    type="textarea"
+                    placeholder={messages['label.description']}
+                  />
+                  <span>
+                    <IntlMessages id="label.description" />
+                  </span>
+                </Label>
+
                 <Row>
-                  <Colxx>
+                  <Colxx sm="8">
+                    <Label className="px-0 mr-2" sm="3">
+                      <IntlMessages id="label.image" />
+                    </Label>
+
+                    {files === '' ? (
+                      <Label className="custom-image-attach-inline">
+                        <Input
+                          type="file"
+                          id="fileupload"
+                          onChange={onChangeImage}
+                        />
+                        <i className="fa fa-cloud-upload mr-2" /> Upload
+                      </Label>
+                    ) : (
+                      <Label>
+                        <img
+                          src={URL.createObjectURL(files)}
+                          alt=""
+                          width="150"
+                        />
+                        <span
+                          onClick={removeFile}
+                          className="ml-3 cursor-pointer"
+                        >
+                          <i className="fa fa-times-circle fa-2x text-secondary" />
+                        </span>
+                      </Label>
+                    )}
+                  </Colxx>
+                  <Colxx sm="4">
                     <Label className="form-group has-float-label">
                       <Input
-                        type="textarea"
-                        placeholder={messages['label.address']}
+                        type="color"
+                        placeholder={messages['label.color']}
                       />
                       <span>
-                        <IntlMessages id="label.address" />
+                        <IntlMessages id="label.color" />
                       </span>
                     </Label>
                   </Colxx>
                 </Row>
 
-                <Row>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input type="text" placeholder={messages['label.city']} />
-                      <span>
-                        <IntlMessages id="label.city" />
-                      </span>
+                <FormGroup row>
+                  <Colxx sm="2">
+                    <Label className="pt-0">
+                      <IntlMessages id="label.privacy" />
                     </Label>
                   </Colxx>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        placeholder={messages['label.state']}
-                      />
-                      <span>
-                        <IntlMessages id="label.state" />
-                      </span>
-                    </Label>
+                  <Colxx sm="8">
+                    <FormGroup check className="mb-2">
+                      <Label check>
+                        <Input type="radio" name="radio1" />
+                        Full Access / Public
+                      </Label>
+                      <div className="text-muted text-small">
+                        Available to members, non-members and on the public
+                        calendar.
+                      </div>
+                    </FormGroup>
+                    <FormGroup check>
+                      <Label check>
+                        <Input type="radio" name="radio1" />
+                        Active Members
+                      </Label>
+                      <div className="text-muted text-small">
+                        Available to active members.
+                      </div>
+                    </FormGroup>
                   </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input type="text" placeholder={messages['label.zip']} />
-                      <span>
-                        <IntlMessages id="label.zip" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        placeholder={messages['label.country']}
-                      />
-                      <span>
-                        <IntlMessages id="label.country" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                </Row>
+                </FormGroup>
               </TabPane>
             </TabContent>
           </Colxx>

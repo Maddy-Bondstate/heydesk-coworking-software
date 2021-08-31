@@ -24,8 +24,15 @@
   color: $button-text-color;
 }
 
-.bg-muted {
-  background-color: $muted-color;
+.bg-secondary,
+.badge-secondary {
+  background-color: $theme-color-2 !important;
+  color: $button-text-color;
+}
+
+.bg-secondary-color {
+  background-color: $separator-color;
+  color: $primary-color;
 }
 
 .bg-semi-muted {

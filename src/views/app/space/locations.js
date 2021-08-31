@@ -57,7 +57,10 @@ const SpaceLocations = ({ match }) => {
           name: 'Bondstate IT Solutions',
           uniqueCode: 'HYCS100',
           description: 'Bondstate Soln',
-          businessHour: ['09:00', '17:00'],
+          businessHour: {
+            start: '09:00',
+            end: '17:00',
+          },
           timezone: '',
           image:
             'https://www.bondstate.com/wp-content/uploads/2014/10/bond_log_center_2.png',
@@ -100,7 +103,10 @@ const SpaceLocations = ({ match }) => {
           name: 'Heydesk - Coworking Space',
           uniqueCode: 'HYCS101',
           description: 'Heydesk Coworking space',
-          businessHour: ['09:00', '17:00'],
+          businessHour: {
+            start: '09:00',
+            end: '17:00',
+          },
           timezone: '',
           image: 'https://www.heydesk.com/assets/images/top_slider.jpg?v=1.10',
           isOpen: true,
