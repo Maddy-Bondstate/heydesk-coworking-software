@@ -31,8 +31,8 @@ const validateEmail = (value) => {
 };
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('demo@gogo.com');
-  const [password] = useState('gogo123');
+  const [email] = useState('');
+  const [password] = useState('');
 
   useEffect(() => {
     if (error) {
@@ -114,6 +114,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       <IntlMessages id="label.forgot-password" />
                     </NavLink> */}
                     <Button
+                      type="submit"
                       color="primary"
                       className={`btn-shadow btn-multiple-state ${
                         loading ? 'show-spinner' : ''

@@ -3,7 +3,6 @@ import { Row, Card, CardTitle } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { Colxx } from '../components/common/CustomBootstrap';
 import IntlMessages from '../helpers/IntlMessages';
-import { adminRoot } from '../constants/defaultValues';
 
 const Unauthorized = () => {
   useEffect(() => {
@@ -22,11 +21,11 @@ const Unauthorized = () => {
       <main>
         <div className="container">
           <Row className="h-100">
-            <Colxx xxs="12" md="10" className="mx-auto my-auto">
+            <Colxx xxs="12" md="7" className="mx-auto my-auto">
               <Card className="auth-card">
                 <div className="position-relative image-side ">
-                  <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
-                  <p className="white mb-0">Yes, it is indeed!</p>
+                  <p className="text-white h2">OOPS!</p>
+                  <p className="white mb-0">Unauthorized Page...</p>
                 </div>
                 <div className="form-side">
                   <NavLink to="/" className="white">
@@ -39,10 +38,7 @@ const Unauthorized = () => {
                     <IntlMessages id="unauthorized.detail" />
                   </p>
                   <p className="display-1 font-weight-bold mb-5">503</p>
-                  <NavLink
-                    to={adminRoot}
-                    className="btn btn-primary btn-shadow btn-lg"
-                  >
+                  <NavLink to="/" className="btn btn-primary btn-shadow btn-lg">
                     <IntlMessages id="pages.go-back-home" />
                   </NavLink>
                 </div>

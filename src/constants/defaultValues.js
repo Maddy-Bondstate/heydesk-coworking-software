@@ -43,7 +43,7 @@ export const servicePath = 'https://api.coloredstrategies.com';
 export const themeColorStorageKey = '__theme_selected_color';
 export const defaultDirection = 'ltr';
 export const themeRadiusStorageKey = '__theme_radius';
-export const isAuthGuardActive = false;
+export const isAuthGuardActive = true;
 export const colors = [
   'bluenavy',
   'blueyale',

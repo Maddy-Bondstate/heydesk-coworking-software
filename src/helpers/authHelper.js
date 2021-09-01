@@ -12,19 +12,19 @@ const ProtectedRoute = ({
     if (isAuthGuardActive) {
       const currentUser = getCurrentUser();
       if (currentUser) {
-        if (roles) {
-          if (roles.includes(currentUser.role)) {
-            return <Component {...props} />;
-          }
-          return (
-            <Redirect
-              to={{
-                pathname: '/unauthorized',
-                state: { from: props.location },
-              }}
-            />
-          );
-        }
+        // if (roles) {
+        //   if (roles.includes(currentUser.role)) {
+        //     return <Component {...props} />;
+        //   }
+        //   return (
+        //     <Redirect
+        //       to={{
+        //         pathname: '/unauthorized',
+        //         state: { from: props.location },
+        //       }}
+        //     />
+        //   );
+        // }
         return <Component {...props} />;
       }
       return (

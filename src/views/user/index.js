@@ -2,6 +2,9 @@ import React, { Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import UserLayout from '../../layout/UserLayout';
 
+import { getCurrentUser } from '../../helpers/Utils';
+import { adminRoot } from '../../constants/defaultValues';
+
 const Login = React.lazy(() =>
   import(/* webpackChunkName: "user-login" */ './login')
 );
@@ -15,12 +18,19 @@ const ResetPassword = React.lazy(() =>
   import(/* webpackChunkName: "user-reset-password" */ './reset-password')
 );
 
+const currentUser = getCurrentUser();
+
 const User = ({ match }) => {
   return (
     <UserLayout>
       <Suspense fallback={<div className="loading" />}>
         <Switch>
-          <Redirect exact from={`${match.url}/`} to={`${match.url}/login`} />
+          {currentUser ? (
+            <Redirect exact from={`${match.url}/`} to={adminRoot} />
+          ) : (
+            <Redirect exact from={`${match.url}/`} to={`${match.url}/login`} />
+          )}
+
           <Route
             path={`${match.url}/login`}
             render={(props) => <Login {...props} />}

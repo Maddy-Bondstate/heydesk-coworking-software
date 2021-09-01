@@ -28,6 +28,16 @@ const validateLastName = (value) => {
   return error;
 };
 
+const validateEmail = (value) => {
+  let error;
+  if (!value) {
+    error = 'Please enter your email address';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    error = 'Invalid email address';
+  }
+  return error;
+};
+
 const validatePassword = (value) => {
   let error;
   if (!value) {
@@ -41,6 +51,7 @@ const validatePassword = (value) => {
 const Register = ({ history, loading, error, registerUserAction }) => {
   const [firstName] = useState('');
   const [lastName] = useState('');
+  const [email1] = useState('');
   const [password] = useState('');
 
   useEffect(() => {
@@ -61,6 +72,7 @@ const Register = ({ history, loading, error, registerUserAction }) => {
       if (
         values.firstName !== '' &&
         values.lastName !== '' &&
+        values.email1 !== '' &&
         values.password !== ''
       ) {
         registerUserAction(values, history);
@@ -68,7 +80,7 @@ const Register = ({ history, loading, error, registerUserAction }) => {
     }
   };
 
-  const initialValues = { firstName, lastName, password };
+  const initialValues = { firstName, lastName, email1, password };
 
   return (
     <Row className="h-100">
@@ -123,6 +135,22 @@ const Register = ({ history, loading, error, registerUserAction }) => {
                     {errors.lastName && touched.lastName && (
                       <div className="invalid-feedback d-block">
                         {errors.lastName}
+                      </div>
+                    )}
+                  </FormGroup>
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="label.email" />
+                    </Label>
+                    <Field
+                      className="form-control"
+                      name="email1"
+                      validate={validateEmail}
+                      autoComplete="new-password"
+                    />
+                    {errors.email1 && touched.email1 && (
+                      <div className="invalid-feedback d-block">
+                        {errors.email1}
                       </div>
                     )}
                   </FormGroup>

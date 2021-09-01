@@ -21,7 +21,7 @@ import {
   resetPasswordError,
 } from './actions';
 
-import { adminRoot, currentUser } from '../../constants/defaultValues';
+import { adminRoot } from '../../constants/defaultValues';
 import { setCurrentUser } from '../../helpers/Utils';
 
 export function* watchLoginUser() {
@@ -49,14 +49,14 @@ function* loginWithEmailPassword({ payload }) {
   const { history } = payload;
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-    console.log(loginUser);
-    if (!loginUser.message) {
-      const item = { uid: loginUser.user.uid, ...currentUser };
+    // console.log(loginUser);
+    if (loginUser.status === 200) {
+      const item = { token: loginUser.data.token, ...loginUser.data.user };
       setCurrentUser(item);
       yield put(loginUserSuccess(item));
       history.push(adminRoot);
     } else {
-      yield put(loginUserError(loginUser.message));
+      yield put(loginUserError(loginUser.status));
     }
   } catch (error) {
     yield put(loginUserError(error));
@@ -68,7 +68,12 @@ export function* watchRegisterUser() {
   yield takeEvery(REGISTER_USER, registerWithEmailPassword);
 }
 
-const registerWithEmailPasswordAsync = async (firstName, lastName, password) =>
+const registerWithEmailPasswordAsync = async (
+  firstName,
+  lastName,
+  email1,
+  password
+) =>
   // eslint-disable-next-line no-return-await
   // await auth
   //   .createUserWithEmailAndPassword(email, password)
@@ -79,29 +84,34 @@ const registerWithEmailPasswordAsync = async (firstName, lastName, password) =>
     .post('https://hd-coworking.herokuapp.com/api/auth/registration/', {
       first_name: firstName,
       last_name: lastName,
+      email: email1,
       password1: password,
     })
     .then((user) => user)
     .catch((error) => error);
 
 function* registerWithEmailPassword({ payload }) {
-  const { firstName, lastName, password } = payload.user;
+  const { firstName, lastName, email1, password } = payload.user;
   const { history } = payload;
   try {
     const registerUser = yield call(
       registerWithEmailPasswordAsync,
       firstName,
       lastName,
+      email1,
       password
     );
     console.log(registerUser);
-    if (!registerUser.message) {
-      const item = { uid: registerUser.user.uid, ...currentUser };
+    if (registerUser.status === 200) {
+      const item = {
+        token: registerUser.data.token,
+        ...registerUser.data.user,
+      };
       setCurrentUser(item);
       yield put(registerUserSuccess(item));
       history.push(adminRoot);
     } else {
-      yield put(registerUserError(registerUser.message));
+      yield put(registerUserError(registerUser.status));
     }
   } catch (error) {
     yield put(registerUserError(error));
@@ -114,10 +124,10 @@ export function* watchLogoutUser() {
 }
 
 const logoutAsync = async (history) => {
-  await auth
-    .signOut()
-    .then((user) => user)
-    .catch((error) => error);
+  // await auth
+  //   .signOut()
+  //   .then((user) => user)
+  //   .catch((error) => error);
   history.push(adminRoot);
 };
 
