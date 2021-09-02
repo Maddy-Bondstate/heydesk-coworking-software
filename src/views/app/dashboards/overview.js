@@ -5,6 +5,22 @@ import { Colxx, Separator } from '../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../containers/navs/Breadcrumb';
 import IconCardsCarousel from '../../../containers/dashboards/IconCardsCarousel';
 import GradientWithRadialProgressCard from '../../../components/cards/GradientWithRadialProgressCard';
+var CryptoJS = require('crypto-js');
+
+// Encrypt
+var ciphertext = CryptoJS.AES.encrypt(
+  'my message',
+  '!HYCWPORTAL2021!'
+).toString();
+console.log(ciphertext);
+// Decrypt
+var bytes = CryptoJS.AES.decrypt(
+  'U2FsdGVkX18eveFI12CGvT+NY05ghl5jDAXtq5R6T0Q=',
+  '!HYCWPORTAL2021!'
+);
+var originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+console.log(originalText); // 'my message'
 
 const DashboardOverview = ({ intl, match }) => {
   const { messages } = intl;

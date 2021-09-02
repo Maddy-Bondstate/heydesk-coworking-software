@@ -51,10 +51,20 @@ const validatePassword = (value) => {
 const Register = ({ history, loading, error, registerUserAction }) => {
   const [firstName] = useState('');
   const [lastName] = useState('');
-  const [email1] = useState('');
+  const [email1, setEmail1] = useState('');
   const [password] = useState('');
 
+  const searchParams = new URLSearchParams(history.location.search);
+  const invite = searchParams.get('invite');
+
   useEffect(() => {
+    if (invite) {
+      const atob = (str) => Buffer.from(str, 'base64').toString('binary');
+      const decrypt1 = atob(invite);
+      const decrypt2 = atob(decrypt1);
+      setEmail1(decrypt2);
+    }
+
     if (error) {
       NotificationManager.warning(
         error,
@@ -65,9 +75,11 @@ const Register = ({ history, loading, error, registerUserAction }) => {
         ''
       );
     }
-  }, [error]);
+  }, [invite, error]);
 
   const onUserRegister = (values) => {
+    if (values.email1 === '') values.email1 = email1;
+
     if (!loading) {
       if (
         values.firstName !== '' &&
@@ -145,8 +157,9 @@ const Register = ({ history, loading, error, registerUserAction }) => {
                     <Field
                       className="form-control"
                       name="email1"
-                      validate={validateEmail}
-                      autoComplete="new-password"
+                      validate={invite || validateEmail}
+                      value={email1}
+                      disabled={invite || ''}
                     />
                     {errors.email1 && touched.email1 && (
                       <div className="invalid-feedback d-block">

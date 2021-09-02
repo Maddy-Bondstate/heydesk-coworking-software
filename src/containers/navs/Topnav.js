@@ -27,9 +27,13 @@ import {
 } from '../../constants/defaultValues';
 
 import { MobileMenuIcon, MenuIcon } from '../../components/svg';
+
+import { getCurrentUser } from '../../helpers/Utils';
 // import TopnavNotifications from './Topnav.Notifications';
 
 // import { getDirection, setDirection } from '../../helpers/Utils';
+
+const currentUser = getCurrentUser();
 
 const TopNav = ({
   history,
@@ -203,7 +207,9 @@ const TopNav = ({
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
-              <span className="name mr-1">Maddy BS</span>
+              <span className="name mr-1 font-weight-bold text-capitalize">
+                {currentUser.first_name} {currentUser.last_name}
+              </span>
               <span>
                 <img alt="Profile" src="/assets/img/profiles/l-2.jpg" />
               </span>

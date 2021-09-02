@@ -49,14 +49,14 @@ function* loginWithEmailPassword({ payload }) {
   const { history } = payload;
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-    // console.log(loginUser);
+
     if (loginUser.status === 200) {
       const item = { token: loginUser.data.token, ...loginUser.data.user };
       setCurrentUser(item);
       yield put(loginUserSuccess(item));
       history.push(adminRoot);
     } else {
-      yield put(loginUserError(loginUser.status));
+      yield put(loginUserError('Username or password does not match'));
     }
   } catch (error) {
     yield put(loginUserError(error));
@@ -101,7 +101,7 @@ function* registerWithEmailPassword({ payload }) {
       email1,
       password
     );
-    console.log(registerUser);
+
     if (registerUser.status === 200) {
       const item = {
         token: registerUser.data.token,
@@ -111,7 +111,7 @@ function* registerWithEmailPassword({ payload }) {
       yield put(registerUserSuccess(item));
       history.push(adminRoot);
     } else {
-      yield put(registerUserError(registerUser.status));
+      yield put(registerUserError('Email is already registered'));
     }
   } catch (error) {
     yield put(registerUserError(error));
