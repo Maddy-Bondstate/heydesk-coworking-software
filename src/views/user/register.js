@@ -158,7 +158,7 @@ const Register = ({ history, loading, error, registerUserAction }) => {
                       className="form-control"
                       name="email1"
                       validate={invite || validateEmail}
-                      value={email1}
+                      // value={email1}
                       disabled={invite || ''}
                     />
                     {errors.email1 && touched.email1 && (
