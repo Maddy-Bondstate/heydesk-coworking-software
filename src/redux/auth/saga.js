@@ -1,13 +1,12 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { auth } from '../../helpers/Firebase';
 import axios from 'axios';
 
 import {
   LOGIN_USER,
   REGISTER_USER,
   LOGOUT_USER,
-  FORGOT_PASSWORD,
-  RESET_PASSWORD,
+  // FORGOT_PASSWORD,
+  // RESET_PASSWORD,
 } from '../actions';
 
 import {
@@ -15,27 +14,18 @@ import {
   loginUserError,
   registerUserSuccess,
   registerUserError,
-  forgotPasswordSuccess,
-  forgotPasswordError,
-  resetPasswordSuccess,
-  resetPasswordError,
+  // forgotPasswordSuccess,
+  // forgotPasswordError,
+  // resetPasswordSuccess,
+  // resetPasswordError,
 } from './actions';
 
 import { adminRoot } from '../../constants/defaultValues';
 import { setCurrentUser } from '../../helpers/Utils';
 
-export function* watchLoginUser() {
-  // eslint-disable-next-line no-use-before-define
-  yield takeEvery(LOGIN_USER, loginWithEmailPassword);
-}
-
+// --------- Login ---------
 const loginWithEmailPasswordAsync = async (email, password) =>
   // eslint-disable-next-line no-return-await
-  // await auth
-  //   .signInWithEmailAndPassword(email, password)
-  //   .then((user) => user)
-  //   .catch((error) => error);
-
   await axios
     .post('https://hd-coworking.herokuapp.com/api/auth/login/', {
       email,
@@ -63,11 +53,12 @@ function* loginWithEmailPassword({ payload }) {
   }
 }
 
-export function* watchRegisterUser() {
+export function* watchLoginUser() {
   // eslint-disable-next-line no-use-before-define
-  yield takeEvery(REGISTER_USER, registerWithEmailPassword);
+  yield takeEvery(LOGIN_USER, loginWithEmailPassword);
 }
 
+// --------- Register ---------
 const registerWithEmailPasswordAsync = async (
   firstName,
   lastName,
@@ -75,11 +66,6 @@ const registerWithEmailPasswordAsync = async (
   password
 ) =>
   // eslint-disable-next-line no-return-await
-  // await auth
-  //   .createUserWithEmailAndPassword(email, password)
-  //   .then((user) => user)
-  //   .catch((error) => error);
-
   await axios
     .post('https://hd-coworking.herokuapp.com/api/auth/registration/', {
       first_name: firstName,
@@ -118,16 +104,13 @@ function* registerWithEmailPassword({ payload }) {
   }
 }
 
-export function* watchLogoutUser() {
+export function* watchRegisterUser() {
   // eslint-disable-next-line no-use-before-define
-  yield takeEvery(LOGOUT_USER, logout);
+  yield takeEvery(REGISTER_USER, registerWithEmailPassword);
 }
 
+// --------- Logout ---------
 const logoutAsync = async (history) => {
-  // await auth
-  //   .signOut()
-  //   .then((user) => user)
-  //   .catch((error) => error);
   history.push(adminRoot);
 };
 
@@ -137,70 +120,70 @@ function* logout({ payload }) {
   yield call(logoutAsync, history);
 }
 
-export function* watchForgotPassword() {
+export function* watchLogoutUser() {
   // eslint-disable-next-line no-use-before-define
-  yield takeEvery(FORGOT_PASSWORD, forgotPassword);
+  yield takeEvery(LOGOUT_USER, logout);
 }
 
-const forgotPasswordAsync = async (email) => {
-  // eslint-disable-next-line no-return-await
-  return await auth
-    .sendPasswordResetEmail(email)
-    .then((user) => user)
-    .catch((error) => error);
-};
+// --------- Forgot Password ---------
+// const forgotPasswordAsync = async (email) => {
+//   // eslint-disable-next-line no-return-await
 
-function* forgotPassword({ payload }) {
-  const { email } = payload.forgotUserMail;
-  try {
-    const forgotPasswordStatus = yield call(forgotPasswordAsync, email);
-    if (!forgotPasswordStatus) {
-      yield put(forgotPasswordSuccess('success'));
-    } else {
-      yield put(forgotPasswordError(forgotPasswordStatus.message));
-    }
-  } catch (error) {
-    yield put(forgotPasswordError(error));
-  }
-}
+// };
 
-export function* watchResetPassword() {
-  // eslint-disable-next-line no-use-before-define
-  yield takeEvery(RESET_PASSWORD, resetPassword);
-}
+// function* forgotPassword({ payload }) {
+//   const { email } = payload.forgotUserMail;
+//   try {
+//     const forgotPasswordStatus = yield call(forgotPasswordAsync, email);
+//     if (!forgotPasswordStatus) {
+//       yield put(forgotPasswordSuccess('success'));
+//     } else {
+//       yield put(forgotPasswordError(forgotPasswordStatus.message));
+//     }
+//   } catch (error) {
+//     yield put(forgotPasswordError(error));
+//   }
+// }
 
-const resetPasswordAsync = async (resetPasswordCode, newPassword) => {
-  // eslint-disable-next-line no-return-await
-  return await auth
-    .confirmPasswordReset(resetPasswordCode, newPassword)
-    .then((user) => user)
-    .catch((error) => error);
-};
+// export function* watchForgotPassword() {
+//   // eslint-disable-next-line no-use-before-define
+//   yield takeEvery(FORGOT_PASSWORD, forgotPassword);
+// }
 
-function* resetPassword({ payload }) {
-  const { newPassword, resetPasswordCode } = payload;
-  try {
-    const resetPasswordStatus = yield call(
-      resetPasswordAsync,
-      resetPasswordCode,
-      newPassword
-    );
-    if (!resetPasswordStatus) {
-      yield put(resetPasswordSuccess('success'));
-    } else {
-      yield put(resetPasswordError(resetPasswordStatus.message));
-    }
-  } catch (error) {
-    yield put(resetPasswordError(error));
-  }
-}
+// --------- Reset Password ---------
+// const resetPasswordAsync = async (resetPasswordCode, newPassword) => {
+//   // eslint-disable-next-line no-return-await
+
+// };
+
+// function* resetPassword({ payload }) {
+//   const { newPassword, resetPasswordCode } = payload;
+//   try {
+//     const resetPasswordStatus = yield call(
+//       resetPasswordAsync,
+//       resetPasswordCode,
+//       newPassword
+//     );
+//     if (!resetPasswordStatus) {
+//       yield put(resetPasswordSuccess('success'));
+//     } else {
+//       yield put(resetPasswordError(resetPasswordStatus.message));
+//     }
+//   } catch (error) {
+//     yield put(resetPasswordError(error));
+//   }
+// }
+// export function* watchResetPassword() {
+//   // eslint-disable-next-line no-use-before-define
+//   yield takeEvery(RESET_PASSWORD, resetPassword);
+// }
 
 export default function* rootSaga() {
   yield all([
     fork(watchLoginUser),
     fork(watchLogoutUser),
     fork(watchRegisterUser),
-    fork(watchForgotPassword),
-    fork(watchResetPassword),
+    // fork(watchForgotPassword),
+    // fork(watchResetPassword),
   ]);
 }

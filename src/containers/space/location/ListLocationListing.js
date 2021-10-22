@@ -17,11 +17,11 @@ const ListLocationListing = ({
 }) => {
   return (
     <Row>
-      {items.map((product) => {
+      {items.map((item) => {
         return (
           <LocationListView
-            key={product.id}
-            product={product}
+            key={item.id}
+            item={item}
             collect={collect}
             toggleModal={toggleModal}
             toggleFloor={toggleFloor}
