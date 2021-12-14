@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { injectIntl } from 'react-intl';
 
 import {
@@ -34,6 +34,7 @@ const AddFloorModal = ({
     modalOpen,
     toggleModal, 
     intl,
+    //floor,
     SpaceaddFloorAction 
     }) => {
   const { messages = '' } = intl || {};
@@ -41,7 +42,6 @@ const AddFloorModal = ({
   const [selectedOption, setSelectedOption] = useState('');
   const [files, setFiles] = useState('');
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
-  const [tog,isopen] = useState(false);
   const [state, setState] = React.useState({
     name: "",
     floor: "",
@@ -68,17 +68,20 @@ const AddFloorModal = ({
     //console.log(state);
   }
 
-  const submitFloor = () => {
-   const image = files.name;
-   const company = selectedOption.value;
-    SpaceaddFloorAction(company,state,image,tog);
+  // useEffect(() => {
+  //  const image = (files==""?null:files.name);
+  //  const company = selectedOption.value;
+  //   SpaceaddFloorAction(company,state,image,checkedPrimarySmall);
+  //   if (floor?.status==201) toggleModal;
     
-  }
+  // },[SpaceaddFloorAction]);
 
-  const isOpentog=() =>{
-    isopen({
-      tog: !tog
-    });
+  const submitFloor = () => {
+    const image = (files==""?null:files.name);
+    const company = selectedOption.value;
+    //console.log("checkedPrimarySmall",checkedPrimarySmall);
+     SpaceaddFloorAction(company,state,image,checkedPrimarySmall);
+     toggleModal();
   }
 
   return (
@@ -178,7 +181,7 @@ const AddFloorModal = ({
         </Label>
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" size="sm" outline onClick={isOpentog}>
+        <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
         <Button color="primary"  onClick={submitFloor} size="sm" >
@@ -190,7 +193,7 @@ const AddFloorModal = ({
 };
 
 const mapStateToProps = ({ space }) => {
-  console.log('floor',space);
+ // console.log('floor',space);
   // const { location, loading } = space;
   // return { location, loading };
   const { loading } = space;

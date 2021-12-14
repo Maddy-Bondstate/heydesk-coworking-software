@@ -102,17 +102,17 @@ const AddLocationModal = ({
   };
 
   const submitLocation = () => {
-     console.log('submit',state);
-     const image = files.name;
-     const start_time = "";
-     const end_time = "";
-     const time_zone = "";
-     const is_open = false;
+    const image = (files==""?null:files.name);
+     const start_time = startBusinessHour;
+     const end_time = endBusinessHour;
+     const time_zone = selectedTimezone.label;
+     const is_open = checkedPrimarySmall;
     
-    // console.log('selectedTimezone',selectedTimezone);
-    // console.log('startBusinessHour',startBusinessHour);
+    // console.log('selectedTimezone',selectedTimezone.label);
+     //console.log('startBusinessHour',startBusinessHour);
     // console.log('endBusinessHour',endBusinessHour);
     SpaceaddLocationAction(state,image,start_time,end_time,time_zone,is_open);
+    toggleModal();
     
   }
 

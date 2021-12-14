@@ -12,6 +12,10 @@ import {
   ADD_LOCATION_SUCCESS,
   ADD_LOCATION_ERROR,
 
+  SINGLE_SPACE,
+  SINGLE_SPACE_SUCCESS,
+  SINGLE_SPACE_ERROR,
+
 
 } from '../actions';
 
@@ -65,3 +69,22 @@ export const SpaceaddLocationError = (error) => ({
   payload : error,
 });
 /* Add location - Ends */
+
+/* SINGLE SPACE DETAILS - STARTS */
+
+export const SingleSpace = (space_id) => ({
+  type : SINGLE_SPACE,
+  payload : space_id
+});
+
+export const SingleSpaceSuccess = (item) => ({
+  type : SINGLE_SPACE_SUCCESS,
+  payload : item
+});
+
+export const SingleSpaceError = (error) => ({
+  type : SINGLE_SPACE_ERROR,
+  payload : error
+});
+
+/* SINGLE SPACE DETAILS - END */

@@ -3,6 +3,7 @@ import ListLocationHeading from '../../../containers/space/location/ListLocation
 import AddLocationModal from '../../../containers/space/location/AddLocationModal';
 import AddFloorModal from '../../../containers/space/location/AddFloorModal';
 import ListLocationListing from '../../../containers/space/location/ListLocationListing';
+import SingleLocationPg from '../../../containers/space/location/SingleLocationPg';
 
 import { getSpaceLocationList } from '../../../redux/actions';
 import { connect } from 'react-redux';
@@ -33,10 +34,22 @@ const SpaceLocations = ({
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
+  const url = window.location.href;
+  //console.log(url);
+  //const space_id = (url.substring(url.lastIndexOf('=') + 1));
+  var space_id = url.substring(url.indexOf("=") + 1);
+  var split = url .split( '?' );
+  var lenspace = split.length;
+
+ 
+  
   return loading ? (
     <div className="loading" />
   ) : (
+
+
     <div className="disable-text-selection">
+
       <ListLocationHeading
         heading="menu.locations"
         changePageSize={setSelectedPageSize}
@@ -66,20 +79,27 @@ const SpaceLocations = ({
         modalOpen={floorOpen}
         toggleModal={() => setFloorModalOpen(!floorOpen)}
       />
+      {lenspace>1?
+          <SingleLocationPg
+          space_id = {space_id}
+          />
+        :
 
-      <ListLocationListing
-        items={items}
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onChangePage={setCurrentPage}
-        toggleModal={() => setModalOpen(!modalOpen)}
-        toggleFloor={() => setFloorModalOpen(!floorOpen)}
-      />
+          <ListLocationListing
+          items={items}
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onChangePage={setCurrentPage}
+          toggleModal={() => setModalOpen(!modalOpen)}
+          toggleFloor={() => setFloorModalOpen(!floorOpen)}
+          />
+      }
     </div>
   );
 };
 
 const mapStateToProps = ({ space }) => {
+ // console.log('location',space);
   const { location, loading } = space;
   return { location, loading };
 };

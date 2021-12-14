@@ -1,6 +1,6 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-import { SPACE_GET_LOCATION_LIST,ADD_FLOOR,ADD_LOCATION } from '../actions';
+import { SPACE_GET_LOCATION_LIST,ADD_FLOOR,ADD_LOCATION,SINGLE_SPACE } from '../actions';
 //import cors from 'cors';
 import {
   getSpaceLocationListSuccess,
@@ -12,12 +12,15 @@ import {
   SpaceaddLocationSuccess,
   SpaceaddLocationError,
 
+  SingleSpaceSuccess,
+  SingleSpaceError,
+
 } from './actions';
 import { getCurrentUser } from '../../helpers/Utils';
 
 const currentUser = getCurrentUser();
 const token = `JWT ${currentUser?.token}`;
-console.log("token",token);
+
 
 
 // --------- Location ---------
@@ -48,11 +51,47 @@ export function* watchGetLocationList() {
   yield takeEvery(SPACE_GET_LOCATION_LIST, getSpaceLocationListItems);
 }
 
+/* Single space details - Starts */
+
+const SingleSpaceRequest = async (space_id) => {
+  // eslint-disable-next-line no-return-await
+  //const urrl = 'https://hd-coworking.herokuapp.com/api/space/objects/retrieve/'+space_id+'/';
+ // console.log("urrl",urrl);
+  return await axios
+    .get('https://hd-coworking.herokuapp.com/api/space/objects/retrieve/'+space_id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+         Authorization: token,
+      },
+    })
+    .then((response) => response)
+    .catch((error) => error);
+};
+
+function* SingleSpaceItems(payload) 
+{
+ // console.log('pyy',payload);
+  //const {space_id} = payload;
+  try {
+    const response = yield call(SingleSpaceRequest(payload.payload));
+    yield put(SingleSpaceSuccess(response));
+  } catch (error) {
+    yield put(SingleSpaceError(error));
+  }
+}
+
+export function* watchSingleSpace() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(SINGLE_SPACE, SingleSpaceItems);
+}
+
+
+/* Single space details - Ends */
 
 /* Add Floor - STARTS */
 
 const addFloorRequest = async (company,name,floor,area,target,image,is_open) => {
- console.log('fl',token);
+ 
  const headerParams = {
   'Content-Type': 'application/json',
   Authorization: token,
@@ -91,7 +130,8 @@ function* addFloorItems({ payload }) {
   try {
     const addFloor = yield call (addFloorRequest,company,name,floor,area,target,image,is_open);
     yield put(SpaceaddFloorSuccess(addFloor));
-    //console.log('adres',addFloor);
+    //console.log('adres',addFloor.status);
+
   } catch (error) {
     console.log(error);
     yield put(SpaceaddFloorError(error));
@@ -176,7 +216,7 @@ export default function* rootSaga() {
     fork(watchGetLocationList),
     fork(watchaddFloor),
     fork(watchaddLocation),
-    // fork(watchResetPassword),
+    fork(watchSingleSpace),
   ]);
 
 }

@@ -34,7 +34,16 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                       {item.name}
                     </p>
                   </NavLink>
-                  <div className="d-flex align-items-center">
+                    <div className=" mb-3">
+                      {item.description}
+                    </div>
+                    <div className=" mb-3">
+                      {item.start_time} {item.end_time?" - ":""} {item.end_time}
+                    </div>
+                    <div className=" mb-3">
+                      {item.address}{item.country?" , ":""} {item.country}{item.city?" , ":""} {item.city}
+                    </div>
+                  <div className="float-right align-items-center">
                     {item.is_open && (
                       <Badge color="success badge-pill">Open</Badge>
                     )}
@@ -65,28 +74,31 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                 </div>
               </div>
 
-              {item.floor?.length > 0 ? (
-                item.floor.map((floor, i) => (
+              {item.floors?.length > 0 ? (
+                item.floors.map((floors, i) => (
                   <div className="d-flex ml-4 mt-3" key={i}>
-                    <NavLink to={`?p=${floor.id}`} className="d-flex">
+                    <NavLink to={`?p=${floors.id}`} className="d-flex">
                       <img
-                        alt={floor.name}
-                        src={floor.image}
+                        alt={floors.name}
+                        src={floors.image?floors.image:Noimage}
                         className="list-thumbnail-small responsive border-0 card-img-left"
                       />
                     </NavLink>
                     <div>
                       <div className="d-flex align-items-center ml-4 mb-1">
-                        <NavLink to={`?p=${floor.id}`}>
+                        <NavLink to={`?p=${floors.id}`}>
                           <p className="list-item-heading text-sm truncate mb-0">
-                            {floor.name}
+                            {floors.name}
                           </p>
                         </NavLink>
-                        {floor.isOpen && (
+                       
+                        {floors.isOpen && (
                           <div className="ml-2">
                             <Badge color="success badge-small mb-0">Open</Badge>
                           </div>
                         )}
+                          <div className="ml-3"><b>Area : </b>{floors.area}</div>
+                          <div className="ml-3"><b>Taget : </b>{floors.target}</div>
                         <UncontrolledDropdown className="ml-3">
                           <DropdownToggle color="none">
                             <i className="fa fa-cog fa-lg text-muted" />
@@ -106,7 +118,7 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                       </div>
                       <div className="d-flex align-items-center ml-4">
                         <p className="text-muted text-small mb-0">
-                          Floor {floor.floor}
+                          Floor {floors.floors}
                         </p>
                       </div>
                     </div>
