@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
+import { injectIntl } from 'react-intl';
 import {
   Row,
   Nav,
@@ -14,10 +15,8 @@ import {
   Label,
 } from 'reactstrap';
 import Switch from 'rc-switch';
-//import { NotificationManager } from '../../components/common/react-notifications';
 import 'rc-switch/assets/index.css';
-import { injectIntl } from 'react-intl';
-//import { useForm, Controller } from 'react-hook-form';
+
 import moment from 'moment';
 import IntlMessages from '../../../helpers/IntlMessages';
 import { NavLink } from 'react-router-dom';
@@ -26,42 +25,20 @@ import { Colxx } from '../../../components/common/CustomBootstrap';
 import DatePicker from 'react-datepicker';
 import TimezoneSelect from 'react-timezone-select';
 
-import { SpaceaddLocation } from '../../../redux/actions';
-import { connect } from 'react-redux';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
-const AddLocationModal = ({ 
-  modelTitle, 
-  modalOpen, 
-  toggleModal, 
-  intl, 
-  loading,
-  SpaceaddLocationAction
- }) => {
-  const { messages = '' } = intl || {};
+const AddLocationModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
+  const { messages } = intl;
 
   const [activeFirstTab, setActiveFirstTab] = useState('1');
   const [startBusinessHour, setStartBusinessHour] = useState(
     new Date(moment().format('YYYY-MM-DDT09:00'))
-    
-    
   );
   const [endBusinessHour, setEndBusinessHour] = useState(
     new Date(moment().format('YYYY-MM-DDT17:00'))
   );
   const [selectedTimezone, setSelectedTimezone] = useState({});
   const [files, setFiles] = useState('');
-  const [state, setState] = React.useState({
-      name: "",
-      unique_code: "",
-      description:"",
-      address:"",
-      city:"",
-      country:"",
-      zip:"",
-      state: ""
-  })
 
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
 
@@ -69,57 +46,12 @@ const AddLocationModal = ({
     setFiles(e.target.files[0]);
   };
 
-  const getValues = (e) => {
-    //console.log('val',e.target.value);
-    const value = e.target.value;
-
-    //console.log("name",e.target.name);
-    setState({
-      ...state,
-      [e.target.name]: value
-    });
-    console.log(state);
-  }
-
-  // useEffect(() => {
-  //   if (error) {
-  //     NotificationManager.warning(error, 'Location add Error', 3000, null, null, '');
-  //   }
-  // }, [error]);
-
-  // const onUserLogin = (values) => {
-  //   if (!loading) {
-  //     if (values.email !== '' && values.password !== '') {
-  //       loginUserAction(values, history);
-  //     }
-  //   }
-  // };
-  
-
   const removeFile = () => {
     setFiles('');
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
-  const submitLocation = () => {
-     console.log('submit',state);
-     const image = files.name;
-     const start_time = "";
-     const end_time = "";
-     const time_zone = "";
-     const is_open = false;
-    
-    // console.log('selectedTimezone',selectedTimezone);
-    // console.log('startBusinessHour',startBusinessHour);
-    // console.log('endBusinessHour',endBusinessHour);
-    SpaceaddLocationAction(state,image,start_time,end_time,time_zone,is_open);
-    
-  }
-
-  return loading ? (
-    <div className="loading" />
-  ) : (
-  
+  return (
     <Modal isOpen={modalOpen} toggle={toggleModal} backdrop="static">
       <ModalHeader toggle={toggleModal}>
         <IntlMessages id={modelTitle} />
@@ -160,13 +92,12 @@ const AddLocationModal = ({
               </NavItem>
             </Nav>
 
-
             <TabContent activeTab={activeFirstTab}>
               <TabPane tabId="1">
                 <Row>
                   <Colxx sm="8">
                     <Label className="form-group has-float-label">
-                      <Input type="text" onChange={getValues} name="name" placeholder={messages['label.name']} />
+                      <Input type="text" placeholder={messages['label.name']} />
                       <span>
                         <IntlMessages id="label.name" />
                       </span>
@@ -176,8 +107,6 @@ const AddLocationModal = ({
                     <Label className="form-group has-float-label">
                       <Input
                         type="text"
-                        name="unique_code"
-                        onChange = {getValues}
                         placeholder={messages['label.unique_code']}
                       />
                       <span>
@@ -190,8 +119,6 @@ const AddLocationModal = ({
                 <Label className="form-group has-float-label">
                   <Input
                     type="text"
-                    name = "description"
-                    onChange={getValues}
                     placeholder={messages['label.description']}
                   />
                   <span>
@@ -219,7 +146,6 @@ const AddLocationModal = ({
                         timeIntervals={30}
                         dateFormat="HH:mm"
                         timeCaption="Time"
-                        name="from_time"
                       />
                     </div>
                   </Colxx>
@@ -234,7 +160,6 @@ const AddLocationModal = ({
                         timeIntervals={30}
                         dateFormat="HH:mm"
                         timeCaption="Time"
-                        name="to_time"
                       />
                     </div>
                   </Colxx>
@@ -300,7 +225,6 @@ const AddLocationModal = ({
                     <Label className="form-group has-float-label">
                       <Input
                         type="textarea"
-                        onChange={getValues} name="address"
                         placeholder={messages['label.address']}
                       />
                       <span>
@@ -313,7 +237,7 @@ const AddLocationModal = ({
                 <Row>
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
-                      <Input type="text" onChange={getValues} name="city" placeholder={messages['label.city']} />
+                      <Input type="text" placeholder={messages['label.city']} />
                       <span>
                         <IntlMessages id="label.city" />
                       </span>
@@ -323,7 +247,6 @@ const AddLocationModal = ({
                     <Label className="form-group has-float-label">
                       <Input
                         type="text"
-                        onChange={getValues} name="state"
                         placeholder={messages['label.state']}
                       />
                       <span>
@@ -336,7 +259,7 @@ const AddLocationModal = ({
                 <Row>
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
-                      <Input type="text" onChange={getValues} name="zip" placeholder={messages['label.zip']} />
+                      <Input type="text" placeholder={messages['label.zip']} />
                       <span>
                         <IntlMessages id="label.zip" />
                       </span>
@@ -345,7 +268,7 @@ const AddLocationModal = ({
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
                       <Input
-                        type="text" onChange={getValues} name="country"
+                        type="text"
                         placeholder={messages['label.country']}
                       />
                       <span>
@@ -363,7 +286,7 @@ const AddLocationModal = ({
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        <Button color="primary" size="sm" onClick={submitLocation}>
+        <Button color="primary" size="sm" onClick={toggleModal}>
           <IntlMessages id="model.add" />
         </Button>
       </ModalFooter>
@@ -371,18 +294,4 @@ const AddLocationModal = ({
   );
 };
 
-const mapStateToProps = ({ space }) => {
-  //console.log('space',space);
-  // const { location, loading } = space;
-  // return { location, loading };
-  const { loading } = space;
-  return { loading };
-};
-
-export default connect(mapStateToProps, {
-  SpaceaddLocationAction : SpaceaddLocation,
-})(AddLocationModal);
-
-//export default injectIntl(AddLocationModal);
-
-
+export default injectIntl(AddLocationModal);

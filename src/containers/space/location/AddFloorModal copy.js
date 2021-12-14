@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
-
 import {
   Row,
   Button,
@@ -20,34 +19,18 @@ import 'rc-switch/assets/index.css';
 
 import IntlMessages from '../../../helpers/IntlMessages';
 import { Colxx } from '../../../components/common/CustomBootstrap';
-import { SpaceaddFloor } from '../../../redux/actions';
-//import { addFloor } from 'containers/space/location'
-import { connect } from 'react-redux';
 
 const selectData = [
   { label: 'Bondstate', value: 'bondstate' },
   { label: 'Heydesk', value: 'heydesk' },
 ];
 
-const AddFloorModal = ({ 
-    modelTitle,
-    modalOpen,
-    toggleModal, 
-    intl,
-    SpaceaddFloorAction 
-    }) => {
-  const { messages = '' } = intl || {};
+const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
+  const { messages } = intl;
 
   const [selectedOption, setSelectedOption] = useState('');
   const [files, setFiles] = useState('');
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
-  const [tog,isopen] = useState(false);
-  const [state, setState] = React.useState({
-    name: "",
-    floor: "",
-    area:"",
-    target:"",
-})
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
@@ -58,29 +41,6 @@ const AddFloorModal = ({
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
-  const getValues = (e) => {
-    //console.log('val',e.target.value);
-    const value = e.target.value;
-    setState({
-      ...state,
-      [e.target.name]: value
-    });
-    //console.log(state);
-  }
-
-  const submitFloor = () => {
-   const image = files.name;
-   const company = selectedOption.value;
-    SpaceaddFloorAction(company,state,image,tog);
-    
-  }
-
-  const isOpentog=() =>{
-    isopen({
-      tog: !tog
-    });
-  }
-
   return (
     <Modal isOpen={modalOpen} toggle={toggleModal} backdrop="static">
       <ModalHeader toggle={toggleModal}>
@@ -88,7 +48,7 @@ const AddFloorModal = ({
       </ModalHeader>
       <ModalBody>
         <Label className="form-group has-float-label">
-          <Input onChange={getValues} name="name" type="text" placeholder={messages['label.name']} />
+          <Input type="text" placeholder={messages['label.name']} />
           <span>
             <IntlMessages id="label.name" />
           </span>
@@ -110,7 +70,7 @@ const AddFloorModal = ({
         </Label>
 
         <Label className="form-group has-float-label">
-          <Input type="text" onChange={getValues} name="floor" placeholder={messages['label.floor']} />
+          <Input type="text" placeholder={messages['label.floor']} />
           <span>
             <IntlMessages id="label.floor" />
           </span>
@@ -118,7 +78,7 @@ const AddFloorModal = ({
 
         <Label className="form-group has-float-label">
           <InputGroup className="mb-3">
-            <Input type="text" onChange={getValues} name="area" placeholder={messages['label.area']} />
+            <Input placeholder={messages['label.area']} />
             <InputGroupAddon addonType="append">ft2</InputGroupAddon>
           </InputGroup>
           <span>
@@ -128,7 +88,7 @@ const AddFloorModal = ({
 
         <Label className="form-group has-float-label">
           <InputGroup className="mb-3">
-            <Input type="text" onChange={getValues} name="target" placeholder={messages['label.target']} />
+            <Input placeholder={messages['label.target']} />
             <InputGroupAddon addonType="append">EUR</InputGroupAddon>
           </InputGroup>
           <span>
@@ -178,10 +138,10 @@ const AddFloorModal = ({
         </Label>
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" size="sm" outline onClick={isOpentog}>
+        <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        <Button color="primary"  onClick={submitFloor} size="sm" >
+        <Button color="primary" size="sm" onClick={toggleModal}>
           <IntlMessages id="model.add" />
         </Button>
       </ModalFooter>
@@ -189,16 +149,4 @@ const AddFloorModal = ({
   );
 };
 
-const mapStateToProps = ({ space }) => {
-  console.log('floor',space);
-  // const { location, loading } = space;
-  // return { location, loading };
-  const { loading } = space;
-  return { loading };
-};
-
-export default connect(mapStateToProps, {
-  SpaceaddFloorAction : SpaceaddFloor,
-})(AddFloorModal);
-
-//export default injectIntl(AddFloorModal);
+export default injectIntl(AddFloorModal);

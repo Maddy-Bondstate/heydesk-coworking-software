@@ -35,6 +35,7 @@ const loginWithEmailPasswordAsync = async (email, password) =>
     .catch((error) => error);
 
 function* loginWithEmailPassword({ payload }) {
+  //console.log('login',payload);
   const { email, password } = payload.user;
   const { history } = payload;
   try {
