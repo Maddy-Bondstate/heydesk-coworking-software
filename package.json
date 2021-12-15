@@ -16,7 +16,6 @@
     "jwt-decode": "^3.1.2",
     "moment": "2.29.1",
     "mousetrap": "^1.6.5",
-    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "rc-slider": "^9.7.2",
     "rc-switch": "^3.2.2",
@@ -105,6 +104,7 @@
     "husky": "^4.3.8",
     "lint-staged": "^10.5.4",
     "ncp": "^2.0.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "sass": "^1.45.0"
   }
 }

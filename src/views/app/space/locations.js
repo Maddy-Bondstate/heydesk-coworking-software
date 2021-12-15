@@ -3,18 +3,20 @@ import ListLocationHeading from '../../../containers/space/location/ListLocation
 import AddLocationModal from '../../../containers/space/location/AddLocationModal';
 import AddFloorModal from '../../../containers/space/location/AddFloorModal';
 import ListLocationListing from '../../../containers/space/location/ListLocationListing';
-import SingleSpaceAl from '../../../containers/space/location/SingleLocationPg';
+import SingleLocationPg from '../../../containers/space/location/SingleLocationPg';
 
-import { getSpaceLocationList } from '../../../redux/actions';
+import { getSpaceLocationList, SingleSpace } from '../../../redux/actions';
 import { connect } from 'react-redux';
-import { useLocation } from  'react-router-dom';
+import { useLocation } from 'react-router-dom';
 const pageSizes = [4, 8, 12, 20];
 
 const SpaceLocations = ({
   match,
   location,
   loading,
+  single_space,
   getSpaceLocationListAction,
+  SingleSpaceAction,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(8);
@@ -24,40 +26,33 @@ const SpaceLocations = ({
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
   const [items, setItems] = useState([]);
-  
-  const location_l = useLocation();
-  const space_i = location_l.search;
-console.log(location_l.search);
+  const [item, setItem] = useState({});
 
-var space_id="be52f4a5-8874-4452-a4ad-3bacff1dc0d7";
+  const location_l = useLocation();
+  const getParams = location_l.search;
+
+  const paramsString = getParams;
+  let searchParams = new URLSearchParams(paramsString);
+  const space_id = searchParams.get('p');
 
   useEffect(() => {
-    getSpaceLocationListAction();
-    if (location?.data) setTotalItemCount(location.data.count);
-    if (location?.data?.results) setItems(location.data.results);
-  }, [getSpaceLocationListAction,space_id]);
+    if (space_id && space_id !== '') {
+      SingleSpaceAction(space_id);
+      if (single_space?.data) setItem(single_space.data);
+    } else {
+      getSpaceLocationListAction();
+      if (location?.data) setTotalItemCount(location.data.count);
+      if (location?.data?.results) setItems(location.data.results);
+    }
+  }, [getSpaceLocationListAction, SingleSpaceAction, space_id]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  const url = window.location.href;
-  //console.log(url);
-  //const space_id = (url.substring(url.lastIndexOf('=') + 1));
-  //var space_id = url.substring(url.indexOf("=") + 1);
- 
-  //var split = url .split( '?' );
-  //var lenspace = split.length;
-  //console.log('idspa',space_id);
-
- 
-  
   return loading ? (
     <div className="loading" />
   ) : (
-
-
     <div className="disable-text-selection">
-
       <ListLocationHeading
         heading="menu.locations"
         changePageSize={setSelectedPageSize}
@@ -87,32 +82,29 @@ var space_id="be52f4a5-8874-4452-a4ad-3bacff1dc0d7";
         modalOpen={floorOpen}
         toggleModal={() => setFloorModalOpen(!floorOpen)}
       />
-      {space_i?
-          <SingleSpaceAl
-          space_id = {space_id}
-        />
-         
-        :
-       
+
+      {space_id && space_id !== '' ? (
+        <SingleLocationPg item={item} />
+      ) : (
         <ListLocationListing
-        items={items}
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onChangePage={setCurrentPage}
-        toggleModal={() => setModalOpen(!modalOpen)}
-        toggleFloor={() => setFloorModalOpen(!floorOpen)}
+          items={items}
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onChangePage={setCurrentPage}
+          toggleModal={() => setModalOpen(!modalOpen)}
+          toggleFloor={() => setFloorModalOpen(!floorOpen)}
         />
-      }
+      )}
     </div>
   );
 };
 
 const mapStateToProps = ({ space }) => {
- // console.log('location',space);
-  const { location, loading } = space;
-  return { location, loading };
+  const { location, single_space, loading } = space;
+  return { location, single_space, loading };
 };
 
 export default connect(mapStateToProps, {
   getSpaceLocationListAction: getSpaceLocationList,
+  SingleSpaceAction: SingleSpace,
 })(SpaceLocations);

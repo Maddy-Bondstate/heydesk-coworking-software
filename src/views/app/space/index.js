@@ -26,6 +26,10 @@ const Space = ({ match }) => (
         render={(props) => <SpaceLocations {...props} />}
       />
       <Route
+        path={`${match.url}/locations/:id`}
+        render={(props) => <SpaceLocations {...props} />}
+      />
+      <Route
         path={`${match.url}/desks`}
         render={(props) => <SpaceDesks {...props} />}
       />
