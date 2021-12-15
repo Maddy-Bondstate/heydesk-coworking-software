@@ -3,11 +3,11 @@ import ListLocationHeading from '../../../containers/space/location/ListLocation
 import AddLocationModal from '../../../containers/space/location/AddLocationModal';
 import AddFloorModal from '../../../containers/space/location/AddFloorModal';
 import ListLocationListing from '../../../containers/space/location/ListLocationListing';
-import SingleLocationPg from '../../../containers/space/location/SingleLocationPg';
+import SingleSpaceAl from '../../../containers/space/location/SingleLocationPg';
 
 import { getSpaceLocationList } from '../../../redux/actions';
 import { connect } from 'react-redux';
-
+import { useLocation } from  'react-router-dom';
 const pageSizes = [4, 8, 12, 20];
 
 const SpaceLocations = ({
@@ -24,12 +24,18 @@ const SpaceLocations = ({
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
   const [items, setItems] = useState([]);
+  
+  const location_l = useLocation();
+  const space_i = location_l.search;
+console.log(location_l.search);
+
+var space_id="be52f4a5-8874-4452-a4ad-3bacff1dc0d7";
 
   useEffect(() => {
     getSpaceLocationListAction();
     if (location?.data) setTotalItemCount(location.data.count);
     if (location?.data?.results) setItems(location.data.results);
-  }, [getSpaceLocationListAction]);
+  }, [getSpaceLocationListAction,space_id]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -37,9 +43,11 @@ const SpaceLocations = ({
   const url = window.location.href;
   //console.log(url);
   //const space_id = (url.substring(url.lastIndexOf('=') + 1));
-  var space_id = url.substring(url.indexOf("=") + 1);
-  var split = url .split( '?' );
-  var lenspace = split.length;
+  //var space_id = url.substring(url.indexOf("=") + 1);
+ 
+  //var split = url .split( '?' );
+  //var lenspace = split.length;
+  //console.log('idspa',space_id);
 
  
   
@@ -79,20 +87,21 @@ const SpaceLocations = ({
         modalOpen={floorOpen}
         toggleModal={() => setFloorModalOpen(!floorOpen)}
       />
-      {lenspace>1?
-          <SingleLocationPg
+      {space_i?
+          <SingleSpaceAl
           space_id = {space_id}
-          />
+        />
+         
         :
-
-          <ListLocationListing
-          items={items}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onChangePage={setCurrentPage}
-          toggleModal={() => setModalOpen(!modalOpen)}
-          toggleFloor={() => setFloorModalOpen(!floorOpen)}
-          />
+       
+        <ListLocationListing
+        items={items}
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onChangePage={setCurrentPage}
+        toggleModal={() => setModalOpen(!modalOpen)}
+        toggleFloor={() => setFloorModalOpen(!floorOpen)}
+        />
       }
     </div>
   );

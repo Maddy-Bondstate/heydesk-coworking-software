@@ -74,7 +74,7 @@ export const SpaceaddLocationError = (error) => ({
 
 export const SingleSpace = (space_id) => ({
   type : SINGLE_SPACE,
-  payload : space_id
+  payload : { space_id }
 });
 
 export const SingleSpaceSuccess = (item) => ({

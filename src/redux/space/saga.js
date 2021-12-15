@@ -55,10 +55,10 @@ export function* watchGetLocationList() {
 
 const SingleSpaceRequest = async (space_id) => {
   // eslint-disable-next-line no-return-await
-  //const urrl = 'https://hd-coworking.herokuapp.com/api/space/objects/retrieve/'+space_id+'/';
+ // const urrl = 'https://hd-coworking.herokuapp.com/api/space/location/retrieve/'+space_id+'/';
  // console.log("urrl",urrl);
   return await axios
-    .get('https://hd-coworking.herokuapp.com/api/space/objects/retrieve/'+space_id+'/', {
+    .get('https://hd-coworking.herokuapp.com/api/space/location/retrieve/'+space_id+'/', {
       headers: {
         'Content-Type': 'application/json',
          Authorization: token,
@@ -68,13 +68,15 @@ const SingleSpaceRequest = async (space_id) => {
     .catch((error) => error);
 };
 
-function* SingleSpaceItems(payload) 
+function* SingleSpaceItems({ payload }) 
 {
- // console.log('pyy',payload);
-  //const {space_id} = payload;
+  //console.log('pyy',payload.space_id);
+  //const space_id = payload.space_id;
+  //console.log('space_bfg',space_id);
   try {
-    const response = yield call(SingleSpaceRequest(payload.payload));
-    yield put(SingleSpaceSuccess(response));
+    const respo = yield call(SingleSpaceRequest,payload.space_id);
+    yield put(SingleSpaceSuccess(respo));
+    console.log('res',respo);
   } catch (error) {
     yield put(SingleSpaceError(error));
   }
