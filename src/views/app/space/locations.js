@@ -84,7 +84,10 @@ const SpaceLocations = ({
       />
 
       {space_id && space_id !== '' ? (
-        <SingleLocationPg item={item} />
+        <SingleLocationPg item={item} 
+        toggleModal={() => setModalOpen(!modalOpen)}
+        toggleFloor={() => setFloorModalOpen(!floorOpen)}
+        />
       ) : (
         <ListLocationListing
           items={items}
@@ -100,6 +103,7 @@ const SpaceLocations = ({
 };
 
 const mapStateToProps = ({ space }) => {
+  
   const { location, single_space, loading } = space;
   return { location, single_space, loading };
 };

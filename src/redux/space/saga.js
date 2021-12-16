@@ -80,7 +80,7 @@ function* SingleSpaceItems({ payload }) {
   try {
     const respo = yield call(SingleSpaceRequest, payload.space_id);
     yield put(SingleSpaceSuccess(respo));
-    // console.log('res', respo);
+    console.log('res', respo);
   } catch (error) {
     yield put(SingleSpaceError(error));
   }
