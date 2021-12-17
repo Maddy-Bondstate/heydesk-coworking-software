@@ -36,8 +36,9 @@ const AddLocationModal = ({
   modalOpen, 
   toggleModal, 
   intl, 
-  loading,
-  SpaceaddLocationAction
+  loading, 
+  locat,
+  SpaceaddLocationAction,
  }) => {
   const { messages = '' } = intl || {};
 
@@ -64,6 +65,7 @@ const AddLocationModal = ({
   })
 
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
+console.log("locat_test",locat)
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
@@ -78,22 +80,10 @@ const AddLocationModal = ({
       ...state,
       [e.target.name]: value
     });
-    console.log(state);
+  //  console.log(state);
   }
 
-  // useEffect(() => {
-  //   if (error) {
-  //     NotificationManager.warning(error, 'Location add Error', 3000, null, null, '');
-  //   }
-  // }, [error]);
-
-  // const onUserLogin = (values) => {
-  //   if (!loading) {
-  //     if (values.email !== '' && values.password !== '') {
-  //       loginUserAction(values, history);
-  //     }
-  //   }
-  // };
+ 
   
 
   const removeFile = () => {
@@ -119,7 +109,9 @@ const AddLocationModal = ({
   return loading ? (
     <div className="loading" />
   ) : (
+    <div>
   
+
     <Modal isOpen={modalOpen} toggle={toggleModal} backdrop="static">
       <ModalHeader toggle={toggleModal}>
         <IntlMessages id={modelTitle} />
@@ -368,6 +360,9 @@ const AddLocationModal = ({
         </Button>
       </ModalFooter>
     </Modal>
+  
+ 
+ </div>  
   );
 };
 

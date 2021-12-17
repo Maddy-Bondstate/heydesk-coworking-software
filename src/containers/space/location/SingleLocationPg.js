@@ -55,7 +55,7 @@ const SingleLocationPg = ({ item, toggleModal, toggleFloor }) => {
                         <i className="fa fa-cog fa-2x text-muted" />
                       </DropdownToggle>
                       <DropdownMenu>
-                        <DropdownItem onClick={() => toggleModal()}>
+                        <DropdownItem onClick={() => toggleModal(item.id)}>
                           <i className="fa fa-pencil text-muted mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>

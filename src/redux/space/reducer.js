@@ -15,6 +15,10 @@ import {
   SINGLE_SPACE_SUCCESS,
   SINGLE_SPACE_ERROR,
 
+  SINGLE_FLOOR,
+  SINGLE_FLOOR_SUCCESS,
+  SINGLE_FLOOR_ERROR,
+
 } from '../actions';
 
 const INIT_STATE = {
@@ -73,6 +77,19 @@ const reducer = (state = INIT_STATE, action) => {
       return { ...state, loading: false, error: action.payload.message} 
 
     /* Single space details - Ends */
+
+    /* Single Floor details - Start */
+    case SINGLE_FLOOR:
+      return { ...state, loading:true, error: '' };
+      
+    case SINGLE_FLOOR_SUCCESS:  
+      return { ...state, loading:false, add_floor: action.payload }
+
+    case SINGLE_FLOOR_ERROR:
+      return { ...state, loading: false, error: action.payload.message} 
+
+    /* Single Floor details - Ends */
+
 
     default:
       return { ...state };

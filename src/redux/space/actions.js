@@ -16,6 +16,10 @@ import {
   SINGLE_SPACE_SUCCESS,
   SINGLE_SPACE_ERROR,
 
+  SINGLE_FLOOR,
+  SINGLE_FLOOR_SUCCESS,
+  SINGLE_FLOOR_ERROR,
+
 
 } from '../actions';
 
@@ -88,3 +92,22 @@ export const SingleSpaceError = (error) => ({
 });
 
 /* SINGLE SPACE DETAILS - END */
+
+/* SINGLE FLOOR - STARTS */
+
+export const LocSingleFloor = (space_id) => ({
+  type : SINGLE_FLOOR,
+  payload : { space_id }
+});
+
+export const LocSingleFloorSuccess = (item) => ({
+  type : SINGLE_FLOOR_SUCCESS,
+  payload : item
+});
+
+export const LocSingleFloorError = (error) => ({
+  type : SINGLE_FLOOR_ERROR,
+  payload : error
+});
+
+/* SINGLE FLOOR - ENDS */

@@ -34,7 +34,7 @@ const AddFloorModal = ({
     modalOpen,
     toggleModal, 
     intl,
-    //floor,
+    floor,
     SpaceaddFloorAction 
     }) => {
   const { messages = '' } = intl || {};
@@ -48,7 +48,7 @@ const AddFloorModal = ({
     area:"",
     target:"",
 })
-
+console.log("floor_test",floor);
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
   };

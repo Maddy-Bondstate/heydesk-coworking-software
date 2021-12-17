@@ -45,6 +45,10 @@ export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_LOCATION_SUCCESS = 'ADD_LOCATION_SUCCESS';
 export const ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR';
 
+/* SINGLE FLOOR */
+export const SINGLE_FLOOR = 'SINGLE_FLOOR';
+export const SINGLE_FLOOR_SUCCESS = 'SINGLE_FLOOR_SUCCESS';
+export const SINGLE_FLOOR_ERROR = 'SINGLE_FLOOR_ERROR';
 
 export * from './menu/actions';
 export * from './settings/actions';

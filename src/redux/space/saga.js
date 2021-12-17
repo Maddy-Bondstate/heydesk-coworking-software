@@ -5,17 +5,25 @@ import {
   ADD_FLOOR,
   ADD_LOCATION,
   SINGLE_SPACE,
+  SINGLE_FLOOR,
 } from '../actions';
 //import cors from 'cors';
 import {
   getSpaceLocationListSuccess,
   getSpaceLocationListError,
+
   SpaceaddFloorSuccess,
   SpaceaddFloorError,
+
   SpaceaddLocationSuccess,
   SpaceaddLocationError,
+
   SingleSpaceSuccess,
   SingleSpaceError,
+
+  LocSingleFloorSuccess,
+  LocSingleFloorError,
+
 } from './actions';
 import { getCurrentUser } from '../../helpers/Utils';
 
@@ -80,7 +88,7 @@ function* SingleSpaceItems({ payload }) {
   try {
     const respo = yield call(SingleSpaceRequest, payload.space_id);
     yield put(SingleSpaceSuccess(respo));
-    console.log('res', respo);
+    console.log('ressingle', respo);
   } catch (error) {
     yield put(SingleSpaceError(error));
   }
@@ -236,7 +244,7 @@ function* addLocationItems({ payload }) {
     yield put(SpaceaddLocationSuccess(addLocation));
     //console.log('adres',addLocation);
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     yield put(SpaceaddLocationError(error));
   }
 }
@@ -246,6 +254,38 @@ export function* watchaddLocation() {
 }
 
 /* Add Location - Ends */
+
+/* Single floor - Starts */
+
+const SingleFloorRequest = async (space_id) => {
+  return await axios
+    .get('https://hd-coworking.herokuapp.com/api/space/floor/retrieve/'+space_id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+         Authorization: token,
+      },
+    })
+    .then((response) => response)
+    .catch((error) => error);
+};
+
+function* SingleFloorItems({ payload }) 
+{
+  try {
+    const respo = yield call(SingleFloorRequest,payload.space_id);
+    yield put(LocSingleFloorSuccess(respo));
+   // console.log('res',respo);
+  } catch (error) {
+    yield put(LocSingleFloorError(error));
+  }
+}
+
+export function* watchSingleFloor() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(SINGLE_FLOOR, SingleFloorItems);
+}
+
+/* Single floor - Ends */
 
 // --------- Desk ---------
 // --------- Meeting Room ---------
@@ -258,5 +298,6 @@ export default function* rootSaga() {
     fork(watchaddFloor),
     fork(watchaddLocation),
     fork(watchSingleSpace),
+    fork(watchSingleFloor),
   ]);
 }

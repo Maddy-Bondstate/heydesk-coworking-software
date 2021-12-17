@@ -55,11 +55,11 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                         <i className="fa fa-cog fa-2x text-muted" />
                       </DropdownToggle>
                       <DropdownMenu>
-                        <DropdownItem onClick={() => toggleModal()}>
+                        <DropdownItem onClick={() => toggleModal(item.id)}>
                           <i className="fa fa-pencil text-muted mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>
-                        <DropdownItem onClick={() => toggleFloor()}>
+                        <DropdownItem onClick={() => toggleFloor(item.id)}>
                           <i className="fa fa-plus text-muted mr-2" />
                           <IntlMessages id="label.add_floor" />
                         </DropdownItem>
@@ -104,7 +104,7 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                             <i className="fa fa-cog fa-lg text-muted" />
                           </DropdownToggle>
                           <DropdownMenu>
-                            <DropdownItem onClick={() => toggleFloor()}>
+                            <DropdownItem onClick={() => toggleFloor(item.id)}>
                               <i className="fa fa-pencil text-muted mr-2" />
                               <IntlMessages id="label.edit" />
                             </DropdownItem>
