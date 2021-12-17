@@ -205,14 +205,14 @@
     }
 
     @include respond-below(lg) {
-      width: $sub-menu-width * 0.7;
+      width: calc($sub-menu-width * 0.7);
       input {
         width: 85%;
       }
     }
 
     @include respond-below(md) {
-      width: $sub-menu-width / 2;
+      width: calc($sub-menu-width / 2);
       input {
         width: 85%;
       }
