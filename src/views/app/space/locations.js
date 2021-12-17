@@ -5,7 +5,11 @@ import AddFloorModal from '../../../containers/space/location/AddFloorModal';
 import ListLocationListing from '../../../containers/space/location/ListLocationListing';
 import SingleLocationPg from '../../../containers/space/location/SingleLocationPg';
 
-import { getSpaceLocationList, SingleSpace,LocSingleFloor } from '../../../redux/actions';
+import {
+  getSpaceLocationList,
+  SingleSpace,
+  LocSingleFloor,
+} from '../../../redux/actions';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 const pageSizes = [4, 8, 12, 20];
@@ -15,11 +19,10 @@ const SpaceLocations = ({
   location,
   loading,
   single_space,
-  edit_locat,
-  single_floor,
+  add_floor,
   getSpaceLocationListAction,
   SingleSpaceAction,
-  LocSingleFloorAction
+  LocSingleFloorAction,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(8);
@@ -31,7 +34,7 @@ const SpaceLocations = ({
   const [items, setItems] = useState([]);
   const [item, setItem] = useState({});
   const [locat, setLocat] = useState({});
-  const [loc_id, setLocId] = useState("");
+  const [loc_id, setLocId] = useState('');
   const [floor, setfloor] = useState({});
 
   const location_l = useLocation();
@@ -40,18 +43,16 @@ const SpaceLocations = ({
   const paramsString = getParams;
   let searchParams = new URLSearchParams(paramsString);
   const space_id = searchParams.get('p');
-  console.log('test',loc_id);
+  // console.log('test', loc_id);
   useEffect(() => {
-    
-    if(loc_id){
-      SingleSpaceAction(loc_id);
-      if (edit_locat?.data) setLocat(edit_locat.data);
-    }
-    if(loc_id){
-      LocSingleFloorAction(loc_id);
-      if (single_floor?.data) setfloor(single_floor.data);
-
-    }
+    // if (loc_id) {
+    //   SingleSpaceAction(loc_id);
+    //   if (single_space?.data) setLocat(single_space.data);
+    // }
+    // if (loc_id) {
+    //   LocSingleFloorAction(loc_id);
+    //   if (add_floor?.data) setfloor(add_floor.data);
+    // }
     if (space_id && space_id !== '') {
       SingleSpaceAction(space_id);
       if (single_space?.data) setItem(single_space.data);
@@ -60,23 +61,26 @@ const SpaceLocations = ({
       if (location?.data) setTotalItemCount(location.data.count);
       if (location?.data?.results) setItems(location.data.results);
     }
-  }, [getSpaceLocationListAction, SingleSpaceAction, LocSingleFloorAction,space_id,loc_id]);
+  }, [getSpaceLocationListAction, SingleSpaceAction, LocSingleFloorAction]);
 
-  const UpdateLocat = (loct_id) => {
-    
+  const UpdateLocat = async (loct_id) => {
+    console.log(loc_id);
+    setLocId('');
+    setLocat({});
     setModalOpen(!modalOpen);
     setLocId(loct_id);
-    SingleSpaceAction(loct_id);
-    if (edit_locat?.data) setLocat(edit_locat.data);
-    console.log('set',loc_id);
-    
+    await SingleSpaceAction(loct_id);
+    console.log(single_space);
+    if (single_space?.data) return setLocat(single_space.data);
+    console.log('set', locat);
   };
   // [SingleSpaceAction,loc_id]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
-console.log('data',locat);
-console.log('item',item);
+  // console.log('data', locat);
+  // console.log('item', item);
+
   return loading ? (
     <div className="loading" />
   ) : (
@@ -99,26 +103,32 @@ console.log('item',item);
         toggleModal={() => setModalOpen(!modalOpen)}
         toggleFloor={() => setFloorModalOpen(!floorOpen)}
       />
+
       <AddLocationModal
         modelTitle="space.add-location"
         modalOpen={modalOpen}
         toggleModal={() => setModalOpen(!modalOpen)}
-        loc_id = {loc_id}
-        locat={locat} 
+        loc_id={loc_id}
+        locat={locat}
       />
 
       <AddFloorModal
         modelTitle="space.add-floor"
         modalOpen={floorOpen}
         toggleModal={() => setFloorModalOpen(!floorOpen)}
-        loc_id = {loc_id}
-        floor = {floor}
+        loc_id={loc_id}
+        floor={floor}
       />
 
       {space_id && space_id !== '' ? (
-        <SingleLocationPg item={item} 
-        toggleModal={(loc_id) => { return setModalOpen(!modalOpen),setLocId(loc_id)}}
-        toggleFloor={(loc_id) => { return setFloorModalOpen(!floorOpen),setLocId(loc_id)}}
+        <SingleLocationPg
+          item={item}
+          toggleModal={(loc_id) => {
+            return setModalOpen(!modalOpen), setLocId(loc_id);
+          }}
+          toggleFloor={(loc_id) => {
+            return setFloorModalOpen(!floorOpen), setLocId(loc_id);
+          }}
         />
       ) : (
         <ListLocationListing
@@ -127,11 +137,12 @@ console.log('item',item);
           totalPage={totalPage}
           onChangePage={setCurrentPage}
           // toggleModal={() => setModalOpen(!modalOpen)}
-           
 
-          toggleModal={(loc_id) =>  UpdateLocat( loc_id ) } 
+          toggleModal={UpdateLocat}
           //toggleModal={(loc_id) => { return setModalOpen(!modalOpen),setLocId(loc_id)}}
-          toggleFloor={(loc_id) => { return setFloorModalOpen(!floorOpen),setLocId(loc_id)}}
+          toggleFloor={(loc_id) => {
+            return setFloorModalOpen(!floorOpen), setLocId(loc_id);
+          }}
         />
       )}
     </div>
@@ -139,13 +150,12 @@ console.log('item',item);
 };
 
 const mapStateToProps = ({ space }) => {
-  
-  const { location, single_space,edit_locat,single_floor, loading } = space;
-  return { location, single_space,edit_locat,single_floor, loading };
+  const { location, single_space, add_floor, loading } = space;
+  return { location, single_space, add_floor, loading };
 };
 
 export default connect(mapStateToProps, {
   getSpaceLocationListAction: getSpaceLocationList,
   SingleSpaceAction: SingleSpace,
-  LocSingleFloorAction : LocSingleFloor
+  LocSingleFloorAction: LocSingleFloor,
 })(SpaceLocations);
