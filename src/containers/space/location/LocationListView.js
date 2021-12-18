@@ -14,6 +14,10 @@ import IntlMessages from '../../../helpers/IntlMessages';
 import { Noimage } from '../../../constants/defaultValues';
 
 const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
+  const handleToggleModal = (id) => {
+    console.log('Correct id', id);
+    return toggleModal(id);
+  };
   return (
     <Colxx xxs="12" key={item.id} className="mb-4">
       <ContextMenuTrigger id="menu_id" data={item.id} collect={collect}>
@@ -34,15 +38,16 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                       {item.name}
                     </p>
                   </NavLink>
-                    <div className=" mb-3">
-                      {item.description}
-                    </div>
-                    <div className=" mb-3">
-                      {item.start_time} {item.end_time?" - ":""} {item.end_time}
-                    </div>
-                    <div className=" mb-3">
-                      {item.address}{item.country?" , ":""} {item.country}{item.city?" , ":""} {item.city}
-                    </div>
+                  <div className=" mb-3">{item.description}</div>
+                  <div className=" mb-3">
+                    {item.start_time} {item.end_time ? ' - ' : ''}{' '}
+                    {item.end_time}
+                  </div>
+                  <div className=" mb-3">
+                    {item.address}
+                    {item.country ? ' , ' : ''} {item.country}
+                    {item.city ? ' , ' : ''} {item.city}
+                  </div>
                   <div className="float-right align-items-center">
                     {item.is_open && (
                       <Badge color="success badge-pill">Open</Badge>
@@ -55,7 +60,9 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                         <i className="fa fa-cog fa-2x text-muted" />
                       </DropdownToggle>
                       <DropdownMenu>
-                        <DropdownItem onClick={() => toggleModal(item.id)}>
+                        <DropdownItem
+                          onClick={() => handleToggleModal(item.id)}
+                        >
                           <i className="fa fa-pencil text-muted mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>
@@ -80,7 +87,7 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                     <NavLink to={`?p=${floors.id}`} className="d-flex">
                       <img
                         alt={floors.name}
-                        src={floors.image?floors.image:Noimage}
+                        src={floors.image ? floors.image : Noimage}
                         className="list-thumbnail-small responsive border-0 card-img-left"
                       />
                     </NavLink>
@@ -91,14 +98,20 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                             {floors.name}
                           </p>
                         </NavLink>
-                       
+
                         {floors.isOpen && (
                           <div className="ml-2">
                             <Badge color="success badge-small mb-0">Open</Badge>
                           </div>
                         )}
-                          <div className="ml-3"><b>Area : </b>{floors.area}</div>
-                          <div className="ml-3"><b>Taget : </b>{floors.target}</div>
+                        <div className="ml-3">
+                          <b>Area : </b>
+                          {floors.area}
+                        </div>
+                        <div className="ml-3">
+                          <b>Taget : </b>
+                          {floors.target}
+                        </div>
                         <UncontrolledDropdown className="ml-3">
                           <DropdownToggle color="none">
                             <i className="fa fa-cog fa-lg text-muted" />
