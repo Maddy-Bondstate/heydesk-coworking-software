@@ -60,9 +60,20 @@ const AddLocationModal = ({
       address:"",
       city:"",
       country:"",
-      zip:"",
+      zipcode:"",
       state: ""
-  })
+  });
+//   const [display, setRetrieve] = React.useState({
+//     name: "",
+//     unique_code: "",
+//     description:"",
+//     address:"",
+//     city:"",
+//     country:"",
+//     zipcode:"",
+//     state: "",
+//     user: ""
+// })
 
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
 console.log("locat_test",locat)
@@ -82,9 +93,48 @@ console.log("locat_test",locat)
     });
   //  console.log(state);
   }
-
  
+  useEffect(() => {
+    if(Object.keys(locat).length != 0){
+      const name = locat.name;
+      const description = locat.description;
+      const unique_code = locat.unique_code;
+      const country = locat.country;
+      const city = locat.city;
+      const state = locat.state;
+      const zipcode = locat.zipcode;
+      const StartBusinessHour = locat.start_time;
+      const endBusinessHour = locat.end_time;
+      const selectedTimezone = locat.time_zone;
+      setState({
+       name :name,
+       description: description,
+       unique_code:unique_code,
+       country:country,
+       city:city,
+       state:state,
+       zipcode:zipcode
+      });
+      if(StartBusinessHour!==null){
+        setStartBusinessHour({
+          StartBusinessHour : StartBusinessHour
+        });
+      }
+      if(endBusinessHour!==null){
+        setEndBusinessHour({
+          endBusinessHour:endBusinessHour
+        });
+      }
+      if(selectedTimezone!==null){
+        setSelectedTimezone({
+          selectedTimezone:selectedTimezone
+        })
+      }
+    }
+  },[locat]); 
   
+  console.log("stateval",state);
+
 
   const removeFile = () => {
     setFiles('');
@@ -158,7 +208,7 @@ console.log("locat_test",locat)
                 <Row>
                   <Colxx sm="8">
                     <Label className="form-group has-float-label">
-                      <Input type="text" onChange={getValues} name="name" placeholder={messages['label.name']} />
+                      <Input type="text" value={state.name} onChange={getValues} name="name" placeholder={messages['label.name']} />
                       <span>
                         <IntlMessages id="label.name" />
                       </span>
@@ -169,6 +219,7 @@ console.log("locat_test",locat)
                       <Input
                         type="text"
                         name="unique_code"
+                        value={state.unique_code}
                         onChange = {getValues}
                         placeholder={messages['label.unique_code']}
                       />
@@ -184,6 +235,7 @@ console.log("locat_test",locat)
                     type="text"
                     name = "description"
                     onChange={getValues}
+                    value={state.description}
                     placeholder={messages['label.description']}
                   />
                   <span>
@@ -292,6 +344,7 @@ console.log("locat_test",locat)
                     <Label className="form-group has-float-label">
                       <Input
                         type="textarea"
+                        value={state.address}
                         onChange={getValues} name="address"
                         placeholder={messages['label.address']}
                       />
@@ -305,7 +358,7 @@ console.log("locat_test",locat)
                 <Row>
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
-                      <Input type="text" onChange={getValues} name="city" placeholder={messages['label.city']} />
+                      <Input type="text" value={state.city} onChange={getValues} name="city" placeholder={messages['label.city']} />
                       <span>
                         <IntlMessages id="label.city" />
                       </span>
@@ -315,6 +368,7 @@ console.log("locat_test",locat)
                     <Label className="form-group has-float-label">
                       <Input
                         type="text"
+                        value={state.state}
                         onChange={getValues} name="state"
                         placeholder={messages['label.state']}
                       />
@@ -328,7 +382,7 @@ console.log("locat_test",locat)
                 <Row>
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
-                      <Input type="text" onChange={getValues} name="zip" placeholder={messages['label.zip']} />
+                      <Input type="text" value={state.zipcode} onChange={getValues} name="zipcode" placeholder={messages['label.zip']} />
                       <span>
                         <IntlMessages id="label.zip" />
                       </span>
@@ -337,7 +391,7 @@ console.log("locat_test",locat)
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
                       <Input
-                        type="text" onChange={getValues} name="country"
+                        type="text" value={state.country} onChange={getValues} name="country"
                         placeholder={messages['label.country']}
                       />
                       <span>

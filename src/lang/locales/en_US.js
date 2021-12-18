@@ -171,6 +171,7 @@ module.exports = {
   /* Model */
   'model.close': 'Close',
   'model.add': 'Add',
+  'model.update': 'Update',
 
   /* SPACE */
   'space.add-location': 'Add Location',

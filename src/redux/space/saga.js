@@ -5,6 +5,7 @@ import {
   ADD_FLOOR,
   ADD_LOCATION,
   SINGLE_SPACE,
+  //UPDATE_LOCATION,
   SINGLE_FLOOR,
 } from '../actions';
 //import cors from 'cors';
@@ -20,6 +21,9 @@ import {
 
   SingleSpaceSuccess,
   SingleSpaceError,
+
+  // UpdateLocationSuccess,
+  // UpdateLocationError,
 
   LocSingleFloorSuccess,
   LocSingleFloorError,
@@ -101,6 +105,8 @@ export function* watchSingleSpace() {
 
 /* Single space details - Ends */
 
+
+
 /* Add Floor - STARTS */
 
 const addFloorRequest = async (
@@ -179,7 +185,7 @@ const addLocationRequest = async (
   address,
   city,
   country,
-  zip,
+  zipcode,
   state,
   image,
   start_time,
@@ -197,7 +203,7 @@ const addLocationRequest = async (
       address: address,
       city: city,
       country: country,
-      zip: zip,
+      zipcode: zipcode,
       state: state,
       image: image,
       start_time: start_time,
@@ -216,12 +222,11 @@ const addLocationRequest = async (
 
 function* addLocationItems({ payload }) {
   //console.log('floor',payload.state);
-  const { name, unique_code, description, address, city, country, zip, state } =
-    payload.location;
-  const { image } = payload.image;
+  const { name, unique_code, description, address, city, country, zipcode, state } =payload.location;
+  const { image } = payload.image!==null?payload.image:"";
   const { start_time } = payload.start_time;
   const { end_time } = payload.end_time;
-  const { time_zone } = payload.time_zone;
+  const { time_zone } = payload.time_zone==undefined?"":payload.time_zone;
   const { is_open } = payload.is_open;
 
   try {
@@ -233,7 +238,7 @@ function* addLocationItems({ payload }) {
       address,
       city,
       country,
-      zip,
+      zipcode,
       state,
       image,
       start_time,
@@ -254,6 +259,68 @@ export function* watchaddLocation() {
 }
 
 /* Add Location - Ends */
+
+
+/* Update Location - Start */
+
+// const updLocationRequest = async (space_id,name,unique_code,description,address,city,country,zipcode,state,image,start_time,end_time,time_zone,
+//   is_open) => {
+ 
+
+//     return await axios({
+//       method: 'put',
+//       url: `https://hd-coworking.herokuapp.com/api/space/location/update/`+space_id+`/`,
+//       params: {
+//         name : name,
+//         unique_code : unique_code,
+//         description : description,
+//         address : address,
+//         city : city,
+//         country : country,
+//         zipcode : zipcode,
+//         state : state,
+//         image : image,
+//         start_time : start_time,
+//         end_time : end_time,
+//         time_zone : time_zone,
+//         is_open : is_open
+//       },
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: token,
+//       }
+//     })
+//     .then((res) => res )
+//     .catch((error) => error);
+    
+//     };
+
+// function* updLocationItems({ payload }) {
+//   const {space_id} = payload.space_id;
+//  const {name,unique_code,description,address,city,country,zipcode,state} = payload.location;
+//  const { image } = payload.image!==null?payload.image:"";
+//  const { start_time } = payload.start_time;
+//  const { end_time } = payload.end_time;
+//  const { time_zone } = payload.time_zone==undefined?"":payload.time_zone;
+//  const { is_open } = payload.is_open;
+ 
+//  try {
+//    const upLocation = yield call (updLocationRequest,space_id,name,unique_code,description,address,city,country,zipcode,state,image,
+//     start_time,end_time,time_zone,is_open);
+//    yield put(UpdateLocationSuccess(upLocation));
+//    console.log('upres',upLocation);
+//  } catch (error) {
+//    //console.log(error);
+//    yield put(UpdateLocationError(error));
+//  }
+// }
+
+// export function* watchupdLocation() {
+//  yield takeEvery(UPDATE_LOCATION, updLocationItems);
+// }
+
+
+/* Update Location - Ends */
 
 /* Single floor - Starts */
 
@@ -298,6 +365,7 @@ export default function* rootSaga() {
     fork(watchaddFloor),
     fork(watchaddLocation),
     fork(watchSingleSpace),
+    //fork(watchupdLocation),
     fork(watchSingleFloor),
   ]);
 }

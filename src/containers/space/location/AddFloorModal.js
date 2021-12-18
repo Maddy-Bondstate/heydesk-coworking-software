@@ -48,7 +48,7 @@ const AddFloorModal = ({
     area:"",
     target:"",
 })
-console.log("floor_test",floor);
+//console.log("floor_test",floor);
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
   };

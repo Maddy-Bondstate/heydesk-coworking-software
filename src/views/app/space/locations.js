@@ -15,7 +15,6 @@ const SpaceLocations = ({
   location,
   loading,
   single_space,
-  edit_locat,
   single_floor,
   getSpaceLocationListAction,
   SingleSpaceAction,
@@ -43,15 +42,15 @@ const SpaceLocations = ({
   console.log('test',loc_id);
   useEffect(() => {
     
-    if(loc_id){
-      SingleSpaceAction(loc_id);
-      if (edit_locat?.data) setLocat(edit_locat.data);
-    }
-    if(loc_id){
-      LocSingleFloorAction(loc_id);
-      if (single_floor?.data) setfloor(single_floor.data);
+    // if(loc_id){
+    //   SingleSpaceAction(loc_id);
+    //   if (edit_locat?.data) setLocat(edit_locat.data);
+    // }
+    // if(loc_id){
+    //   LocSingleFloorAction(loc_id);
+    //   if (single_floor?.data) setfloor(single_floor.data);
 
-    }
+    // }
     if (space_id && space_id !== '') {
       SingleSpaceAction(space_id);
       if (single_space?.data) setItem(single_space.data);
@@ -60,19 +59,33 @@ const SpaceLocations = ({
       if (location?.data) setTotalItemCount(location.data.count);
       if (location?.data?.results) setItems(location.data.results);
     }
-  }, [getSpaceLocationListAction, SingleSpaceAction, LocSingleFloorAction,space_id,loc_id]);
+  }, [getSpaceLocationListAction, SingleSpaceAction,space_id]);
 
-  const UpdateLocat = (loct_id) => {
-    
+  /* edit location */
+  const UpdateLocat = async (loct_id) => {
+  
     setModalOpen(!modalOpen);
     setLocId(loct_id);
+    await
     SingleSpaceAction(loct_id);
-    if (edit_locat?.data) setLocat(edit_locat.data);
-    console.log('set',loc_id);
+    if (single_space?.data) setLocat(single_space.data);
+    console.log('set',locat);
     
   };
-  // [SingleSpaceAction,loc_id]);
 
+  /* Edit foor */
+  const UpdateFloor = async (loct_id) => {
+  
+    setFloorModalOpen(!floorOpen)
+    setLocId(loct_id);
+    await
+    LocSingleFloorAction(loct_id);
+    if (single_floor?.data) setfloor(single_floor.data);
+    console.log('get',locat);
+    
+  };
+  
+ 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 console.log('data',locat);
@@ -117,8 +130,10 @@ console.log('item',item);
 
       {space_id && space_id !== '' ? (
         <SingleLocationPg item={item} 
-        toggleModal={(loc_id) => { return setModalOpen(!modalOpen),setLocId(loc_id)}}
-        toggleFloor={(loc_id) => { return setFloorModalOpen(!floorOpen),setLocId(loc_id)}}
+        // toggleModal={(loc_id) => { return setModalOpen(!modalOpen),setLocId(loc_id)}}
+        toggleModal={(loc_id) =>  UpdateLocat( loc_id ) } 
+        toggleFloor={(loc_id) =>  UpdateFloor(loc_id)}
+        // toggleFloor={(loc_id) => { return setFloorModalOpen(!floorOpen),setLocId(loc_id)}}
         />
       ) : (
         <ListLocationListing
@@ -126,12 +141,10 @@ console.log('item',item);
           currentPage={currentPage}
           totalPage={totalPage}
           onChangePage={setCurrentPage}
-          // toggleModal={() => setModalOpen(!modalOpen)}
-           
-
           toggleModal={(loc_id) =>  UpdateLocat( loc_id ) } 
+          toggleFloor={(loc_id) =>  UpdateFloor(loc_id)}
           //toggleModal={(loc_id) => { return setModalOpen(!modalOpen),setLocId(loc_id)}}
-          toggleFloor={(loc_id) => { return setFloorModalOpen(!floorOpen),setLocId(loc_id)}}
+          // toggleFloor={(loc_id) => { return setFloorModalOpen(!floorOpen),setLocId(loc_id)}}
         />
       )}
     </div>
