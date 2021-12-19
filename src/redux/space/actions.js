@@ -16,13 +16,13 @@ import {
   SINGLE_SPACE_SUCCESS,
   SINGLE_SPACE_ERROR,
 
-  // UPDATE_LOCATION,
-  // UPDATE_LOCATION_SUCCESS,
-  // UPDATE_LOCATION_ERROR,
-
   SINGLE_FLOOR,
   SINGLE_FLOOR_SUCCESS,
   SINGLE_FLOOR_ERROR,
+
+  UPDATE_LOCATION,
+  UPDATE_LOCATION_SUCCESS,
+  UPDATE_LOCATION_ERROR,
 
 
 } from '../actions';
@@ -78,6 +78,24 @@ export const SpaceaddLocationError = (error) => ({
 });
 /* Add location - Ends */
 
+/* Update Location - starts */
+export const SpaceupdateLocation = (space_id,location,image,start_time,end_time,time_zone,is_open) => ({
+  type : UPDATE_LOCATION,
+  payload : { space_id,location,image,start_time,end_time,time_zone,is_open }
+});
+
+export const SpaceupdateLocationSuccess = (item) => ({
+  type : UPDATE_LOCATION_SUCCESS,
+  payload : item,
+});
+
+export const SpaceupdateLocationError = (error) => ({
+  type : UPDATE_LOCATION_ERROR,
+  payload : error,
+});
+
+/* Update Location - Ends */
+
 /* SINGLE SPACE DETAILS - STARTS */
 
 export const SingleSpace = (space_id) => ({
@@ -96,26 +114,6 @@ export const SingleSpaceError = (error) => ({
 });
 
 /* SINGLE SPACE DETAILS - END */
-
-
-/* UPDATE LOCATION - STARTS */
-
-// export const UpdateLocation = (space_id,location,image,start_time,end_time,time_zone,is_open) => ({
-//   type : UPDATE_LOCATION,
-//   payload : { space_id,location,image,start_time,end_time,time_zone,is_open }
-// });
-
-// export const UpdateLocationSuccess = (item) => ({
-//   type : UPDATE_LOCATION_SUCCESS,
-//   payload : item
-// });
-
-// export const UpdateLocationError = (error) => ({
-//   type : UPDATE_LOCATION_ERROR,
-//   payload : error
-// });
-
-/* UPDATE LOCATION - END */
 
 /* SINGLE FLOOR - STARTS */
 

@@ -11,13 +11,13 @@ import {
   ADD_LOCATION_SUCCESS,
   ADD_LOCATION_ERROR,
 
+  UPDATE_LOCATION,
+  UPDATE_LOCATION_SUCCESS,
+  UPDATE_LOCATION_ERROR,
+
   SINGLE_SPACE,
   SINGLE_SPACE_SUCCESS,
   SINGLE_SPACE_ERROR,
-
-  // UPDATE_LOCATION,
-  // UPDATE_LOCATION_SUCCESS,
-  // UPDATE_LOCATION_ERROR,
 
   SINGLE_FLOOR,
   SINGLE_FLOOR_SUCCESS,
@@ -29,7 +29,7 @@ const INIT_STATE = {
   location: null,
   add_floor : null,
   add_location : null,
- // upd_location:null,
+  update_location:null,
   single_space:null,
   single_floor:null,
   loading: true,
@@ -72,6 +72,19 @@ const reducer = (state = INIT_STATE, action) => {
 
     /* Add location - Ends */
 
+    /* Update location - Starts */
+
+    case UPDATE_LOCATION:
+      return { ...state, loading:true, error: '' };
+      
+    case UPDATE_LOCATION_SUCCESS:  
+      return { ...state, loading:false, update_location: action.payload }
+
+    case UPDATE_LOCATION_ERROR:
+      return { ...state, loading: false, error: action.payload.message} 
+
+    /* Update Location - Ends */
+
     /* Single space details - Start */
     case SINGLE_SPACE:
       return { ...state, loading:true, error: '' };
@@ -83,18 +96,6 @@ const reducer = (state = INIT_STATE, action) => {
       return { ...state, loading: false, error: action.payload.message} 
 
     /* Single space details - Ends */
-
-     /* Update location - Start */
-    //  case UPDATE_LOCATION:
-    //   return { ...state, loading:true, error: '' };
-      
-    // case UPDATE_LOCATION_SUCCESS:  
-    //   return { ...state, loading:false, upd_location: action.payload }
-
-    // case UPDATE_LOCATION_ERROR:
-    //   return { ...state, loading: false, error: action.payload.message} 
-
-    /* Update location - Ends */
 
     /* Single Floor details - Start */
     case SINGLE_FLOOR:

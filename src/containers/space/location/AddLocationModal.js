@@ -26,7 +26,7 @@ import { Colxx } from '../../../components/common/CustomBootstrap';
 import DatePicker from 'react-datepicker';
 import TimezoneSelect from 'react-timezone-select';
 
-import { SpaceaddLocation } from '../../../redux/actions';
+import { SpaceaddLocation,SpaceupdateLocation } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -39,6 +39,7 @@ const AddLocationModal = ({
   loading, 
   locat,
   SpaceaddLocationAction,
+  SpaceupdateLocationAction,
  }) => {
   const { messages = '' } = intl || {};
 
@@ -61,7 +62,8 @@ const AddLocationModal = ({
       city:"",
       country:"",
       zipcode:"",
-      state: ""
+      state: "",
+      space_id :""
   });
 //   const [display, setRetrieve] = React.useState({
 //     name: "",
@@ -106,6 +108,7 @@ console.log("locat_test",locat)
       const StartBusinessHour = locat.start_time;
       const endBusinessHour = locat.end_time;
       const selectedTimezone = locat.time_zone;
+      const space_id = locat.id;
       setState({
        name :name,
        description: description,
@@ -113,7 +116,8 @@ console.log("locat_test",locat)
        country:country,
        city:city,
        state:state,
-       zipcode:zipcode
+       zipcode:zipcode,
+       space_id : space_id
       });
       if(StartBusinessHour!==null){
         setStartBusinessHour({
@@ -151,7 +155,13 @@ console.log("locat_test",locat)
     // console.log('selectedTimezone',selectedTimezone.label);
      //console.log('startBusinessHour',startBusinessHour);
     // console.log('endBusinessHour',endBusinessHour);
-    SpaceaddLocationAction(state,image,start_time,end_time,time_zone,is_open);
+    console.log('s_id',state.space_id);
+    if(state.space_id!="" && state.space_id){
+      SpaceupdateLocationAction(state.space_id,state,image,start_time,end_time,time_zone,is_open);
+    }else{
+      SpaceaddLocationAction(state,image,start_time,end_time,time_zone,is_open);
+    } 
+    
     toggleModal();
     
   }
@@ -409,9 +419,15 @@ console.log("locat_test",locat)
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
+        {state.space_id!="" && state.space_id?
         <Button color="primary" size="sm" onClick={submitLocation}>
-          <IntlMessages id="model.add" />
+          <IntlMessages id="model.update" />
         </Button>
+        :
+          <Button color="primary" size="sm" onClick={submitLocation}>
+            <IntlMessages id="model.add" />
+          </Button>
+        }
       </ModalFooter>
     </Modal>
   
@@ -430,8 +446,8 @@ const mapStateToProps = ({ space }) => {
 
 export default connect(mapStateToProps, {
   SpaceaddLocationAction : SpaceaddLocation,
+  SpaceupdateLocationAction : SpaceupdateLocation,
 })(AddLocationModal);
 
 //export default injectIntl(AddLocationModal);
-
 
