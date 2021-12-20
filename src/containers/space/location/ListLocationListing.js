@@ -14,6 +14,8 @@ const ListLocationListing = ({
   toggleModal,
   toggleFloor,
   onChangePage,
+  setModalId,
+  setModalDeleteId,
 }) => {
   return (
     <Row>
@@ -25,6 +27,8 @@ const ListLocationListing = ({
             collect={collect}
             toggleModal={toggleModal}
             toggleFloor={toggleFloor}
+            setModalId={setModalId}
+            setModalDeleteId={setModalDeleteId}
           />
         );
       })}

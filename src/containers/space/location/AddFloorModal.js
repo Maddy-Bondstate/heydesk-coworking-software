@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import {
   Row,
@@ -20,12 +20,25 @@ import 'rc-switch/assets/index.css';
 import IntlMessages from '../../../helpers/IntlMessages';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 
+import { addSpaceLocationFloor } from '../../../redux/actions';
+import { connect } from 'react-redux';
+
 const selectData = [
   { label: 'Bondstate', value: 'bondstate' },
   { label: 'Heydesk', value: 'heydesk' },
 ];
 
-const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
+const AddFloorModal = (props) => {
+  const {
+    modelTitle,
+    modalOpen,
+    toggleModal,
+    intl,
+    loading,
+    addLocationFloor,
+    addSpaceLocationFloor,
+  } = props;
+
   const { messages } = intl;
 
   const [selectedOption, setSelectedOption] = useState('');
@@ -40,6 +53,42 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
     setFiles('');
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
+
+  const [state, setState] = useState({
+    name: '',
+    unique_code: '',
+    description: '',
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    zipcode: '',
+  });
+
+  useLayoutEffect(() => {
+    if (item !== null) {
+      setState({
+        ...state,
+        name: item.name,
+        unique_code: item.unique_code,
+        description: item.description,
+        address: item.address,
+        city: item.city,
+        state: item.state,
+        country: item.country,
+        zipcode: item.zipcode,
+      });
+
+      // setSelectedTimezone({ value: item.time_zone });
+      // setStartBusinessHour(
+      //   new Date(moment(item.start_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
+      // );
+      // setEndBusinessHour(
+      //   new Date(moment(item.end_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
+      // );
+      // setCheckedPrimarySmall(item.is_open);
+    }
+  }, [item]);
 
   return (
     <Modal isOpen={modalOpen} toggle={toggleModal} backdrop="static">
@@ -149,4 +198,14 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
   );
 };
 
-export default injectIntl(AddFloorModal);
+// export default injectIntl(AddFloorModal);
+const mapStateToProps = ({ space }) => {
+  const { addLocationFloor, loading } = space;
+  return { addLocationFloor, loading };
+};
+
+export default injectIntl(
+  connect(mapStateToProps, {
+    addSpaceLocationFloorAction: addSpaceLocationFloor,
+  })(AddFloorModal)
+);
