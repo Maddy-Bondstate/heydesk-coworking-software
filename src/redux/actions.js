@@ -25,13 +25,34 @@ export const MENU_CHANGE_DEFAULT_CLASSES = 'MENU_CHANGE_DEFAULT_CLASSES';
 export const MENU_CHANGE_HAS_SUB_ITEM_STATUS =
   'MENU_CHANGE_HAS_SUB_ITEM_STATUS';
 
-/* SPACE */
+/*----------------------------- CALENDAR -----------------------------*/
+
+// Get Calendar
+export const DASHBOARD_GET_CALENDAR_LIST = 'DASHBOARD_GET_CALENDAR_LIST';
+export const DASHBOARD_GET_CALENDAR_LIST_SUCCESS =
+  'DASHBOARD_GET_CALENDAR_LIST_SUCCESS';
+export const DASHBOARD_GET_CALENDAR_LIST_ERROR =
+  'DASHBOARD_GET_CALENDAR_LIST_ERROR';
+
+/*----------------------------- SPACE -----------------------------*/
+
+// Get Location
 export const SPACE_GET_LOCATION_LIST = 'SPACE_GET_LOCATION_LIST';
 export const SPACE_GET_LOCATION_LIST_SUCCESS =
   'SPACE_GET_LOCATION_LIST_SUCCESS';
 export const SPACE_GET_LOCATION_LIST_ERROR = 'SPACE_GET_LOCATION_LIST_ERROR';
+// Add Location
+export const SPACE_ADD_LOCATION = 'SPACE_ADD_LOCATION';
+export const SPACE_ADD_LOCATION_SUCCESS = 'SPACE_ADD_LOCATION_SUCCESS';
+export const SPACE_ADD_LOCATION_ERROR = 'SPACE_ADD_LOCATION_ERROR';
+// Add Floor
+export const SPACE_ADD_LOCATION_FLOOR = 'SPACE_ADD_LOCATION_FLOOR';
+export const SPACE_ADD_LOCATION_FLOOR_SUCCESS =
+  'SPACE_ADD_LOCATION_FLOOR_SUCCESS';
+export const SPACE_ADD_LOCATION_FLOOR_ERROR = 'SPACE_ADD_LOCATION_FLOOR_ERROR';
 
 export * from './menu/actions';
 export * from './settings/actions';
 export * from './auth/actions';
+export * from './dashboard/actions';
 export * from './space/actions';

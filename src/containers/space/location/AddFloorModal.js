@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import {
   Row,
@@ -20,12 +20,22 @@ import 'rc-switch/assets/index.css';
 import IntlMessages from '../../../helpers/IntlMessages';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 
-const selectData = [
-  { label: 'Bondstate', value: 'bondstate' },
-  { label: 'Heydesk', value: 'heydesk' },
-];
+import { addSpaceLocationFloor } from '../../../redux/actions';
+import { connect } from 'react-redux';
 
-const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
+const AddFloorModal = (props) => {
+  const {
+    modelTitle,
+    modalOpen,
+    toggleModal,
+    intl,
+    loading,
+    addLocationFloor,
+    addSpaceLocationFloorAction,
+    item,
+    locationList,
+  } = props;
+
   const { messages } = intl;
 
   const [selectedOption, setSelectedOption] = useState('');
@@ -41,6 +51,68 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
+  const [locationListData, setLocationListData] = useState([]);
+
+  const [state, setState] = useState({
+    name: '',
+    floor: '',
+    area: '',
+    target: '',
+  });
+
+  useLayoutEffect(() => {
+    console.log(item);
+    if (item !== null) {
+      setState({
+        ...state,
+        name: item.name,
+        floor: item.floor,
+        area: item.area,
+        target: item.target,
+      });
+
+      console.log({ label: item.location, value: item.location });
+
+      setSelectedOption({ label: item.location, value: item.location });
+      setCheckedPrimarySmall(item.is_open);
+    }
+
+    if (locationList?.length > 0) {
+      // locationList;
+      let selectData = [];
+      locationList.map((l) => selectData.push({ label: l.name, value: l.id }));
+
+      // console.log(selectData);
+
+      setLocationListData(selectData);
+      // const selectData = [
+      //   { label: 'Bondstate', value: 'bondstate' },
+      //   { label: 'Heydesk', value: 'heydesk' },
+      // ];
+    }
+  }, [item]);
+
+  const handleChangeValue = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const handleSubmitLocationFloor = () => {
+    const data = {
+      ...state,
+      image: null,
+      location: selectedOption.value,
+      is_open: checkedPrimarySmall,
+    };
+
+    if (item) addSpaceLocationFloorAction({ ...data, id: item.id }, 'PUT');
+    else addSpaceLocationFloorAction(data, 'POST');
+  };
+
   return (
     <Modal isOpen={modalOpen} toggle={toggleModal} backdrop="static">
       <ModalHeader toggle={toggleModal}>
@@ -48,7 +120,13 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
       </ModalHeader>
       <ModalBody>
         <Label className="form-group has-float-label">
-          <Input type="text" placeholder={messages['label.name']} />
+          <Input
+            type="text"
+            name="name"
+            value={state.name}
+            onChange={handleChangeValue}
+            placeholder={messages['label.name']}
+          />
           <span>
             <IntlMessages id="label.name" />
           </span>
@@ -59,10 +137,10 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
             components={{ Input: CustomSelectInput }}
             className="react-select"
             classNamePrefix="react-select"
-            name="form-field-name"
+            name="location"
             value={selectedOption}
             onChange={setSelectedOption}
-            options={selectData}
+            options={locationListData}
           />
           <span>
             <IntlMessages id="label.location" />
@@ -70,7 +148,13 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
         </Label>
 
         <Label className="form-group has-float-label">
-          <Input type="text" placeholder={messages['label.floor']} />
+          <Input
+            type="text"
+            name="floor"
+            value={state.floor}
+            onChange={handleChangeValue}
+            placeholder={messages['label.floor']}
+          />
           <span>
             <IntlMessages id="label.floor" />
           </span>
@@ -78,7 +162,12 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
 
         <Label className="form-group has-float-label">
           <InputGroup className="mb-3">
-            <Input placeholder={messages['label.area']} />
+            <Input
+              name="area"
+              value={state.area}
+              onChange={handleChangeValue}
+              placeholder={messages['label.area']}
+            />
             <InputGroupAddon addonType="append">ft2</InputGroupAddon>
           </InputGroup>
           <span>
@@ -88,7 +177,12 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
 
         <Label className="form-group has-float-label">
           <InputGroup className="mb-3">
-            <Input placeholder={messages['label.target']} />
+            <Input
+              name="target"
+              value={state.target}
+              onChange={handleChangeValue}
+              placeholder={messages['label.target']}
+            />
             <InputGroupAddon addonType="append">EUR</InputGroupAddon>
           </InputGroup>
           <span>
@@ -141,12 +235,26 @@ const AddFloorModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        <Button color="primary" size="sm" onClick={toggleModal}>
-          <IntlMessages id="model.add" />
-        </Button>
+        {loading ? (
+          <div className="loading" />
+        ) : (
+          <Button color="primary" size="sm" onClick={handleSubmitLocationFloor}>
+            <IntlMessages id="model.add" />
+          </Button>
+        )}
       </ModalFooter>
     </Modal>
   );
 };
 
-export default injectIntl(AddFloorModal);
+// export default injectIntl(AddFloorModal);
+const mapStateToProps = ({ space }) => {
+  const { addLocationFloor, loading } = space;
+  return { addLocationFloor, loading };
+};
+
+export default injectIntl(
+  connect(mapStateToProps, {
+    addSpaceLocationFloorAction: addSpaceLocationFloor,
+  })(AddFloorModal)
+);

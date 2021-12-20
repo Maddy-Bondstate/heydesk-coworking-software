@@ -13,7 +13,14 @@ import { Colxx } from '../../../components/common/CustomBootstrap';
 import IntlMessages from '../../../helpers/IntlMessages';
 import { Noimage } from '../../../constants/defaultValues';
 
-const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
+const LocationListView = ({
+  item,
+  collect,
+  toggleModal,
+  toggleFloor,
+  setModalId,
+  setModalDeleteId,
+}) => {
   return (
     <Colxx xxs="12" key={item.id} className="mb-4">
       <ContextMenuTrigger id="menu_id" data={item.id} collect={collect}>
@@ -21,7 +28,7 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
           <div className="pl-2 flex-grow-1 min-width-zero">
             <div className="card-body">
               <div className="d-flex mb-4">
-                <NavLink to={`?p=${item.id}`} className="d-flex">
+                <NavLink to={`/`} className="d-flex">
                   <img
                     alt={item.name}
                     src={item.image ? item.image : Noimage}
@@ -29,7 +36,7 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                   />
                 </NavLink>
                 <div className="ml-4 d-flex justify-content-center flex-column">
-                  <NavLink to={`?p=${item.id}`}>
+                  <NavLink to={`/`}>
                     <p className="list-item-heading truncate mb-3">
                       {item.name}
                     </p>
@@ -46,16 +53,20 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                         <i className="fa fa-cog fa-2x text-muted" />
                       </DropdownToggle>
                       <DropdownMenu>
-                        <DropdownItem onClick={() => toggleModal()}>
+                        <DropdownItem
+                          onClick={() => {
+                            return toggleModal(), setModalId(item);
+                          }}
+                        >
                           <i className="fa fa-pencil text-muted mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>
-                        <DropdownItem onClick={() => toggleFloor()}>
+                        <DropdownItem onClick={() => toggleFloor(item.id)}>
                           <i className="fa fa-plus text-muted mr-2" />
                           <IntlMessages id="label.add_floor" />
                         </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem>
+                        <DropdownItem onClick={() => setModalDeleteId(item.id)}>
                           <i className="fa fa-trash text-muted mr-2" />
                           <IntlMessages id="label.delete" />
                         </DropdownItem>
@@ -65,19 +76,19 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                 </div>
               </div>
 
-              {item.floor?.length > 0 ? (
-                item.floor.map((floor, i) => (
+              {item.floors?.length > 0 ? (
+                item.floors.map((floor, i) => (
                   <div className="d-flex ml-4 mt-3" key={i}>
-                    <NavLink to={`?p=${floor.id}`} className="d-flex">
+                    <NavLink to={`/`} className="d-flex">
                       <img
                         alt={floor.name}
-                        src={floor.image}
+                        src={floor.image ? floor.image : Noimage}
                         className="list-thumbnail-small responsive border-0 card-img-left"
                       />
                     </NavLink>
                     <div>
                       <div className="d-flex align-items-center ml-4 mb-1">
-                        <NavLink to={`?p=${floor.id}`}>
+                        <NavLink to={`/`}>
                           <p className="list-item-heading text-sm truncate mb-0">
                             {floor.name}
                           </p>
@@ -92,7 +103,11 @@ const LocationListView = ({ item, collect, toggleModal, toggleFloor }) => {
                             <i className="fa fa-cog fa-lg text-muted" />
                           </DropdownToggle>
                           <DropdownMenu>
-                            <DropdownItem onClick={() => toggleFloor()}>
+                            <DropdownItem
+                              onClick={() => {
+                                return toggleFloor(), setModalId(floor);
+                              }}
+                            >
                               <i className="fa fa-pencil text-muted mr-2" />
                               <IntlMessages id="label.edit" />
                             </DropdownItem>

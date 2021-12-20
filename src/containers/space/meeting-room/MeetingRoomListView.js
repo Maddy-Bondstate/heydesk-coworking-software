@@ -27,7 +27,7 @@ const MeetingRoomListView = ({
           <div className="card-body">
             <Row>
               <Colxx sm="6" className="d-flex">
-                <NavLink to={`?p=${meeting_room.id}`} className="d-flex">
+                <NavLink to={`/`} className="d-flex">
                   <img
                     alt={meeting_room.general.name}
                     src={meeting_room.calendar.image}
@@ -45,7 +45,7 @@ const MeetingRoomListView = ({
                     >
                       &nbsp;
                     </Badge>
-                    <NavLink to={`?p=${meeting_room.id}`}>
+                    <NavLink to={`/`}>
                       <p className="font-weight-bold truncate mb-0 ml-2">
                         {meeting_room.general.name}
                       </p>
@@ -79,7 +79,7 @@ const MeetingRoomListView = ({
                 </div>
               </Colxx>
               <Colxx sm="6" className="d-flex">
-                <NavLink to={`?p=${meeting_room.id}`} className="d-flex">
+                <NavLink to={`/`} className="d-flex">
                   <img
                     alt={meeting_room.general.name}
                     src={meeting_room.general.image}
@@ -87,7 +87,7 @@ const MeetingRoomListView = ({
                   />
                 </NavLink>
                 <div className="ml-4 d-flex justify-content-center flex-column">
-                  <NavLink to={`?p=${meeting_room.id}`}>
+                  <NavLink to={`/`}>
                     <p className="list-item-heading truncate mb-3">
                       {meeting_room.general.name}
                     </p>

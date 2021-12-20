@@ -55,41 +55,8 @@ const SpaceLocations = ({
     <div className="loading" />
   ) : (
     <div className="disable-text-selection">
-      <ListLocationHeading
-        heading="menu.locations"
-        changePageSize={setSelectedPageSize}
-        selectedPageSize={selectedPageSize}
-        totalItemCount={totalItemCount}
-        match={match}
-        startIndex={startIndex}
-        endIndex={endIndex}
-        itemsLength={items ? items.length : 0}
-        onSearchKey={(e) => {
-          if (e.key === 'Enter') {
-            setSearch(e.target.value.toLowerCase());
-          }
-        }}
-        pageSizes={pageSizes}
-        toggleModal={() => setModalOpen(!modalOpen)}
-        toggleFloor={() => setFloorModalOpen(!floorOpen)}
-      />
-
-      <AddLocationModal
-        modelTitle="space.add-location"
-        modalOpen={modalOpen}
-        toggleModal={() => setModalOpen(!modalOpen)}
-        item={modalId}
-      />
-      {items?.length > 0 && (
-        <AddFloorModal
-          modelTitle="space.add-floor"
-          modalOpen={floorOpen}
-          toggleModal={() => setFloorModalOpen(!floorOpen)}
-          item={modalId}
-          locationList={items}
-        />
-      )}
-      <ListLocationListing
+      asdasdas dasdasasdas
+      {/* <ListLocationListing
         items={items}
         currentPage={currentPage}
         totalPage={totalPage}
@@ -100,7 +67,7 @@ const SpaceLocations = ({
         toggleFloor={() => setFloorModalOpen(!floorOpen)}
         setModalId={setModalId}
         setModalDeleteId={setModalDeleteId}
-      />
+      /> */}
     </div>
   );
 };

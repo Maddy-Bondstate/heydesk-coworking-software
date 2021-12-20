@@ -20,6 +20,9 @@ const Collaboration = React.lazy(() =>
   import(/* webpackChunkName: "collaboration" */ './collaboration')
 );
 
+const Settings = React.lazy(() =>
+  import(/* webpackChunkName: "settings" */ './settings')
+);
 const App = ({ match }) => {
   return (
     <AppLayout>
@@ -38,6 +41,10 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/space`}
               render={(props) => <Space {...props} />}
+            />
+            <Route
+              path={`${match.url}/settings`}
+              render={(props) => <Settings {...props} />}
             />
             <Route
               path={`${match.url}/client`}
