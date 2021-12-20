@@ -6,8 +6,12 @@ import {
   SPACE_ADD_LOCATION,
   SPACE_ADD_LOCATION_SUCCESS,
   SPACE_ADD_LOCATION_ERROR,
+  SPACE_ADD_LOCATION_FLOOR,
+  SPACE_ADD_LOCATION_FLOOR_SUCCESS,
+  SPACE_ADD_LOCATION_FLOOR_ERROR,
 } from '../actions';
 
+// Get Location
 export const getSpaceLocationList = () => ({
   type: SPACE_GET_LOCATION_LIST,
 });
@@ -22,6 +26,7 @@ export const getSpaceLocationListError = (error) => ({
   payload: error,
 });
 
+// Location
 export const addSpaceLocation = (data, method) => ({
   type: SPACE_ADD_LOCATION,
   payload: data,
@@ -38,18 +43,19 @@ export const addSpaceLocationError = (error) => ({
   payload: error,
 });
 
+// Floor
 export const addSpaceLocationFloor = (data, method) => ({
-  type: SPACE_ADD_LOCATION,
+  type: SPACE_ADD_LOCATION_FLOOR,
   payload: data,
   method,
 });
 
 export const addSpaceLocationFloorSuccess = (items) => ({
-  type: SPACE_ADD_LOCATION_SUCCESS,
+  type: SPACE_ADD_LOCATION_FLOOR_SUCCESS,
   payload: items,
 });
 
 export const addSpaceLocationFloorError = (error) => ({
-  type: SPACE_ADD_LOCATION_ERROR,
+  type: SPACE_ADD_LOCATION_FLOOR_ERROR,
   payload: error,
 });

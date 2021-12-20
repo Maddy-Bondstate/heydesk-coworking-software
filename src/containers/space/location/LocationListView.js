@@ -76,13 +76,13 @@ const LocationListView = ({
                 </div>
               </div>
 
-              {item.floor?.length > 0 ? (
-                item.floor.map((floor, i) => (
+              {item.floors?.length > 0 ? (
+                item.floors.map((floor, i) => (
                   <div className="d-flex ml-4 mt-3" key={i}>
                     <NavLink to={`/`} className="d-flex">
                       <img
                         alt={floor.name}
-                        src={floor.image}
+                        src={floor.image ? floor.image : Noimage}
                         className="list-thumbnail-small responsive border-0 card-img-left"
                       />
                     </NavLink>
@@ -103,7 +103,11 @@ const LocationListView = ({
                             <i className="fa fa-cog fa-lg text-muted" />
                           </DropdownToggle>
                           <DropdownMenu>
-                            <DropdownItem onClick={() => toggleFloor()}>
+                            <DropdownItem
+                              onClick={() => {
+                                return toggleFloor(), setModalId(floor);
+                              }}
+                            >
                               <i className="fa fa-pencil text-muted mr-2" />
                               <IntlMessages id="label.edit" />
                             </DropdownItem>

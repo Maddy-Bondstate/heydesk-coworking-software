@@ -40,7 +40,6 @@ const SpaceLocations = ({
     }
 
     if (!modalOpen) setModalId(null);
-    console.log(modalDeleteId);
     if (modalDeleteId !== '') {
       addSpaceLocationAction({ id: modalDeleteId }, 'DELETE');
       setModalDeleteId('');
@@ -49,6 +48,8 @@ const SpaceLocations = ({
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
+
+  console.log(items);
 
   return loading ? (
     <div className="loading" />
@@ -79,13 +80,15 @@ const SpaceLocations = ({
         toggleModal={() => setModalOpen(!modalOpen)}
         item={modalId}
       />
-
-      <AddFloorModal
-        modelTitle="space.add-floor"
-        modalOpen={floorOpen}
-        toggleModal={() => setFloorModalOpen(!floorOpen)}
-      />
-
+      {items?.length > 0 && (
+        <AddFloorModal
+          modelTitle="space.add-floor"
+          modalOpen={floorOpen}
+          toggleModal={() => setFloorModalOpen(!floorOpen)}
+          item={modalId}
+          locationList={items}
+        />
+      )}
       <ListLocationListing
         items={items}
         currentPage={currentPage}
