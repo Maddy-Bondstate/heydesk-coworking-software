@@ -82,8 +82,8 @@ const data = [
       },
       {
         icon: 'simple-icon-people',
-        label: 'menu.members',
-        to: `${adminRoot}/client/members`,
+        label: 'menu.customers',
+        to: `${adminRoot}/client/customers`,
         // roles: [UserRole.Admin],
       },
     ],

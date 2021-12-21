@@ -97,8 +97,8 @@ const addSpaceLocationRequest = async (data, method) => {
 
 function* addSpaceLocation({ payload, method }) {
   try {
-    yield call(addSpaceLocationRequest, payload, method);
-    yield put(addSpaceLocationSuccess(true));
+    const response = yield call(addSpaceLocationRequest, payload, method);
+    yield put(addSpaceLocationSuccess(response));
   } catch (error) {
     yield put(addSpaceLocationError(error));
   }
@@ -137,12 +137,25 @@ const addSpaceLocationFloorRequest = async (data, method) => {
       .then((response) => response)
       .catch((error) => error);
   }
+
+  if (method === 'DELETE') {
+    const id = data.id;
+    delete data['id'];
+
+    return await axios
+      .delete(
+        `https://hd-coworking.herokuapp.com/api/space/floor/update/${id}/`,
+        axiosConfig
+      )
+      .then((response) => response)
+      .catch((error) => error);
+  }
 };
 
 function* addSpaceLocationFloor({ payload, method }) {
   try {
-    yield call(addSpaceLocationFloorRequest, payload, method);
-    yield put(addSpaceLocationFloorSuccess(true));
+    const response = yield call(addSpaceLocationFloorRequest, payload, method);
+    yield put(addSpaceLocationFloorSuccess(response));
   } catch (error) {
     yield put(addSpaceLocationFloorError(error));
   }

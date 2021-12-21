@@ -7,7 +7,7 @@ const ClientMembers = () => {
   return (
     <>
       <Row>
-        <Colxx xxs="12">Members</Colxx>
+        <Colxx xxs="12">Customers</Colxx>
       </Row>
     </>
   );

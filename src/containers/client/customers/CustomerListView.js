@@ -13,15 +13,13 @@ import { Colxx } from '../../../components/common/CustomBootstrap';
 import IntlMessages from '../../../helpers/IntlMessages';
 import { Noimage } from '../../../constants/defaultValues';
 
-const LocationListView = ({
+const CustomerListView = ({
   item,
   collect,
   toggleModal,
   toggleFloor,
   setModalId,
-  setModalIds,
   setModalDeleteId,
-  setModalDeleteIds,
 }) => {
   return (
     <Colxx xxs="12" key={item.id} className="mb-4">
@@ -107,16 +105,14 @@ const LocationListView = ({
                           <DropdownMenu>
                             <DropdownItem
                               onClick={() => {
-                                return toggleFloor(), setModalIds(floor);
+                                return toggleFloor(), setModalId(floor);
                               }}
                             >
                               <i className="fa fa-pencil text-muted mr-2" />
                               <IntlMessages id="label.edit" />
                             </DropdownItem>
                             <DropdownItem divider />
-                            <DropdownItem
-                              onClick={() => setModalDeleteIds(floor.id)}
-                            >
+                            <DropdownItem>
                               <i className="fa fa-trash text-muted mr-2" />
                               <IntlMessages id="label.delete" />
                             </DropdownItem>
@@ -143,4 +139,4 @@ const LocationListView = ({
 };
 
 /* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
-export default React.memo(LocationListView);
+export default React.memo(CustomerListView);

@@ -75,6 +75,7 @@ module.exports = {
   'menu.bookings': 'Bookings',
   'menu.companies': 'Companies',
   'menu.members': 'Members',
+  'menu.customers': 'Customers',
   'menu.billing': 'Billing',
   'menu.invoices': 'Invoices',
   'menu.plans': 'Plans',
@@ -269,6 +270,8 @@ module.exports = {
   'dashboards.top-rated-items': 'Artículos Mejores Valorados',
 
   /* 05.Esquemas */
+  'pages.add-booking': 'AGREGAR RESERVAS',
+
   'pages.add-new': 'AGREGAR NUEVO',
   'pages.add-new-modal-title': 'Agregar ítem nuevo',
   'pages.display-options': 'Opciones de Pantalla',

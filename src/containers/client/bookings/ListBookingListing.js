@@ -1,38 +1,32 @@
 import React from 'react';
 import { Row } from 'reactstrap';
 import Pagination from './Pagination';
-import LocationListView from './LocationListView';
+import BookingListView from './BookingListView';
 
 function collect(props) {
   return { data: props.data };
 }
 
-const ListLocationListing = ({
+const ListBookingListing = ({
   items,
   currentPage,
   totalPage,
   toggleModal,
-  toggleFloor,
   onChangePage,
   setModalId,
-  setModalIds,
   setModalDeleteId,
-  setModalDeleteIds,
 }) => {
   return (
     <Row>
       {items.map((item) => {
         return (
-          <LocationListView
+          <BookingListView
             key={item.id}
             item={item}
             collect={collect}
             toggleModal={toggleModal}
-            toggleFloor={toggleFloor}
             setModalId={setModalId}
-            setModalIds={setModalIds}
             setModalDeleteId={setModalDeleteId}
-            setModalDeleteIds={setModalDeleteIds}
           />
         );
       })}
@@ -45,4 +39,4 @@ const ListLocationListing = ({
   );
 };
 
-export default React.memo(ListLocationListing);
+export default React.memo(ListBookingListing);

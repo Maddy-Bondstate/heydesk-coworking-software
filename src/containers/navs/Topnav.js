@@ -11,7 +11,7 @@ import {
   DropdownMenu,
 } from 'reactstrap';
 
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
@@ -215,8 +215,12 @@ const TopNav = ({
               </span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
-              <DropdownItem>My Profile</DropdownItem>
-              <DropdownItem>Settings</DropdownItem>
+              <DropdownItem>
+                <Link to={`/app/settings/profile`} className="d-block">
+                  My Profile
+                </Link>
+              </DropdownItem>
+              {/* <DropdownItem>Settings</DropdownItem> */}
               <DropdownItem divider />
               <DropdownItem onClick={() => handleLogout()}>
                 Sign out

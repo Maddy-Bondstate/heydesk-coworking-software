@@ -13,8 +13,8 @@ import {
 const INIT_STATE = {
   loading: true,
   location: null,
-  addlocation: false,
-  addLocationFloor: false,
+  addlocation: null,
+  addLocationFloor: null,
   error: '',
 };
 
@@ -35,7 +35,12 @@ const reducer = (state = INIT_STATE, action) => {
       return { ...state, loading: true };
 
     case SPACE_ADD_LOCATION_SUCCESS:
-      return { ...state, loading: false, addlocation: action.payload };
+      return {
+        ...state,
+        loading: false,
+        addlocation: action.payload,
+        // addlocation: true,
+      };
 
     case SPACE_ADD_LOCATION_ERROR:
       return { ...state, loading: false, error: action.payload };
@@ -45,7 +50,12 @@ const reducer = (state = INIT_STATE, action) => {
       return { ...state, loading: true };
 
     case SPACE_ADD_LOCATION_FLOOR_SUCCESS:
-      return { ...state, loading: false, addLocationFloor: action.payload };
+      return {
+        ...state,
+        loading: false,
+        addLocationFloor: action.payload,
+        // addLocationFloor: true,
+      };
 
     case SPACE_ADD_LOCATION_FLOOR_ERROR:
       return { ...state, loading: false, error: action.payload };

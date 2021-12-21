@@ -10,6 +10,9 @@ const Dashboards = React.lazy(() =>
 const Space = React.lazy(() =>
   import(/* webpackChunkName: "space" */ './space')
 );
+const Settings = React.lazy(() =>
+  import(/* webpackChunkName: "settings" */ './settings')
+);
 const Client = React.lazy(() =>
   import(/* webpackChunkName: "client" */ './client')
 );
@@ -38,6 +41,10 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/space`}
               render={(props) => <Space {...props} />}
+            />
+            <Route
+              path={`${match.url}/settings`}
+              render={(props) => <Settings {...props} />}
             />
             <Route
               path={`${match.url}/client`}

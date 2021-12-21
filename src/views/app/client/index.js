@@ -7,8 +7,8 @@ const ClientBookings = React.lazy(() =>
 const ClientCompanies = React.lazy(() =>
   import(/* webpackChunkName: "client-companies" */ './companies')
 );
-const ClientMembers = React.lazy(() =>
-  import(/* webpackChunkName: "client-members" */ './members')
+const ClientCustomers = React.lazy(() =>
+  import(/* webpackChunkName: "client-customers" */ './customers')
 );
 const Client = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -23,8 +23,8 @@ const Client = ({ match }) => (
         render={(props) => <ClientCompanies {...props} />}
       />
       <Route
-        path={`${match.url}/members`}
-        render={(props) => <ClientMembers {...props} />}
+        path={`${match.url}/customers`}
+        render={(props) => <ClientCustomers {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

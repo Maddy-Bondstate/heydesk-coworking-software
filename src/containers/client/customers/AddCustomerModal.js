@@ -30,7 +30,7 @@ import { connect } from 'react-redux';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-const AddLocationModal = (props) => {
+const AddCustomerModal = (props) => {
   const {
     modelTitle,
     modalOpen,
@@ -68,7 +68,6 @@ const AddLocationModal = (props) => {
   });
 
   useLayoutEffect(() => {
-    console.log('Location', item);
     if (item !== null) {
       setState({
         ...state,
@@ -417,5 +416,5 @@ const mapStateToProps = ({ space }) => {
 export default injectIntl(
   connect(mapStateToProps, {
     addSpaceLocationAction: addSpaceLocation,
-  })(AddLocationModal)
+  })(AddCustomerModal)
 );

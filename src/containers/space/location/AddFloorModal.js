@@ -61,7 +61,7 @@ const AddFloorModal = (props) => {
   });
 
   useLayoutEffect(() => {
-    console.log(item);
+    console.log('FLOOR', item);
     if (item !== null) {
       setState({
         ...state,
@@ -71,9 +71,9 @@ const AddFloorModal = (props) => {
         target: item.target,
       });
 
-      console.log({ label: item.location, value: item.location });
+      // console.log(item.location);
 
-      setSelectedOption({ label: item.location, value: item.location });
+      setSelectedOption(item.location);
       setCheckedPrimarySmall(item.is_open);
     }
 
@@ -109,8 +109,13 @@ const AddFloorModal = (props) => {
       is_open: checkedPrimarySmall,
     };
 
-    if (item) addSpaceLocationFloorAction({ ...data, id: item.id }, 'PUT');
-    else addSpaceLocationFloorAction(data, 'POST');
+    if (item) {
+      console.log('PUT', item);
+      addSpaceLocationFloorAction({ ...data, id: item.id }, 'PUT');
+    } else {
+      console.log('POST', item);
+      addSpaceLocationFloorAction(data, 'POST');
+    }
   };
 
   return (

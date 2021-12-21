@@ -51,8 +51,35 @@ export const SPACE_ADD_LOCATION_FLOOR_SUCCESS =
   'SPACE_ADD_LOCATION_FLOOR_SUCCESS';
 export const SPACE_ADD_LOCATION_FLOOR_ERROR = 'SPACE_ADD_LOCATION_FLOOR_ERROR';
 
+/*----------------------------- CLIENT -----------------------------*/
+
+// ------- BOOKING -----
+// GET
+export const CLIENT_GET_BOOKING_LIST = 'CLIENT_GET_BOOKING_LIST';
+export const CLIENT_GET_BOOKING_LIST_SUCCESS =
+  'CLIENT_GET_BOOKING_LIST_SUCCESS';
+export const CLIENT_GET_BOOKING_LIST_ERROR = 'CLIENT_GET_BOOKING_LIST_ERROR';
+
+// ADD
+export const CLIENT_ADD_BOOKING = 'CLIENT_ADD_BOOKING';
+export const CLIENT_ADD_BOOKING_SUCCESS = 'CLIENT_ADD_BOOKING_SUCCESS';
+export const CLIENT_ADD_BOOKING_ERROR = 'CLIENT_ADD_BOOKING_ERROR';
+
+// ------- CUSTOMER -----
+// GET
+export const CLIENT_GET_CUSTOMER_LIST = 'CLIENT_GET_CUSTOMER_LIST';
+export const CLIENT_GET_CUSTOMER_LIST_SUCCESS =
+  'CLIENT_GET_CUSTOMER_LIST_SUCCESS';
+export const CLIENT_GET_CUSTOMER_LIST_ERROR = 'CLIENT_GET_CUSTOMER_LIST_ERROR';
+
+// ADD
+export const CLIENT_ADD_CUSTOMER = 'CLIENT_ADD_CUSTOMER';
+export const CLIENT_ADD_CUSTOMER_SUCCESS = 'CLIENT_ADD_CUSTOMER_SUCCESS';
+export const CLIENT_ADD_CUSTOMER_ERROR = 'CLIENT_ADD_CUSTOMER_ERROR';
+
 export * from './menu/actions';
 export * from './settings/actions';
 export * from './auth/actions';
 export * from './dashboard/actions';
 export * from './space/actions';
+export * from './client/actions';
