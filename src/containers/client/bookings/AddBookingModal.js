@@ -2,28 +2,18 @@ import React, { useState, useLayoutEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import {
   Row,
-  Nav,
-  NavItem,
-  TabContent,
-  TabPane,
   Button,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Input,
   Label,
 } from 'reactstrap';
-import Switch from 'rc-switch';
-import 'rc-switch/assets/index.css';
 
 import moment from 'moment';
 import IntlMessages from '../../../helpers/IntlMessages';
-import { NavLink } from 'react-router-dom';
-import classnames from 'classnames';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 import DatePicker from 'react-datepicker';
-import TimezoneSelect from 'react-timezone-select';
 import Select from 'react-select';
 import CustomSelectInput from '../../../components/common/CustomSelectInput';
 
@@ -87,7 +77,7 @@ const AddBookingModal = (props) => {
       end_time: moment(dateTo).format('DD/MM/YYYY HH:mm'),
     };
 
-    console.log(data);
+    // console.log(data);
 
     // if (item) addClientBookingAction({ ...data, id: item.id }, 'PUT');
     // else

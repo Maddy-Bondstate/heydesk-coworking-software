@@ -6,6 +6,7 @@ import {
   getDashboardCalendarListError,
 } from './actions';
 import { getCurrentUser } from '../../helpers/Utils';
+import { api } from '../../constants/defaultValues';
 
 const currentUser = getCurrentUser();
 const token = `JWT ${currentUser?.token}`;
@@ -22,7 +23,7 @@ const axiosConfig = {
 const getDashboardCalendarListRequest = async (data) => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get('https://hd-coworking.herokuapp.com/api/service/calender/list/', {
+    .get(`${api}service/calender/list/`, {
       params: data,
       headers: axiosConfig.headers,
     })

@@ -30,7 +30,6 @@ const AddFloorModal = (props) => {
     toggleModal,
     intl,
     loading,
-    addLocationFloor,
     addSpaceLocationFloorAction,
     item,
     locationList,
@@ -61,7 +60,6 @@ const AddFloorModal = (props) => {
   });
 
   useLayoutEffect(() => {
-    console.log('FLOOR', item);
     if (item !== null) {
       setState({
         ...state,
@@ -71,26 +69,17 @@ const AddFloorModal = (props) => {
         target: item.target,
       });
 
-      // console.log(item.location);
-
       setSelectedOption(item.location);
       setCheckedPrimarySmall(item.is_open);
     }
 
     if (locationList?.length > 0) {
-      // locationList;
       let selectData = [];
       locationList.map((l) => selectData.push({ label: l.name, value: l.id }));
 
-      // console.log(selectData);
-
       setLocationListData(selectData);
-      // const selectData = [
-      //   { label: 'Bondstate', value: 'bondstate' },
-      //   { label: 'Heydesk', value: 'heydesk' },
-      // ];
     }
-  }, [item]);
+  }, [item, locationList, state]);
 
   const handleChangeValue = (e) => {
     const name = e.target.name;
@@ -110,10 +99,8 @@ const AddFloorModal = (props) => {
     };
 
     if (item) {
-      console.log('PUT', item);
       addSpaceLocationFloorAction({ ...data, id: item.id }, 'PUT');
     } else {
-      console.log('POST', item);
       addSpaceLocationFloorAction(data, 'POST');
     }
   };
@@ -252,7 +239,6 @@ const AddFloorModal = (props) => {
   );
 };
 
-// export default injectIntl(AddFloorModal);
 const mapStateToProps = ({ space }) => {
   const { addLocationFloor, loading } = space;
   return { addLocationFloor, loading };

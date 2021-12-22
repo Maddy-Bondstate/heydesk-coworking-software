@@ -20,6 +20,7 @@ import {
   addSpaceMeetingError,
 } from './actions';
 import { getCurrentUser } from '../../helpers/Utils';
+import { api } from '../../constants/defaultValues';
 
 const currentUser = getCurrentUser();
 const token = `JWT ${currentUser?.token}`;
@@ -36,10 +37,7 @@ const axiosConfig = {
 const getSpaceLocationListRequest = async () => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(
-      'https://hd-coworking.herokuapp.com/api/space/location/list/',
-      axiosConfig
-    )
+    .get(`${api}space/location/list/`, axiosConfig)
     .then((response) => response)
     .catch((error) => error);
 };
@@ -64,11 +62,7 @@ const addSpaceLocationRequest = async (data, method) => {
 
   if (method === 'POST') {
     return await axios
-      .post(
-        'https://hd-coworking.herokuapp.com/api/space/location/',
-        data,
-        axiosConfig
-      )
+      .post(`${api}space/location/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -78,11 +72,7 @@ const addSpaceLocationRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(
-        `https://hd-coworking.herokuapp.com/api/space/location/update/${id}/`,
-        data,
-        axiosConfig
-      )
+      .put(`${api}space/location/update/${id}/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -92,10 +82,7 @@ const addSpaceLocationRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(
-        `https://hd-coworking.herokuapp.com/api/space/location/update/${id}/`,
-        axiosConfig
-      )
+      .delete(`${api}space/location/update/${id}/`, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -121,11 +108,7 @@ const addSpaceLocationFloorRequest = async (data, method) => {
 
   if (method === 'POST') {
     return await axios
-      .post(
-        'https://hd-coworking.herokuapp.com/api/space/floor/',
-        data,
-        axiosConfig
-      )
+      .post(`${api}space/floor/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -135,11 +118,7 @@ const addSpaceLocationFloorRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(
-        `https://hd-coworking.herokuapp.com/api/space/floor/update/${id}/`,
-        data,
-        axiosConfig
-      )
+      .put(`${api}space/floor/update/${id}/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -149,10 +128,7 @@ const addSpaceLocationFloorRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(
-        `https://hd-coworking.herokuapp.com/api/space/floor/update/${id}/`,
-        axiosConfig
-      )
+      .delete(`${api}space/floor/update/${id}/`, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -179,10 +155,7 @@ export function* watchAddLocationFloor() {
 const getSpaceMeetingListRequest = async () => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(
-      'https://hd-coworking.herokuapp.com/api/space/objects/list/',
-      axiosConfig
-    )
+    .get(`${api}space/objects/list/`, axiosConfig)
     .then((response) => response)
     .catch((error) => error);
 };
@@ -207,11 +180,7 @@ const addSpaceMeetingRequest = async (data, method) => {
 
   if (method === 'POST') {
     return await axios
-      .post(
-        'https://hd-coworking.herokuapp.com/api/space/objects/',
-        data,
-        axiosConfig
-      )
+      .post(`${api}space/objects/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -221,11 +190,7 @@ const addSpaceMeetingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(
-        `https://hd-coworking.herokuapp.com/api/space/objects/update/${id}/`,
-        data,
-        axiosConfig
-      )
+      .put(`${api}space/objects/update/${id}/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -235,10 +200,7 @@ const addSpaceMeetingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(
-        `https://hd-coworking.herokuapp.com/api/space/objects/update/${id}/`,
-        axiosConfig
-      )
+      .delete(`${api}space/objects/update/${id}/`, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }

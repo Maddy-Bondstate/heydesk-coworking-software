@@ -18,13 +18,9 @@ const ClientBookings = ({
   match,
   loading,
   booking,
-  addBooking,
   customer,
-  addCustomer,
-  error,
   meeting,
   getClientBookingListAction,
-  addClientBookingAction,
   getSpaceMeetingListAction,
   getClientCustomerListAction,
 }) => {
@@ -61,12 +57,10 @@ const ClientBookings = ({
       setCustomerData(customer.data.results);
     }
 
-    console.log('meeting', meeting);
-
     if (meeting?.data) {
       setSpaceData(meeting.data.results);
     }
-  });
+  }, [booking, customer, meeting]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;

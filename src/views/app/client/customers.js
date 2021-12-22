@@ -15,13 +15,8 @@ const pageSizes = [4, 8, 12, 20];
 const ClientCustomers = ({
   match,
   loading,
-  booking,
-  addBooking,
   customer,
-  addCustomer,
-  error,
   getClientCustomerListAction,
-  addClientCustomerAction,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(8);
@@ -32,19 +27,17 @@ const ClientCustomers = ({
   const [items, setItems] = useState([]);
 
   const [modalId, setModalId] = useState(null);
-  // const [modalDeleteId, setModalDeleteId] = useState('');
 
   useEffect(() => {
     getClientCustomerListAction();
   }, [getClientCustomerListAction]);
 
   useLayoutEffect(() => {
-    console.log(customer);
     if (customer?.data) {
       setTotalItemCount(customer.data.count);
       setItems(customer.data.results);
     }
-  });
+  }, [customer]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -87,7 +80,6 @@ const ClientCustomers = ({
           return setModalOpen(!modalOpen), setModalId(modalId);
         }}
         setModalId={setModalId}
-        // setModalDeleteId={setModalDeleteId}
       />
     </div>
   );

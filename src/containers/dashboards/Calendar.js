@@ -5,7 +5,6 @@ import moment from 'moment';
 
 import CalendarToolbar from '../../components/CalendarToolbar';
 import IntlMessages from '../../helpers/IntlMessages';
-import data from '../../data/events';
 
 import { getDirection } from '../../helpers/Utils';
 
@@ -31,7 +30,7 @@ const CalendarCard = ({
 
   useLayoutEffect(() => {
     if (calendar?.data) setCalendarList(calendar.data);
-  });
+  }, [calendar]);
 
   const handleNavigate = (action) => {
     const data = {

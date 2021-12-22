@@ -17,8 +17,6 @@ const SpaceLocations = ({
   match,
   location,
   loading,
-  addlocation,
-  addLocationFloor,
   getSpaceLocationListAction,
   addSpaceLocationAction,
   addSpaceLocationFloorAction,
@@ -31,7 +29,6 @@ const SpaceLocations = ({
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
   const [items, setItems] = useState([]);
-  // const [itemsLoca, setItemsLoca] = useState(false);
 
   const [modalId, setModalId] = useState(null);
   const [modalIds, setModalIds] = useState(null);
@@ -43,7 +40,6 @@ const SpaceLocations = ({
   }, [getSpaceLocationListAction]);
 
   useLayoutEffect(() => {
-    // console.log('resp', location);
     if (location?.data) {
       setTotalItemCount(location.data.count);
       setItems(location.data.results);
@@ -61,47 +57,18 @@ const SpaceLocations = ({
       addSpaceLocationFloorAction({ id: modalDeleteIds }, 'DELETE');
       setModalDeleteIds('');
     }
-    // console.log('resp2', addlocation);
-
-    // if (addlocation?.data) {
-    //   const objIndex = items.findIndex((obj) => obj.id == addlocation.data.id);
-    //   items[objIndex] = addlocation.data;
-
-    //   setItems(items);
-    //   setModalId(addlocation.data);
-    //   // setTimeout(() => {
-    //   //   return setModalOpen(false), setFloorModalOpen(false);
-    //   // }, 100);
-    // }
-
-    // console.log(addLocationFloor);
-
-    // if (addLocationFloor?.data) {
-    //   const objIndex = items.findIndex(
-    //     (obj) => obj.id == addLocationFloor.data.location
-    //   );
-
-    //   const objIndexFloor = items.findIndex((obj) =>
-    //     obj.floors.findIndex((flo) => flo.id == addLocationFloor.data.id)
-    //   );
-
-    //   if (objIndex) {
-    //     items[objIndex][objIndexFloor] = addLocationFloor.data;
-    //     setItems(items);
-    //   } else {
-    //     setItems({ ...addLocationFloor.data, ...items });
-    //   }
-    //   setModalId(addLocationFloor.data);
-    //   // setTimeout(() => {
-    //   //   return setModalOpen(false), setFloorModalOpen(false);
-    //   // }, 100);
-    // }
-  });
+  }, [
+    location,
+    modalOpen,
+    floorOpen,
+    modalDeleteId,
+    modalDeleteIds,
+    addSpaceLocationAction,
+    addSpaceLocationFloorAction,
+  ]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
-
-  console.log('Start');
 
   return loading ? (
     <div className="loading" />

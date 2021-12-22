@@ -17,6 +17,7 @@ import {
   addClientCustomerError,
 } from './actions';
 import { getCurrentUser } from '../../helpers/Utils';
+import { api } from '../../constants/defaultValues';
 
 const currentUser = getCurrentUser();
 const token = `JWT ${currentUser?.token}`;
@@ -33,10 +34,7 @@ const axiosConfig = {
 const getClientBookingListRequest = async () => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(
-      'https://hd-coworking.herokuapp.com/api/service/booking/list/',
-      axiosConfig
-    )
+    .get(`${api}service/booking/list/`, axiosConfig)
     .then((response) => response)
     .catch((error) => error);
 };
@@ -61,11 +59,7 @@ const addClientBookingRequest = async (data, method) => {
 
   if (method === 'POST') {
     return await axios
-      .post(
-        'https://hd-coworking.herokuapp.com/api/service/booking/',
-        data,
-        axiosConfig
-      )
+      .post(`${api}service/booking/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -75,11 +69,7 @@ const addClientBookingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(
-        `https://hd-coworking.herokuapp.com/api/service/booking/update/${id}/`,
-        data,
-        axiosConfig
-      )
+      .put(`${api}service/booking/update/${id}/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -89,10 +79,7 @@ const addClientBookingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(
-        `https://hd-coworking.herokuapp.com/api/space/location/update/${id}/`,
-        axiosConfig
-      )
+      .delete(`${api}space/location/update/${id}/`, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -118,10 +105,7 @@ export function* watchAddClientBooking() {
 const getClientCustomerListRequest = async () => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(
-      'https://hd-coworking.herokuapp.com/api/service/customer/list/',
-      axiosConfig
-    )
+    .get(`${api}service/customer/list/`, axiosConfig)
     .then((response) => response)
     .catch((error) => error);
 };
@@ -146,11 +130,7 @@ const addClientCustomerRequest = async (data, method) => {
 
   if (method === 'POST') {
     return await axios
-      .post(
-        'https://hd-coworking.herokuapp.com/api/service/customer/',
-        data,
-        axiosConfig
-      )
+      .post(`${api}service/customer/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -160,11 +140,7 @@ const addClientCustomerRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(
-        `https://hd-coworking.herokuapp.com/api/service/customer/update/${id}/`,
-        data,
-        axiosConfig
-      )
+      .put(`${api}service/customer/update/${id}/`, data, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }
@@ -174,10 +150,7 @@ const addClientCustomerRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(
-        `https://hd-coworking.herokuapp.com/api/space/location/update/${id}/`,
-        axiosConfig
-      )
+      .delete(`${api}space/location/update/${id}/`, axiosConfig)
       .then((response) => response)
       .catch((error) => error);
   }

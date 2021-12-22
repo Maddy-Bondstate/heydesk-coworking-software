@@ -31,25 +31,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { addSpaceMeeting } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
-// const rateData = [
-//   { label: 'Large Meeting Room $30', value: 'Large Meeting Room $30' },
-//   { label: 'Small Meeting Room $20', value: 'Small Meeting Room $20' },
-// ];
-
 const AddMeetingRoomModal = ({
   modelTitle,
   modalOpen,
   toggleModal,
   intl,
   locationData,
-  addMeeting,
+  loading,
   item,
   addSpaceMeetingAction,
 }) => {
   const { messages } = intl;
 
-  const [floorOption, setFloorOption] = useState('');
-  const [rateOption, setRateOption] = useState('');
   const [activeFirstTab, setActiveFirstTab] = useState('1');
   const [availableFrom, setAvailableFrom] = useState(new Date());
   const [availableTo, setAvailableTo] = useState();
@@ -98,19 +91,14 @@ const AddMeetingRoomModal = ({
       end_data: moment(availableTo).format('DD/MM/YYYY'),
     };
 
-    // console.log(data);
-
     if (item) {
-      console.log('PUT', item);
       addSpaceMeetingAction({ ...data, id: item.id }, 'PUT');
     } else {
-      console.log('POST', item);
       addSpaceMeetingAction(data, 'POST');
     }
   };
 
   useLayoutEffect(() => {
-    console.log('item', item);
     if (item !== null) {
       setState({
         ...state,
@@ -124,8 +112,6 @@ const AddMeetingRoomModal = ({
         color: item.color,
         privacy: item.privacy.toString(),
       });
-
-      // console.log(item.location);
 
       item.start_time &&
         setAvailableFrom(new Date(moment(item.start_time, 'DD/MM/YYYY')));
@@ -144,10 +130,10 @@ const AddMeetingRoomModal = ({
 
       setLocationListData(selectData);
     }
-  }, [item]);
+  }, [item, state, locationData]);
 
   const handleFloorData = ({ value }) => {
-    const objIndex = locationData.findIndex((obj) => obj.id == value);
+    const objIndex = locationData.findIndex((obj) => obj.id === value);
 
     let selectData = [];
     locationData[objIndex].floors.map((l) =>
@@ -324,21 +310,6 @@ const AddMeetingRoomModal = ({
               </TabPane>
 
               <TabPane tabId="2">
-                {/* <Label className="form-group has-float-label">
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-name"
-                    value={rateOption}
-                    onChange={setRateOption}
-                    options={rateData}
-                  />
-                  <span>
-                    <IntlMessages id="label.rate" />
-                  </span>
-                </Label> */}
-
                 <Label className="form-group has-float-label">
                   <InputGroup className="mb-3">
                     <Input
@@ -463,13 +434,13 @@ const AddMeetingRoomModal = ({
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        {/* {loading ? (
+        {loading ? (
           <div className="loading" />
-        ) : ( */}
-        <Button color="primary" size="sm" onClick={handleSubmitMeetingRoom}>
-          <IntlMessages id="model.add" />
-        </Button>
-        {/* )} */}
+        ) : (
+          <Button color="primary" size="sm" onClick={handleSubmitMeetingRoom}>
+            <IntlMessages id="model.add" />
+          </Button>
+        )}
       </ModalFooter>
     </Modal>
   );

@@ -30,16 +30,12 @@ const MeetingRoomListView = ({
   useLayoutEffect(() => {
     if (locationData) {
       const objIndex = locationData.findIndex(
-        (obj) => obj.id == meeting_room.location.value
+        (obj) => obj.id === meeting_room.location.value
       );
 
       const objIndexFloor = locationData[objIndex]?.floors.findIndex(
-        (obj) => obj.id == meeting_room.floor.value
+        (obj) => obj.id === meeting_room.floor.value
       );
-
-      console.log(objIndex, objIndexFloor);
-
-      // console.log(locationData[objIndex].floors[objIndexFloor]);
 
       if (locationData[objIndex]?.name)
         setLocationName(locationData[objIndex].name);
@@ -49,7 +45,7 @@ const MeetingRoomListView = ({
           `${locationData[objIndex].floors[objIndexFloor].name} - ${locationData[objIndex].floors[objIndexFloor].floor}`
         );
     }
-  }, [locationData]);
+  }, [locationData, meeting_room]);
 
   return (
     <Colxx xxs="12" key={meeting_room.id} className="mb-2">

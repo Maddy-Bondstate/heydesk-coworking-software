@@ -37,7 +37,6 @@ const AddLocationModal = (props) => {
     toggleModal,
     intl,
     loading,
-    addlocation,
     addSpaceLocationAction,
     item,
   } = props;
@@ -68,7 +67,6 @@ const AddLocationModal = (props) => {
   });
 
   useLayoutEffect(() => {
-    // console.log('Location', item);
     if (item !== null) {
       setState({
         ...state,
@@ -91,7 +89,7 @@ const AddLocationModal = (props) => {
       );
       setCheckedPrimarySmall(item.is_open);
     }
-  }, [item]);
+  }, [item, state]);
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);

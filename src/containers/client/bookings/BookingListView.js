@@ -32,18 +32,20 @@ const BookingListView = ({
   useLayoutEffect(() => {
     if (customerData !== null) {
       const objIndex = customerData.findIndex(
-        (obj) => obj.id == item.customer.value
+        (obj) => obj.id === item.customer.value
       );
 
       if (customerData[objIndex]) setCustomer(customerData[objIndex]);
     }
 
     if (spaceData !== null) {
-      const objIndex = spaceData.findIndex((obj) => obj.id == item.space.value);
+      const objIndex = spaceData.findIndex(
+        (obj) => obj.id === item.space.value
+      );
 
       if (spaceData[objIndex]) setSpace(spaceData[objIndex]);
     }
-  }, [customerData, spaceData]);
+  }, [customerData, spaceData, item]);
 
   return (
     <Colxx xxs="12" key={item.id} className="mb-2">

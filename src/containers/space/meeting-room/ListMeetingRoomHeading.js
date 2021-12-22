@@ -1,13 +1,13 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Row,
   Button,
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  Collapse,
+  // UncontrolledDropdown,
+  // DropdownMenu,
+  // DropdownItem,
+  // DropdownToggle,
+  // Collapse,
 } from 'reactstrap';
 import { injectIntl } from 'react-intl';
 
@@ -16,20 +16,20 @@ import Breadcrumb from '../../navs/Breadcrumb';
 import IntlMessages from '../../../helpers/IntlMessages';
 
 const ListMeetingRoomHeading = ({
-  intl,
-  changePageSize,
-  selectedPageSize,
-  totalItemCount,
+  // intl,
+  // changePageSize,
+  // selectedPageSize,
+  // totalItemCount,
   match,
-  startIndex,
-  endIndex,
-  onSearchKey,
-  pageSizes,
+  // startIndex,
+  // endIndex,
+  // onSearchKey,
+  // pageSizes,
   toggleModal,
   heading,
 }) => {
-  const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
-  const { messages } = intl;
+  // const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
+  // const { messages } = intl;
 
   return (
     <Row>

@@ -31,9 +31,6 @@ const AddCustomerModal = (props) => {
     toggleModal,
     intl,
     loading,
-    customer,
-    addCustomer,
-    error,
     addClientCustomerAction,
     item,
   } = props;
@@ -69,7 +66,7 @@ const AddCustomerModal = (props) => {
         zipcode: item.zipcode,
       });
     }
-  }, [item]);
+  }, [state, item]);
 
   const handleChangeValue = (e) => {
     const name = e.target.name;

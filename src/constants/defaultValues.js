@@ -3,6 +3,9 @@ export const UserRole = {
   Editor: 1,
 };
 
+// export const api = 'https://hd-coworking.herokuapp.com/api/';
+export const api = 'https://backend.heydesk.com/api/';
+
 /* 
 Menu Types:
 "menu-default", "menu-sub-hidden", "menu-hidden"

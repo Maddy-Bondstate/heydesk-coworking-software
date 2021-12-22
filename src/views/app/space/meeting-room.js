@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-// import axios from 'axios';
 import ListMeetingRoomHeading from '../../../containers/space/meeting-room/ListMeetingRoomHeading';
 import AddMeetingRoomModal from '../../../containers/space/meeting-room/AddMeetingRoomModal';
 import ListMeetingRoomListing from '../../../containers/space/meeting-room/ListMeetingRoomListing';
@@ -17,9 +16,6 @@ const SpaceMeetingRoom = ({
   match,
   location,
   meeting,
-  loading,
-  error,
-  addMeeting,
   getSpaceMeetingListAction,
   addSpaceMeetingAction,
   getSpaceLocationListAction,
@@ -39,54 +35,6 @@ const SpaceMeetingRoom = ({
   useEffect(() => {
     getSpaceMeetingListAction();
     getSpaceLocationListAction();
-    // const items3 = [
-    //   {
-    //     id: 1,
-    //     general: {
-    //       name: 'Large Meeting Room',
-    //       location: '',
-    //       floor: '',
-    //       size: 5,
-    //       area: 22.6,
-    //       available: {
-    //         from: '27/08/2021',
-    //         to: '30/08/2021',
-    //       },
-    //     },
-    //     calendar: {
-    //       rate: '',
-    //       description: '',
-    //       image:
-    //         'https://dzrjcxtasfoip.cloudfront.net/user-resources/organization/small-meeting-room-1587244392084.png',
-    //       color: '#FFFFFF',
-    //       privacy: 1,
-    //     },
-    //   },
-    //   {
-    //     id: 2,
-    //     general: {
-    //       name: 'Small Meeting Room',
-    //       location: '',
-    //       floor: '',
-    //       size: 3,
-    //       area: 12.5,
-    //       available: {
-    //         from: '28/08/2021',
-    //         to: '',
-    //       },
-    //     },
-    //     calendar: {
-    //       rate: '',
-    //       description: '',
-    //       image:
-    //         'https://dzrjcxtasfoip.cloudfront.net/user-resources/organization/large-meeting-room-1587244372271.png',
-    //       color: '#FF00AA',
-    //       privacy: 1,
-    //     },
-    //   },
-    // ];
-    // setItems(items3);
-    // setIsLoaded(true);
   }, [getSpaceMeetingListAction, getSpaceLocationListAction]);
 
   useLayoutEffect(() => {
@@ -105,7 +53,7 @@ const SpaceMeetingRoom = ({
       addSpaceMeetingAction({ id: modalDeleteId }, 'DELETE');
       setModalDeleteId('');
     }
-  });
+  }, [modalOpen, meeting, location, modalDeleteId, addSpaceMeetingAction]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;

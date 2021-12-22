@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row } from 'reactstrap';
 import Pagination from './Pagination';
-import { Colxx } from '../../../components/common/CustomBootstrap';
+// import { Colxx } from '../../../components/common/CustomBootstrap';
 import MeetingRoomListView from './MeetingRoomListView';
 
 function collect(props) {

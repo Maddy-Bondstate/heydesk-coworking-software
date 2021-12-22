@@ -20,14 +20,14 @@ import {
   // resetPasswordError,
 } from './actions';
 
-import { adminRoot } from '../../constants/defaultValues';
+import { adminRoot, api } from '../../constants/defaultValues';
 import { setCurrentUser } from '../../helpers/Utils';
 
 // --------- Login ---------
 const loginWithEmailPasswordAsync = async (email, password) =>
   // eslint-disable-next-line no-return-await
   await axios
-    .post('https://hd-coworking.herokuapp.com/api/auth/login/', {
+    .post(`${api}auth/login/`, {
       email,
       password,
     })
@@ -67,7 +67,7 @@ const registerWithEmailPasswordAsync = async (
 ) =>
   // eslint-disable-next-line no-return-await
   await axios
-    .post('https://hd-coworking.herokuapp.com/api/auth/registration/', {
+    .post(`${api}auth/registration/`, {
       first_name: firstName,
       last_name: lastName,
       email: email1,

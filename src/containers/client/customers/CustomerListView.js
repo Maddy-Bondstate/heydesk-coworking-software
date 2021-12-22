@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Card,
-  // Badge,
   DropdownToggle,
   DropdownItem,
   DropdownMenu,
@@ -11,15 +10,8 @@ import { NavLink } from 'react-router-dom';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 import IntlMessages from '../../../helpers/IntlMessages';
-// import { Noimage } from '../../../constants/defaultValues';
 
-const CustomerListView = ({
-  item,
-  collect,
-  toggleModal,
-  setModalId,
-  // setModalDeleteId,
-}) => {
+const CustomerListView = ({ item, collect, toggleModal, setModalId }) => {
   return (
     <Colxx xxs="6" key={item.id} className="mb-4">
       <ContextMenuTrigger id="menu_id" data={item.id} collect={collect}>
