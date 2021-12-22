@@ -26,7 +26,6 @@ const ListCustomerHeading = ({
   onSearchKey,
   pageSizes,
   toggleModal,
-  toggleFloor,
   heading,
 }) => {
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -46,15 +45,7 @@ const ListCustomerHeading = ({
               className="top-right-button mr-2"
               onClick={() => toggleModal()}
             >
-              <IntlMessages id="space.add-location" />
-            </Button>
-
-            <Button
-              color="primary"
-              className="top-right-button"
-              onClick={() => toggleFloor()}
-            >
-              <IntlMessages id="space.add-floor" />
+              <IntlMessages id="pages.add-customer" />
             </Button>
           </div>
           <Breadcrumb match={match} />

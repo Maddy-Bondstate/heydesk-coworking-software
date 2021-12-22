@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import {
   Row,
@@ -28,31 +28,48 @@ import { Colxx } from '../../../components/common/CustomBootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const selectData = [
-  { label: 'Bondstate', value: 'bondstate' },
-  { label: 'Heydesk', value: 'heydesk' },
-];
+import { addSpaceMeeting } from '../../../redux/actions';
+import { connect } from 'react-redux';
 
-const floorData = [
-  { label: 'Floor1', value: 'floor1' },
-  { label: 'Floor2', value: 'floor2' },
-];
+// const rateData = [
+//   { label: 'Large Meeting Room $30', value: 'Large Meeting Room $30' },
+//   { label: 'Small Meeting Room $20', value: 'Small Meeting Room $20' },
+// ];
 
-const rateData = [
-  { label: 'Large Meeting Room $30', value: 'Large Meeting Room $30' },
-  { label: 'Small Meeting Room $20', value: 'Small Meeting Room $20' },
-];
-
-const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
+const AddMeetingRoomModal = ({
+  modelTitle,
+  modalOpen,
+  toggleModal,
+  intl,
+  locationData,
+  addMeeting,
+  item,
+  addSpaceMeetingAction,
+}) => {
   const { messages } = intl;
 
-  const [selectedOption, setSelectedOption] = useState('');
   const [floorOption, setFloorOption] = useState('');
   const [rateOption, setRateOption] = useState('');
   const [activeFirstTab, setActiveFirstTab] = useState('1');
   const [availableFrom, setAvailableFrom] = useState(new Date());
   const [availableTo, setAvailableTo] = useState();
   const [files, setFiles] = useState('');
+  const [selectedOptionLocation, setSelectedOptionLocation] = useState('');
+  const [selectedOptionFloor, setSelectedOptionFloor] = useState('');
+  const [locationListData, setLocationListData] = useState([]);
+  const [floorListData, setFloorListData] = useState([]);
+
+  const [state, setState] = useState({
+    type: 5,
+    name: '',
+    area: '',
+    size: '',
+    rate: '',
+    description: '',
+    image: null,
+    color: '',
+    privacy: '',
+  });
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
@@ -61,6 +78,83 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
   const removeFile = () => {
     setFiles('');
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
+  };
+
+  const handleChangeValue = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const handleSubmitMeetingRoom = () => {
+    const data = {
+      ...state,
+      location: selectedOptionLocation.value,
+      floor: selectedOptionFloor.value,
+      start_data: moment(availableFrom).format('DD/MM/YYYY'),
+      end_data: moment(availableTo).format('DD/MM/YYYY'),
+    };
+
+    // console.log(data);
+
+    if (item) {
+      console.log('PUT', item);
+      addSpaceMeetingAction({ ...data, id: item.id }, 'PUT');
+    } else {
+      console.log('POST', item);
+      addSpaceMeetingAction(data, 'POST');
+    }
+  };
+
+  useLayoutEffect(() => {
+    console.log('item', item);
+    if (item !== null) {
+      setState({
+        ...state,
+        type: item.type,
+        name: item.name,
+        area: item.area,
+        size: item.size,
+        rate: item.rate,
+        description: item.description,
+        image: null,
+        color: item.color,
+        privacy: item.privacy.toString(),
+      });
+
+      // console.log(item.location);
+
+      item.start_time &&
+        setAvailableFrom(new Date(moment(item.start_time, 'DD/MM/YYYY')));
+      item.end_time &&
+        setAvailableTo(new Date(moment(item.end_time, 'DD/MM/YYYY')));
+
+      setSelectedOptionLocation(item.location);
+      setSelectedOptionFloor(item.floor);
+
+      handleFloorData(item.location);
+    }
+
+    if (locationData) {
+      let selectData = [];
+      locationData.map((l) => selectData.push({ label: l.name, value: l.id }));
+
+      setLocationListData(selectData);
+    }
+  }, [item]);
+
+  const handleFloorData = ({ value }) => {
+    const objIndex = locationData.findIndex((obj) => obj.id == value);
+
+    let selectData = [];
+    locationData[objIndex].floors.map((l) =>
+      selectData.push({ label: l.name, value: l.id })
+    );
+
+    setFloorListData(selectData);
   };
 
   return (
@@ -107,7 +201,13 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
             <TabContent activeTab={activeFirstTab}>
               <TabPane tabId="1">
                 <Label className="form-group has-float-label">
-                  <Input type="text" placeholder={messages['label.name']} />
+                  <Input
+                    type="text"
+                    name="name"
+                    value={state.name}
+                    onChange={handleChangeValue}
+                    placeholder={messages['label.name']}
+                  />
                   <span>
                     <IntlMessages id="label.name" />
                   </span>
@@ -118,36 +218,45 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                     components={{ Input: CustomSelectInput }}
                     className="react-select"
                     classNamePrefix="react-select"
-                    name="form-field-name"
-                    value={selectedOption}
-                    onChange={setSelectedOption}
-                    options={selectData}
+                    name="location"
+                    value={selectedOptionLocation}
+                    onChange={(e) => {
+                      return setSelectedOptionLocation(e), handleFloorData(e);
+                    }}
+                    options={locationListData}
                   />
                   <span>
                     <IntlMessages id="label.location" />
                   </span>
                 </Label>
 
-                <Label className="form-group has-float-label">
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-name"
-                    value={floorOption}
-                    onChange={setFloorOption}
-                    options={floorData}
-                  />
-                  <span>
-                    <IntlMessages id="label.floor" />
-                  </span>
-                </Label>
+                {selectedOptionLocation !== '' && (
+                  <Label className="form-group has-float-label">
+                    <Select
+                      components={{ Input: CustomSelectInput }}
+                      className="react-select"
+                      classNamePrefix="react-select"
+                      name="floor"
+                      value={selectedOptionFloor}
+                      onChange={setSelectedOptionFloor}
+                      options={floorListData}
+                    />
+                    <span>
+                      <IntlMessages id="label.floor" />
+                    </span>
+                  </Label>
+                )}
 
                 <Row>
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
                       <InputGroup className="mb-3">
-                        <Input placeholder={messages['label.size']} />
+                        <Input
+                          name="size"
+                          value={state.size}
+                          onChange={handleChangeValue}
+                          placeholder={messages['label.size']}
+                        />
                         <InputGroupAddon addonType="append">
                           people
                         </InputGroupAddon>
@@ -160,7 +269,12 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
                       <InputGroup className="mb-3">
-                        <Input placeholder={messages['label.area']} />
+                        <Input
+                          name="area"
+                          value={state.area}
+                          onChange={handleChangeValue}
+                          placeholder={messages['label.area']}
+                        />
                         <InputGroupAddon addonType="append">
                           ft2
                         </InputGroupAddon>
@@ -180,6 +294,7 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                   <Colxx sm="6">
                     <div className="form-group has-float-label">
                       <DatePicker
+                        name="start_date"
                         selected={availableFrom}
                         onChange={(val) => setAvailableFrom(val)}
                         dateFormat="MMM dd, yyyy"
@@ -191,11 +306,13 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                   <Colxx sm="6">
                     <div className="form-group has-float-label">
                       <DatePicker
+                        name="end_date"
                         selected={availableTo}
                         onChange={(val) => setAvailableTo(val)}
                         dateFormat="MMM dd, yyyy"
                         todayButton={messages['label.today']}
                         minDate={availableFrom || moment().toDate()}
+                        required
                       />
                     </div>
                   </Colxx>
@@ -207,7 +324,7 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
               </TabPane>
 
               <TabPane tabId="2">
-                <Label className="form-group has-float-label">
+                {/* <Label className="form-group has-float-label">
                   <Select
                     components={{ Input: CustomSelectInput }}
                     className="react-select"
@@ -220,11 +337,29 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                   <span>
                     <IntlMessages id="label.rate" />
                   </span>
+                </Label> */}
+
+                <Label className="form-group has-float-label">
+                  <InputGroup className="mb-3">
+                    <Input
+                      name="rate"
+                      value={state.rate}
+                      onChange={handleChangeValue}
+                      placeholder={messages['label.rate']}
+                    />
+                    <InputGroupAddon addonType="append">ft2</InputGroupAddon>
+                  </InputGroup>
+                  <span>
+                    <IntlMessages id="label.rate" />
+                  </span>
                 </Label>
 
                 <Label className="form-group has-float-label">
                   <Input
                     type="textarea"
+                    name="description"
+                    value={state.description}
+                    onChange={handleChangeValue}
                     placeholder={messages['label.description']}
                   />
                   <span>
@@ -267,6 +402,9 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                     <Label className="form-group has-float-label">
                       <Input
                         type="color"
+                        name="color"
+                        value={state.color}
+                        onChange={handleChangeValue}
                         placeholder={messages['label.color']}
                       />
                       <span>
@@ -285,7 +423,13 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                   <Colxx sm="8">
                     <FormGroup check className="mb-2">
                       <Label check>
-                        <Input type="radio" name="radio1" />
+                        <Input
+                          type="radio"
+                          name="privacy"
+                          value="1"
+                          onChange={handleChangeValue}
+                          checked={state.privacy === '1' ? true : false}
+                        />
                         Full Access / Public
                       </Label>
                       <div className="text-muted text-small">
@@ -295,7 +439,13 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
                     </FormGroup>
                     <FormGroup check>
                       <Label check>
-                        <Input type="radio" name="radio1" />
+                        <Input
+                          type="radio"
+                          name="privacy"
+                          value="2"
+                          onChange={handleChangeValue}
+                          checked={state.privacy === '2' ? true : false}
+                        />
                         Active Members
                       </Label>
                       <div className="text-muted text-small">
@@ -313,12 +463,25 @@ const AddMeetingRoomModal = ({ modelTitle, modalOpen, toggleModal, intl }) => {
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        <Button color="primary" size="sm" onClick={toggleModal}>
+        {/* {loading ? (
+          <div className="loading" />
+        ) : ( */}
+        <Button color="primary" size="sm" onClick={handleSubmitMeetingRoom}>
           <IntlMessages id="model.add" />
         </Button>
+        {/* )} */}
       </ModalFooter>
     </Modal>
   );
 };
 
-export default injectIntl(AddMeetingRoomModal);
+const mapStateToProps = ({ space }) => {
+  const { addMeeting, loading } = space;
+  return { addMeeting, loading };
+};
+
+export default injectIntl(
+  connect(mapStateToProps, {
+    addSpaceMeetingAction: addSpaceMeeting,
+  })(AddMeetingRoomModal)
+);

@@ -68,7 +68,7 @@ const AddLocationModal = (props) => {
   });
 
   useLayoutEffect(() => {
-    console.log('Location', item);
+    // console.log('Location', item);
     if (item !== null) {
       setState({
         ...state,

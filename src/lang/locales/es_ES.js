@@ -181,6 +181,9 @@ module.exports = {
 
   /* LABEL */
   'label.name': 'Name',
+  'label.first_name': 'First Name',
+  'label.last_name': 'Last Name',
+  'label.phone': 'Phone',
   'label.unique_code': 'Unique code',
   'label.description': 'Description',
   'label.business_hours': 'Business hours',
@@ -196,6 +199,8 @@ module.exports = {
   'label.add_floor': 'Add Floor',
   'label.delete': 'Delete',
   'label.location': 'Location',
+  'label.space': 'Space',
+  'label.booking_date': 'Booking Date',
   'label.floor': 'Floor',
   'label.area': 'Area',
   'label.target': 'Target',
@@ -271,6 +276,7 @@ module.exports = {
 
   /* 05.Esquemas */
   'pages.add-booking': 'AGREGAR RESERVAS',
+  'pages.add-customer': 'ADD CUSTOMER',
 
   'pages.add-new': 'AGREGAR NUEVO',
   'pages.add-new-modal-title': 'Agregar ítem nuevo',

@@ -9,9 +9,16 @@ import {
   SPACE_ADD_LOCATION_FLOOR,
   SPACE_ADD_LOCATION_FLOOR_SUCCESS,
   SPACE_ADD_LOCATION_FLOOR_ERROR,
+  SPACE_GET_MEETING_LIST,
+  SPACE_GET_MEETING_LIST_SUCCESS,
+  SPACE_GET_MEETING_LIST_ERROR,
+  SPACE_ADD_MEETING,
+  SPACE_ADD_MEETING_SUCCESS,
+  SPACE_ADD_MEETING_ERROR,
 } from '../actions';
 
-// Get Location
+// ------------- LOCATION ------------- //
+// GET
 export const getSpaceLocationList = () => ({
   type: SPACE_GET_LOCATION_LIST,
 });
@@ -26,7 +33,7 @@ export const getSpaceLocationListError = (error) => ({
   payload: error,
 });
 
-// Location
+// ADD
 export const addSpaceLocation = (data, method) => ({
   type: SPACE_ADD_LOCATION,
   payload: data,
@@ -43,7 +50,8 @@ export const addSpaceLocationError = (error) => ({
   payload: error,
 });
 
-// Floor
+// ------------- FLOOR ------------- //
+// ADD
 export const addSpaceLocationFloor = (data, method) => ({
   type: SPACE_ADD_LOCATION_FLOOR,
   payload: data,
@@ -57,5 +65,38 @@ export const addSpaceLocationFloorSuccess = (items) => ({
 
 export const addSpaceLocationFloorError = (error) => ({
   type: SPACE_ADD_LOCATION_FLOOR_ERROR,
+  payload: error,
+});
+
+// ------------- MEETING ROOM ------------- //
+// GET
+export const getSpaceMeetingList = () => ({
+  type: SPACE_GET_MEETING_LIST,
+});
+
+export const getSpaceMeetingListSuccess = (items) => ({
+  type: SPACE_GET_MEETING_LIST_SUCCESS,
+  payload: items,
+});
+
+export const getSpaceMeetingListError = (error) => ({
+  type: SPACE_GET_MEETING_LIST_ERROR,
+  payload: error,
+});
+
+// ADD
+export const addSpaceMeeting = (data, method) => ({
+  type: SPACE_ADD_MEETING,
+  payload: data,
+  method,
+});
+
+export const addSpaceMeetingSuccess = (items) => ({
+  type: SPACE_ADD_MEETING_SUCCESS,
+  payload: items,
+});
+
+export const addSpaceMeetingError = (error) => ({
+  type: SPACE_ADD_MEETING_ERROR,
   payload: error,
 });

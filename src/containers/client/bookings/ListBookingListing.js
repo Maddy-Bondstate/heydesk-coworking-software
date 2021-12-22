@@ -11,10 +11,12 @@ const ListBookingListing = ({
   items,
   currentPage,
   totalPage,
-  toggleModal,
+  // toggleModal,
   onChangePage,
-  setModalId,
-  setModalDeleteId,
+  // setModalId,
+  // setModalDeleteId,
+  customerData,
+  spaceData,
 }) => {
   return (
     <Row>
@@ -24,9 +26,11 @@ const ListBookingListing = ({
             key={item.id}
             item={item}
             collect={collect}
-            toggleModal={toggleModal}
-            setModalId={setModalId}
-            setModalDeleteId={setModalDeleteId}
+            customerData={customerData}
+            spaceData={spaceData}
+            // toggleModal={toggleModal}
+            // setModalId={setModalId}
+            // setModalDeleteId={setModalDeleteId}
           />
         );
       })}

@@ -24,8 +24,10 @@ import classnames from 'classnames';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 import DatePicker from 'react-datepicker';
 import TimezoneSelect from 'react-timezone-select';
+import Select from 'react-select';
+import CustomSelectInput from '../../../components/common/CustomSelectInput';
 
-import { addSpaceLocation } from '../../../redux/actions';
+import { addClientBooking } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -37,93 +39,59 @@ const AddBookingModal = (props) => {
     toggleModal,
     intl,
     loading,
-    addlocation,
-    addSpaceLocationAction,
-    item,
+    customerData,
+    spaceData,
+    addClientBookingAction,
   } = props;
 
   const { messages } = intl;
 
-  const [activeFirstTab, setActiveFirstTab] = useState('1');
-  const [startBusinessHour, setStartBusinessHour] = useState(
-    new Date(moment().format('YYYY-MM-DDT09:00'))
-  );
-  const [endBusinessHour, setEndBusinessHour] = useState(
-    new Date(moment().format('YYYY-MM-DDT17:00'))
-  );
-  const [selectedTimezone, setSelectedTimezone] = useState({});
-  const [files, setFiles] = useState('');
+  const [selectedOptionLocation, setSelectedOptionLocation] = useState('');
+  const [locationListData, setLocationListData] = useState([]);
+  const [selectedOptionSpace, setSelectedOptionSpace] = useState('');
+  const [spaceListData, setSpaceListData] = useState([]);
 
-  const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
-
-  const [state, setState] = useState({
-    name: '',
-    unique_code: '',
-    description: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zipcode: '',
-  });
+  const [dateFrom, setDateFrom] = useState(moment().add(1, 'day').toDate());
+  const [dateTo, setDateTo] = useState();
 
   useLayoutEffect(() => {
-    if (item !== null) {
-      setState({
-        ...state,
-        name: item.name,
-        unique_code: item.unique_code,
-        description: item.description,
-        address: item.address,
-        city: item.city,
-        state: item.state,
-        country: item.country,
-        zipcode: item.zipcode,
-      });
-
-      setSelectedTimezone({ value: item.time_zone });
-      setStartBusinessHour(
-        new Date(moment(item.start_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
+    if (customerData !== null) {
+      let custData = [];
+      customerData.map((c) =>
+        custData.push({
+          label: `${c.first_name} ${c.last_name}`,
+          value: c.id,
+        })
       );
-      setEndBusinessHour(
-        new Date(moment(item.end_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
-      );
-      setCheckedPrimarySmall(item.is_open);
+      setLocationListData(custData);
     }
-  }, [item]);
 
-  const onChangeImage = (e) => {
-    setFiles(e.target.files[0]);
-  };
+    if (spaceData !== null) {
+      let custDatas = [];
+      spaceData.map((c) =>
+        custDatas.push({
+          label: `${c.name}`,
+          value: c.id,
+        })
+      );
 
-  const removeFile = () => {
-    setFiles('');
-    setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
-  };
-
-  const handleChangeValue = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setState({
-      ...state,
-      [name]: value,
-    });
-  };
+      setSpaceListData(custDatas);
+    }
+  }, [customerData, spaceData]);
 
   const handleSubmitLocation = () => {
-    // files === '' ? null : files.name
-
     const data = {
-      ...state,
-      image: null,
-      start_time: moment(startBusinessHour).format('HH:mm'),
-      end_time: moment(endBusinessHour).format('HH:mm'),
-      time_zone: selectedTimezone.value,
-      is_open: checkedPrimarySmall,
+      customer: selectedOptionLocation.value,
+      space: selectedOptionSpace.value,
+      start_time: moment(dateFrom).format('DD/MM/YYYY HH:mm'),
+      end_time: moment(dateTo).format('DD/MM/YYYY HH:mm'),
     };
 
-    if (item) addSpaceLocationAction({ ...data, id: item.id }, 'PUT');
-    else addSpaceLocationAction(data, 'POST');
+    console.log(data);
+
+    // if (item) addClientBookingAction({ ...data, id: item.id }, 'PUT');
+    // else
+    addClientBookingAction(data, 'POST');
   };
 
   return (
@@ -134,261 +102,75 @@ const AddBookingModal = (props) => {
       <ModalBody>
         <Row>
           <Colxx>
-            <Nav tabs>
-              <NavItem>
-                <NavLink
-                  to="#"
-                  location={{}}
-                  className={classnames({
-                    active: activeFirstTab === '1',
-                    'nav-link': true,
-                  })}
-                  onClick={() => {
-                    setActiveFirstTab('1');
-                  }}
-                >
-                  General
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  to="#"
-                  location={{}}
-                  className={classnames({
-                    active: activeFirstTab === '2',
-                    'nav-link': true,
-                  })}
-                  onClick={() => {
-                    setActiveFirstTab('2');
-                  }}
-                >
-                  Address
-                </NavLink>
-              </NavItem>
-            </Nav>
+            <Label className="form-group has-float-label">
+              <Select
+                components={{ Input: CustomSelectInput }}
+                className="react-select"
+                classNamePrefix="react-select"
+                name="location"
+                value={selectedOptionLocation}
+                onChange={setSelectedOptionLocation}
+                options={locationListData}
+              />
+              <span>
+                <IntlMessages id="label.location" />
+              </span>
+            </Label>
 
-            <TabContent activeTab={activeFirstTab}>
-              <TabPane tabId="1">
-                <Row>
-                  <Colxx sm="8">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        name="name"
-                        value={state.name}
-                        onChange={handleChangeValue}
-                        placeholder={messages['label.name']}
-                      />
-                      <span>
-                        <IntlMessages id="label.name" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                  <Colxx sm="4">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        name="unique_code"
-                        value={state.unique_code}
-                        onChange={handleChangeValue}
-                        placeholder={messages['label.unique_code']}
-                      />
-                      <span>
-                        <IntlMessages id="label.unique_code" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                </Row>
+            <Label className="form-group has-float-label">
+              <Select
+                components={{ Input: CustomSelectInput }}
+                className="react-select"
+                classNamePrefix="react-select"
+                name="space"
+                value={selectedOptionSpace}
+                onChange={setSelectedOptionSpace}
+                options={spaceListData}
+              />
+              <span>
+                <IntlMessages id="label.space" />
+              </span>
+            </Label>
 
-                <Label className="form-group has-float-label">
-                  <Input
-                    type="text"
-                    name="description"
-                    value={state.description}
-                    onChange={handleChangeValue}
-                    placeholder={messages['label.description']}
-                  />
-                  <span>
-                    <IntlMessages id="label.description" />
-                  </span>
+            <Row>
+              <Colxx>
+                <Label>
+                  <IntlMessages id="label.booking_date" />
                 </Label>
+              </Colxx>
+            </Row>
 
-                <Row>
-                  <Colxx>
-                    <Label>
-                      <IntlMessages id="label.business_hours" />
-                    </Label>
-                  </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx sm="6">
-                    <div className="form-group has-float-label">
-                      <DatePicker
-                        name="from_time"
-                        selected={startBusinessHour}
-                        onChange={(val) => setStartBusinessHour(val)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeFormat="HH:mm"
-                        timeIntervals={30}
-                        dateFormat="HH:mm"
-                        timeCaption="Time"
-                      />
-                    </div>
-                  </Colxx>
-                  <Colxx sm="6">
-                    <div className="form-group has-float-label">
-                      <DatePicker
-                        name="to_time"
-                        selected={endBusinessHour}
-                        onChange={(val) => setEndBusinessHour(val)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeFormat="HH:mm"
-                        timeIntervals={30}
-                        dateFormat="HH:mm"
-                        timeCaption="Time"
-                      />
-                    </div>
-                  </Colxx>
-                </Row>
-
+            <Row>
+              <Colxx sm="6">
                 <div className="form-group has-float-label">
-                  <TimezoneSelect
-                    value={selectedTimezone}
-                    onChange={setSelectedTimezone}
+                  <DatePicker
+                    name="start_time"
+                    selected={dateFrom}
+                    onChange={(val) => setDateFrom(val)}
+                    dateFormat="MMM dd, yyyy HH:mm"
+                    todayButton={messages['label.today']}
+                    minDate={moment().add(1, 'day').toDate()}
+                    showTimeSelect
+                    timeFormat="HH:mm"
                   />
-                  <span>
-                    <IntlMessages id="label.timezone" />
-                  </span>
                 </div>
-
-                <Row>
-                  <Colxx className="form-group">
-                    <Label className="mr-4">
-                      <IntlMessages id="label.image" />
-                    </Label>
-
-                    {files === '' ? (
-                      <Label className="custom-image-attach-inline">
-                        <Input
-                          type="file"
-                          id="fileupload"
-                          onChange={onChangeImage}
-                        />
-                        <i className="fa fa-cloud-upload mr-2" /> Upload
-                      </Label>
-                    ) : (
-                      <Label>
-                        <img
-                          src={URL.createObjectURL(files)}
-                          alt=""
-                          width="150"
-                        />
-                        <span
-                          onClick={removeFile}
-                          className="ml-3 cursor-pointer"
-                        >
-                          <i className="fa fa-times-circle fa-2x text-secondary" />
-                        </span>
-                      </Label>
-                    )}
-                  </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx className="form-group">
-                    <Switch
-                      className="custom-switch custom-switch-primary custom-switch-small mr-3"
-                      checked={checkedPrimarySmall}
-                      onChange={(primary) => setCheckedPrimarySmall(primary)}
-                    />
-                    <IntlMessages id="label.isopen" />
-                  </Colxx>
-                </Row>
-              </TabPane>
-              <TabPane tabId="2">
-                <Row>
-                  <Colxx>
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="textarea"
-                        name="address"
-                        value={state.address}
-                        onChange={handleChangeValue}
-                        placeholder={messages['label.address']}
-                      />
-                      <span>
-                        <IntlMessages id="label.address" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        name="city"
-                        value={state.city}
-                        onChange={handleChangeValue}
-                        placeholder={messages['label.city']}
-                      />
-                      <span>
-                        <IntlMessages id="label.city" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        name="state"
-                        value={state.state}
-                        onChange={handleChangeValue}
-                        placeholder={messages['label.state']}
-                      />
-                      <span>
-                        <IntlMessages id="label.state" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        name="zipcode"
-                        value={state.zipcode}
-                        onChange={handleChangeValue}
-                        placeholder={messages['label.zip']}
-                      />
-                      <span>
-                        <IntlMessages id="label.zip" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                  <Colxx sm="6">
-                    <Label className="form-group has-float-label">
-                      <Input
-                        type="text"
-                        name="country"
-                        value={state.country}
-                        onChange={handleChangeValue}
-                        placeholder={messages['label.country']}
-                      />
-                      <span>
-                        <IntlMessages id="label.country" />
-                      </span>
-                    </Label>
-                  </Colxx>
-                </Row>
-              </TabPane>
-            </TabContent>
+              </Colxx>
+              <Colxx sm="6">
+                <div className="form-group has-float-label">
+                  <DatePicker
+                    name="end_time"
+                    selected={dateTo}
+                    onChange={(val) => setDateTo(val)}
+                    dateFormat="MMM dd, yyyy HH:mm"
+                    todayButton={messages['label.today']}
+                    minDate={dateFrom || moment().toDate()}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    required
+                  />
+                </div>
+              </Colxx>
+            </Row>
           </Colxx>
         </Row>
       </ModalBody>
@@ -408,13 +190,13 @@ const AddBookingModal = (props) => {
   );
 };
 
-const mapStateToProps = ({ space }) => {
-  const { addlocation, loading } = space;
-  return { addlocation, loading };
+const mapStateToProps = ({ client }) => {
+  const { loading, booking, addBooking, error } = client;
+  return { loading, booking, addBooking, error };
 };
 
 export default injectIntl(
   connect(mapStateToProps, {
-    addSpaceLocationAction: addSpaceLocation,
+    addClientBookingAction: addClientBooking,
   })(AddBookingModal)
 );

@@ -1,15 +1,104 @@
-import React from 'react';
-import { injectIntl } from 'react-intl';
-import { Row } from 'reactstrap';
-import { Colxx } from '../../../components/common/CustomBootstrap';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 
-const ClientMembers = () => {
-  return (
-    <>
-      <Row>
-        <Colxx xxs="12">Customers</Colxx>
-      </Row>
-    </>
+import {
+  getClientCustomerList,
+  addClientCustomer,
+} from '../../../redux/actions';
+import { connect } from 'react-redux';
+
+import ListCustomerListing from '../../../containers/client/customers/ListCustomerListing';
+import AddCustomerModal from '../../../containers/client/customers/AddCustomerModal';
+import ListCustomerHeading from '../../../containers/client/customers/ListCustomerHeading';
+
+const pageSizes = [4, 8, 12, 20];
+
+const ClientCustomers = ({
+  match,
+  loading,
+  booking,
+  addBooking,
+  customer,
+  addCustomer,
+  error,
+  getClientCustomerListAction,
+  addClientCustomerAction,
+}) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedPageSize, setSelectedPageSize] = useState(8);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [totalItemCount, setTotalItemCount] = useState(0);
+  const [totalPage, setTotalPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [items, setItems] = useState([]);
+
+  const [modalId, setModalId] = useState(null);
+  // const [modalDeleteId, setModalDeleteId] = useState('');
+
+  useEffect(() => {
+    getClientCustomerListAction();
+  }, [getClientCustomerListAction]);
+
+  useLayoutEffect(() => {
+    console.log(customer);
+    if (customer?.data) {
+      setTotalItemCount(customer.data.count);
+      setItems(customer.data.results);
+    }
+  });
+
+  const startIndex = (currentPage - 1) * selectedPageSize;
+  const endIndex = currentPage * selectedPageSize;
+
+  return loading ? (
+    <div className="loading" />
+  ) : (
+    <div className="disable-text-selection">
+      <ListCustomerHeading
+        heading="menu.customers"
+        changePageSize={setSelectedPageSize}
+        selectedPageSize={selectedPageSize}
+        totalItemCount={totalItemCount}
+        match={match}
+        startIndex={startIndex}
+        endIndex={endIndex}
+        itemsLength={items ? items.length : 0}
+        onSearchKey={(e) => {
+          if (e.key === 'Enter') {
+            setSearch(e.target.value.toLowerCase());
+          }
+        }}
+        pageSizes={pageSizes}
+        toggleModal={() => setModalOpen(!modalOpen)}
+      />
+
+      <AddCustomerModal
+        modelTitle="pages.add-customer"
+        modalOpen={modalOpen}
+        toggleModal={() => setModalOpen(!modalOpen)}
+        item={modalId}
+      />
+
+      <ListCustomerListing
+        items={items}
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onChangePage={setCurrentPage}
+        toggleModal={() => {
+          return setModalOpen(!modalOpen), setModalId(modalId);
+        }}
+        setModalId={setModalId}
+        // setModalDeleteId={setModalDeleteId}
+      />
+    </div>
   );
 };
-export default injectIntl(ClientMembers);
+
+const mapStateToProps = ({ client }) => {
+  const { loading, booking, addBooking, customer, addCustomer, error } = client;
+  return { loading, booking, addBooking, customer, addCustomer, error };
+};
+
+export default connect(mapStateToProps, {
+  getClientCustomerListAction: getClientCustomerList,
+  addClientCustomerAction: addClientCustomer,
+})(ClientCustomers);

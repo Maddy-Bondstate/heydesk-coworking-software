@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 
-import { getClientBookingList, addClientBooking } from '../../../redux/actions';
+import {
+  getClientBookingList,
+  getClientCustomerList,
+  addClientBooking,
+  getSpaceMeetingList,
+} from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 import ListBookingListing from '../../../containers/client/bookings/ListBookingListing';
@@ -17,8 +22,11 @@ const ClientBookings = ({
   customer,
   addCustomer,
   error,
+  meeting,
   getClientBookingListAction,
   addClientBookingAction,
+  getSpaceMeetingListAction,
+  getClientCustomerListAction,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(8);
@@ -27,25 +35,37 @@ const ClientBookings = ({
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
   const [items, setItems] = useState([]);
-  // const [itemsLoca, setItemsLoca] = useState(false);
+  const [customerData, setCustomerData] = useState([]);
+  const [spaceData, setSpaceData] = useState([]);
 
-  const [modalId, setModalId] = useState(null);
-  const [modalDeleteId, setModalDeleteId] = useState('');
+  // const [modalId, setModalId] = useState(null);
+  // const [modalDeleteId, setModalDeleteId] = useState('');
 
   useEffect(() => {
     getClientBookingListAction();
-  }, [getClientBookingListAction]);
+    getClientCustomerListAction();
+    getSpaceMeetingListAction();
+  }, [
+    getClientBookingListAction,
+    getClientCustomerListAction,
+    getSpaceMeetingListAction,
+  ]);
 
   useLayoutEffect(() => {
     if (booking?.data) {
       setTotalItemCount(booking.data.count);
       setItems(booking.data.results);
     }
-    // if (!modalOpen) setModalId(null);
-    // if (modalDeleteId !== '') {
-    //   addSpaceLocationAction({ id: modalDeleteId }, 'DELETE');
-    //   setModalDeleteId('');
-    // }
+
+    if (customer?.data) {
+      setCustomerData(customer.data.results);
+    }
+
+    console.log('meeting', meeting);
+
+    if (meeting?.data) {
+      setSpaceData(meeting.data.results);
+    }
   });
 
   const startIndex = (currentPage - 1) * selectedPageSize;
@@ -77,7 +97,9 @@ const ClientBookings = ({
         modelTitle="pages.add-booking"
         modalOpen={modalOpen}
         toggleModal={() => setModalOpen(!modalOpen)}
-        item={modalId}
+        // item={modalId}
+        customerData={customerData}
+        spaceData={spaceData}
       />
 
       <ListBookingListing
@@ -85,22 +107,36 @@ const ClientBookings = ({
         currentPage={currentPage}
         totalPage={totalPage}
         onChangePage={setCurrentPage}
-        toggleModal={() => {
-          return setModalOpen(!modalOpen), setModalId(modalId);
-        }}
-        setModalId={setModalId}
-        setModalDeleteId={setModalDeleteId}
+        customerData={customerData}
+        spaceData={spaceData}
+        // toggleModal={() => {
+        //   return setModalOpen(!modalOpen);
+        //   // , setModalId(modalId);
+        // }}
+        // setModalId={setModalId}
+        // setModalDeleteId={setModalDeleteId}
       />
     </div>
   );
 };
 
-const mapStateToProps = ({ client }) => {
+const mapStateToProps = ({ client, space }) => {
   const { loading, booking, addBooking, customer, addCustomer, error } = client;
-  return { loading, booking, addBooking, customer, addCustomer, error };
+  const { meeting } = space;
+  return {
+    loading,
+    booking,
+    addBooking,
+    customer,
+    addCustomer,
+    error,
+    meeting,
+  };
 };
 
 export default connect(mapStateToProps, {
   getClientBookingListAction: getClientBookingList,
+  getClientCustomerListAction: getClientCustomerList,
+  getSpaceMeetingListAction: getSpaceMeetingList,
   addClientBookingAction: addClientBooking,
 })(ClientBookings);

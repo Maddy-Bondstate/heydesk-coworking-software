@@ -4,6 +4,8 @@ import {
   SPACE_GET_LOCATION_LIST,
   SPACE_ADD_LOCATION,
   SPACE_ADD_LOCATION_FLOOR,
+  SPACE_GET_MEETING_LIST,
+  SPACE_ADD_MEETING,
 } from '../actions';
 import {
   getSpaceLocationListSuccess,
@@ -12,6 +14,10 @@ import {
   addSpaceLocationError,
   addSpaceLocationFloorSuccess,
   addSpaceLocationFloorError,
+  getSpaceMeetingListSuccess,
+  getSpaceMeetingListError,
+  addSpaceMeetingSuccess,
+  addSpaceMeetingError,
 } from './actions';
 import { getCurrentUser } from '../../helpers/Utils';
 
@@ -167,7 +173,91 @@ export function* watchAddLocationFloor() {
 }
 
 ////////////----------- DESK -----------////////////
+
 ////////////----------- MEETING -----------////////////
+// --------- GET ---------//
+const getSpaceMeetingListRequest = async () => {
+  // eslint-disable-next-line no-return-await
+  return await axios
+    .get(
+      'https://hd-coworking.herokuapp.com/api/space/objects/list/',
+      axiosConfig
+    )
+    .then((response) => response)
+    .catch((error) => error);
+};
+
+function* getSpaceMeetingListItems() {
+  try {
+    const response = yield call(getSpaceMeetingListRequest);
+    yield put(getSpaceMeetingListSuccess(response));
+  } catch (error) {
+    yield put(getSpaceMeetingListError(error));
+  }
+}
+
+export function* watchGetMeetingList() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(SPACE_GET_MEETING_LIST, getSpaceMeetingListItems);
+}
+
+// --------- ADD ---------//
+const addSpaceMeetingRequest = async (data, method) => {
+  // eslint-disable-next-line no-return-await
+
+  if (method === 'POST') {
+    return await axios
+      .post(
+        'https://hd-coworking.herokuapp.com/api/space/objects/',
+        data,
+        axiosConfig
+      )
+      .then((response) => response)
+      .catch((error) => error);
+  }
+
+  if (method === 'PUT') {
+    const id = data.id;
+    delete data['id'];
+
+    return await axios
+      .put(
+        `https://hd-coworking.herokuapp.com/api/space/objects/update/${id}/`,
+        data,
+        axiosConfig
+      )
+      .then((response) => response)
+      .catch((error) => error);
+  }
+
+  if (method === 'DELETE') {
+    const id = data.id;
+    delete data['id'];
+
+    return await axios
+      .delete(
+        `https://hd-coworking.herokuapp.com/api/space/objects/update/${id}/`,
+        axiosConfig
+      )
+      .then((response) => response)
+      .catch((error) => error);
+  }
+};
+
+function* addSpaceMeeting({ payload, method }) {
+  try {
+    const response = yield call(addSpaceMeetingRequest, payload, method);
+    yield put(addSpaceMeetingSuccess(response));
+  } catch (error) {
+    yield put(addSpaceMeetingError(error));
+  }
+}
+
+export function* watchAddMeeting() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(SPACE_ADD_MEETING, addSpaceMeeting);
+}
+
 ////////////----------- PRIVATE -----------////////////
 ////////////----------- CONFERENCE -----------////////////
 
@@ -176,5 +266,7 @@ export default function* rootSaga() {
     fork(watchGetLocationList),
     fork(watchAddLocation),
     fork(watchAddLocationFloor),
+    fork(watchGetMeetingList),
+    fork(watchAddMeeting),
   ]);
 }

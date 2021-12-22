@@ -12,10 +12,9 @@ const ListCustomerListing = ({
   currentPage,
   totalPage,
   toggleModal,
-  toggleFloor,
   onChangePage,
   setModalId,
-  setModalDeleteId,
+  // setModalDeleteId,
 }) => {
   return (
     <Row>
@@ -26,9 +25,8 @@ const ListCustomerListing = ({
             item={item}
             collect={collect}
             toggleModal={toggleModal}
-            toggleFloor={toggleFloor}
             setModalId={setModalId}
-            setModalDeleteId={setModalDeleteId}
+            // setModalDeleteId={setModalDeleteId}
           />
         );
       })}
