@@ -206,13 +206,38 @@ const TopNav = ({
         </div>
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
-            <DropdownToggle className="p-0" color="empty">
+            <DropdownToggle
+              className="p-0 d-inline-flex align-items-center"
+              color="empty"
+            >
               <span className="name mr-1 font-weight-bold text-capitalize">
                 {currentUser.first_name} {currentUser.last_name}
               </span>
-              <span>
-                <img alt="Profile" src="/assets/img/profiles/l-2.jpg" />
-              </span>
+              <div className="d-inline-block">
+                {currentUser.profile ? (
+                  <img alt="Profile" src="/assets/img/profiles/l-2.jpg" />
+                ) : (
+                  <div
+                    className="d-inline-flex align-items-center justify-content-center"
+                    style={{
+                      marginLeft: 10,
+                      borderRadius: 30,
+                      width: 40,
+                      background: '#eee',
+                      height: 40,
+                      fontWeight: 'bolder',
+                      fontSize: 16,
+                      color: '#ff3848',
+                      border: '1px solid #f1f1f1',
+                    }}
+                  >
+                    {currentUser.first_name[0].toUpperCase()}
+                    {currentUser.last_name !== ''
+                      ? currentUser.last_name[0].toUpperCase()
+                      : currentUser.first_name[1].toUpperCase()}
+                  </div>
+                )}
+              </div>
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
               <DropdownItem>

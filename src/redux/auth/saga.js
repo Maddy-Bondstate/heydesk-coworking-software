@@ -44,7 +44,9 @@ function* loginWithEmailPassword({ payload }) {
       const item = { token: loginUser.data.token, ...loginUser.data.user };
       setCurrentUser(item);
       yield put(loginUserSuccess(item));
-      history.push(adminRoot);
+      // history.push(adminRoot);
+
+      window.location.href = adminRoot;
     } else {
       yield put(loginUserError('Username or password does not match'));
     }
@@ -88,14 +90,15 @@ function* registerWithEmailPassword({ payload }) {
       password
     );
 
-    if (registerUser.status === 200) {
+    if (registerUser.status === 201) {
       const item = {
         token: registerUser.data.token,
         ...registerUser.data.user,
       };
       setCurrentUser(item);
       yield put(registerUserSuccess(item));
-      history.push(adminRoot);
+      // history.push(adminRoot);
+      window.location.href = adminRoot;
     } else {
       yield put(registerUserError('Email is already registered'));
     }

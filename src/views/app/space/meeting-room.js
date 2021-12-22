@@ -15,6 +15,9 @@ const pageSizes = [4, 8, 12, 20];
 const SpaceMeetingRoom = ({
   match,
   location,
+  type,
+  heading,
+  modelTitle,
   meeting,
   getSpaceMeetingListAction,
   addSpaceMeetingAction,
@@ -33,16 +36,17 @@ const SpaceMeetingRoom = ({
   const [modalDeleteId, setModalDeleteId] = useState('');
 
   useEffect(() => {
-    getSpaceMeetingListAction();
+    setIsLoaded(false);
+    getSpaceMeetingListAction({ type });
     getSpaceLocationListAction();
-  }, [getSpaceMeetingListAction, getSpaceLocationListAction]);
+  }, [getSpaceMeetingListAction, getSpaceLocationListAction, type]);
 
   useLayoutEffect(() => {
     if (!modalOpen) setDataEdit(null);
 
     if (meeting?.data) {
-      setIsLoaded(true);
       setItems(meeting.data.results);
+      setIsLoaded(true);
     }
 
     if (location?.data) {
@@ -63,7 +67,8 @@ const SpaceMeetingRoom = ({
   ) : (
     <div className="disable-text-selection">
       <ListMeetingRoomHeading
-        heading="menu.meeting-rooms"
+        heading={heading}
+        modelTitle={modelTitle}
         changePageSize={setSelectedPageSize}
         selectedPageSize={selectedPageSize}
         totalItemCount={totalItemCount}
@@ -81,11 +86,12 @@ const SpaceMeetingRoom = ({
       />
       {locationData && (
         <AddMeetingRoomModal
-          modelTitle="space.add-meeting-room"
+          modelTitle={modelTitle}
           modalOpen={modalOpen}
           toggleModal={() => setModalOpen(!modalOpen)}
           item={dataEdit}
           locationData={locationData}
+          type={type}
         />
       )}
 

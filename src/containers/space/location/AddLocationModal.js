@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import {
   Row,
@@ -36,9 +36,11 @@ const AddLocationModal = (props) => {
     modalOpen,
     toggleModal,
     intl,
-    loading,
+    // loading,
     addSpaceLocationAction,
     item,
+    // addlocation,
+    // handleGetSpaceLocation,
   } = props;
 
   const { messages } = intl;
@@ -51,7 +53,7 @@ const AddLocationModal = (props) => {
     new Date(moment().format('YYYY-MM-DDT17:00'))
   );
   const [selectedTimezone, setSelectedTimezone] = useState({});
-  const [files, setFiles] = useState('');
+  const [files, setFiles] = useState(null);
 
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
 
@@ -67,13 +69,14 @@ const AddLocationModal = (props) => {
   });
 
   useLayoutEffect(() => {
+    // console.log(item);
     if (item !== null) {
       setState({
         ...state,
         name: item.name,
         unique_code: item.unique_code,
         description: item.description,
-        address: item.address,
+        address: item.address ? item.address : '',
         city: item.city,
         state: item.state,
         country: item.country,
@@ -81,22 +84,26 @@ const AddLocationModal = (props) => {
       });
 
       setSelectedTimezone({ value: item.time_zone });
-      setStartBusinessHour(
-        new Date(moment(item.start_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
-      );
-      setEndBusinessHour(
-        new Date(moment(item.end_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
-      );
+      item.start_time &&
+        setStartBusinessHour(
+          new Date(
+            moment(item.start_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm')
+          )
+        );
+      item.end_time &&
+        setEndBusinessHour(
+          new Date(moment(item.end_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
+        );
       setCheckedPrimarySmall(item.is_open);
     }
-  }, [item, state]);
+  }, [item]);
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
   };
 
   const removeFile = () => {
-    setFiles('');
+    setFiles(null);
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
@@ -110,11 +117,9 @@ const AddLocationModal = (props) => {
   };
 
   const handleSubmitLocation = () => {
-    // files === '' ? null : files.name
-
     const data = {
       ...state,
-      image: null,
+      image: files,
       start_time: moment(startBusinessHour).format('HH:mm'),
       end_time: moment(endBusinessHour).format('HH:mm'),
       time_zone: selectedTimezone.value,
@@ -269,7 +274,7 @@ const AddLocationModal = (props) => {
                       <IntlMessages id="label.image" />
                     </Label>
 
-                    {files === '' ? (
+                    {!files ? (
                       <Label className="custom-image-attach-inline">
                         <Input
                           type="file"
@@ -395,21 +400,21 @@ const AddLocationModal = (props) => {
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        {loading ? (
+        {/* {loading ? (
           <div className="loading" />
-        ) : (
-          <Button color="primary" size="sm" onClick={handleSubmitLocation}>
-            <IntlMessages id="model.add" />
-          </Button>
-        )}
+        ) : ( */}
+        <Button color="primary" size="sm" onClick={handleSubmitLocation}>
+          <IntlMessages id="model.add" />
+        </Button>
+        {/* )} */}
       </ModalFooter>
     </Modal>
   );
 };
 
 const mapStateToProps = ({ space }) => {
-  const { addlocation, loading } = space;
-  return { addlocation, loading };
+  const { addlocation } = space;
+  return { addlocation };
 };
 
 export default injectIntl(

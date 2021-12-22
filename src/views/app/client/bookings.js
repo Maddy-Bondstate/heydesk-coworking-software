@@ -15,6 +15,7 @@ import ListBookingHeading from '../../../containers/client/bookings/ListBookingH
 const pageSizes = [4, 8, 12, 20];
 
 const ClientBookings = ({
+  history,
   match,
   loading,
   booking,
@@ -60,7 +61,12 @@ const ClientBookings = ({
     if (meeting?.data) {
       setSpaceData(meeting.data.results);
     }
-  }, [booking, customer, meeting]);
+
+    if (match.params.id === 'add') {
+      history.push('/app/client/bookings');
+      setModalOpen(true);
+    }
+  }, [booking, customer, meeting, match]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;

@@ -79,7 +79,7 @@ const AddFloorModal = (props) => {
 
       setLocationListData(selectData);
     }
-  }, [item, locationList, state]);
+  }, [item, locationList]);
 
   const handleChangeValue = (e) => {
     const name = e.target.name;

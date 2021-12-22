@@ -60,7 +60,7 @@ const ListLocationHeading = ({
           <Breadcrumb match={match} />
         </div>
 
-        <div className="mb-2">
+        {/* <div className="mb-2">
           <Button
             color="empty"
             className="pt-0 pl-0 d-inline-block d-md-none"
@@ -106,7 +106,7 @@ const ListLocationHeading = ({
               </UncontrolledDropdown>
             </div>
           </Collapse>
-        </div>
+        </div> */}
         <Separator className="mb-5" />
       </Colxx>
     </Row>

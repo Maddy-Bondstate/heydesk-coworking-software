@@ -98,6 +98,7 @@ const SpaceLocations = ({
         modalOpen={modalOpen}
         toggleModal={() => setModalOpen(!modalOpen)}
         item={modalId}
+        // handleGetSpaceLocation={handleGetSpaceLocation}
       />
       {items?.length > 0 && (
         <AddFloorModal

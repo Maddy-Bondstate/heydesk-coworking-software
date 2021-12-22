@@ -39,6 +39,7 @@ const AddMeetingRoomModal = ({
   locationData,
   loading,
   item,
+  type,
   addSpaceMeetingAction,
 }) => {
   const { messages } = intl;
@@ -53,7 +54,7 @@ const AddMeetingRoomModal = ({
   const [floorListData, setFloorListData] = useState([]);
 
   const [state, setState] = useState({
-    type: 5,
+    type: type,
     name: '',
     area: '',
     size: '',
@@ -130,7 +131,7 @@ const AddMeetingRoomModal = ({
 
       setLocationListData(selectData);
     }
-  }, [item, state, locationData]);
+  }, [item, locationData]);
 
   const handleFloorData = ({ value }) => {
     const objIndex = locationData.findIndex((obj) => obj.id === value);

@@ -59,8 +59,11 @@ export function* watchGetLocationList() {
 // --------- ADD ---------//
 const addSpaceLocationRequest = async (data, method) => {
   // eslint-disable-next-line no-return-await
-
   if (method === 'POST') {
+    // const form_data = new FormData();
+    // for (var key in data) {
+    //   form_data.append(key, data[key]);
+    // }
     return await axios
       .post(`${api}space/location/`, data, axiosConfig)
       .then((response) => response)
@@ -70,6 +73,11 @@ const addSpaceLocationRequest = async (data, method) => {
   if (method === 'PUT') {
     const id = data.id;
     delete data['id'];
+
+    // const form_data = new FormData();
+    // for (var key in data) {
+    //   form_data.append(key, data[key]);
+    // }
 
     return await axios
       .put(`${api}space/location/update/${id}/`, data, axiosConfig)
@@ -92,6 +100,7 @@ function* addSpaceLocation({ payload, method }) {
   try {
     const response = yield call(addSpaceLocationRequest, payload, method);
     yield put(addSpaceLocationSuccess(response));
+    window.location.reload();
   } catch (error) {
     yield put(addSpaceLocationError(error));
   }
@@ -138,6 +147,7 @@ function* addSpaceLocationFloor({ payload, method }) {
   try {
     const response = yield call(addSpaceLocationFloorRequest, payload, method);
     yield put(addSpaceLocationFloorSuccess(response));
+    window.location.reload();
   } catch (error) {
     yield put(addSpaceLocationFloorError(error));
   }
@@ -152,17 +162,20 @@ export function* watchAddLocationFloor() {
 
 ////////////----------- MEETING -----------////////////
 // --------- GET ---------//
-const getSpaceMeetingListRequest = async () => {
+const getSpaceMeetingListRequest = async (data) => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(`${api}space/objects/list/`, axiosConfig)
+    .get(`${api}space/objects/list/`, {
+      params: data,
+      headers: axiosConfig.headers,
+    })
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* getSpaceMeetingListItems() {
+function* getSpaceMeetingListItems({ payload }) {
   try {
-    const response = yield call(getSpaceMeetingListRequest);
+    const response = yield call(getSpaceMeetingListRequest, payload);
     yield put(getSpaceMeetingListSuccess(response));
   } catch (error) {
     yield put(getSpaceMeetingListError(error));
@@ -210,6 +223,8 @@ function* addSpaceMeeting({ payload, method }) {
   try {
     const response = yield call(addSpaceMeetingRequest, payload, method);
     yield put(addSpaceMeetingSuccess(response));
+
+    window.location.reload();
   } catch (error) {
     yield put(addSpaceMeetingError(error));
   }

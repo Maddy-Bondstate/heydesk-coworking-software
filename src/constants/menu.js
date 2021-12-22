@@ -74,12 +74,12 @@ const data = [
         to: `${adminRoot}/client/bookings`,
         // roles: [UserRole.Admin],
       },
-      {
-        icon: 'simple-icon-organization',
-        label: 'menu.companies',
-        to: `${adminRoot}/client/companies`,
-        // roles: [UserRole.Admin],
-      },
+      // {
+      //   icon: 'simple-icon-organization',
+      //   label: 'menu.companies',
+      //   to: `${adminRoot}/client/companies`,
+      //   // roles: [UserRole.Admin],
+      // },
       {
         icon: 'simple-icon-people',
         label: 'menu.customers',

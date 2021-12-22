@@ -15,6 +15,10 @@ const Client = ({ match }) => (
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/bookings`} />
       <Route
+        path={`${match.url}/bookings/:id`}
+        render={(props) => <ClientBookings {...props} />}
+      />
+      <Route
         path={`${match.url}/bookings`}
         render={(props) => <ClientBookings {...props} />}
       />

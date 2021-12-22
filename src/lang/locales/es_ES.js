@@ -178,6 +178,9 @@ module.exports = {
   'space.add-location': 'Add Location',
   'space.add-floor': 'Add Floor',
   'space.add-meeting-room': 'Add Meeting Room',
+  'space.add-private-cabin': 'Add Private Cabin',
+  'space.add-conference-room': 'Add Conference Room',
+  'space.add-desk': 'Add Desk',
 
   /* LABEL */
   'label.name': 'Name',

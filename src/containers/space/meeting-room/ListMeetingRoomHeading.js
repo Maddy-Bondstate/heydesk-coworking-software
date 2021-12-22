@@ -27,6 +27,7 @@ const ListMeetingRoomHeading = ({
   // pageSizes,
   toggleModal,
   heading,
+  modelTitle,
 }) => {
   // const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   // const { messages } = intl;
@@ -45,7 +46,7 @@ const ListMeetingRoomHeading = ({
               className="top-right-button mr-2"
               onClick={() => toggleModal()}
             >
-              <IntlMessages id="space.add-meeting-room" />
+              <IntlMessages id={modelTitle} />
             </Button>
           </div>
           <Breadcrumb match={match} />

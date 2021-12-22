@@ -23,7 +23,7 @@ const DashboardCalendar = React.lazy(() =>
 const Dashboards = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
-      <Redirect exact from={`${match.url}/`} to={`${match.url}/overview`} />
+      <Redirect exact from={`${match.url}/`} to={`${match.url}/calendar`} />
       <Route
         path={`${match.url}/overview`}
         render={(props) => <DashboardOverview {...props} />}

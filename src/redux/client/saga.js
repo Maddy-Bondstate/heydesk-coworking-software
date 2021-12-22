@@ -89,6 +89,7 @@ function* addClientBooking({ payload, method }) {
   try {
     const response = yield call(addClientBookingRequest, payload, method);
     yield put(addClientBookingSuccess(response));
+    window.location.reload();
   } catch (error) {
     yield put(addClientBookingError(error));
   }
@@ -160,6 +161,7 @@ function* addClientCustomer({ payload, method }) {
   try {
     const response = yield call(addClientCustomerRequest, payload, method);
     yield put(addClientCustomerSuccess(response));
+    window.location.reload();
   } catch (error) {
     yield put(addClientCustomerError(error));
   }

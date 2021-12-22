@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Card, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardBody, CardTitle, Button } from 'reactstrap';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 
@@ -45,6 +45,14 @@ const CalendarCard = ({
       <CardBody>
         <CardTitle>
           <IntlMessages id="dashboards.calendar" />
+          <Button
+            color="primary"
+            className="ml-4 text-small"
+            style={{ padding: '8px 15px' }}
+            onClick={() => (window.location.href = '/app/client/bookings/add')}
+          >
+            <IntlMessages id="pages.add-booking" />
+          </Button>
         </CardTitle>
         <Calendar
           localizer={localizer}

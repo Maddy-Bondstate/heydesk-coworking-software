@@ -70,8 +70,9 @@ export const addSpaceLocationFloorError = (error) => ({
 
 // ------------- MEETING ROOM ------------- //
 // GET
-export const getSpaceMeetingList = () => ({
+export const getSpaceMeetingList = (data) => ({
   type: SPACE_GET_MEETING_LIST,
+  payload: data,
 });
 
 export const getSpaceMeetingListSuccess = (items) => ({
