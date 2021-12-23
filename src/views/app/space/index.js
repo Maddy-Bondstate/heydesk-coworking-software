@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { ProtectedRoute } from '../../../helpers/authHelper';
 
 const SpaceLocations = React.lazy(() =>
   import(/* webpackChunkName: "space-locations" */ './locations')
 );
-
 const SpaceMeetingRoom = React.lazy(() =>
   import(/* webpackChunkName: "space-meeting-room" */ './meeting-room')
 );
@@ -13,54 +13,51 @@ const Space = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/locations`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/locations`}
-        render={(props) => <SpaceLocations {...props} />}
+        component={SpaceLocations}
       />
-      <Route
+
+      <ProtectedRoute
         path={`${match.url}/desks`}
-        render={(props) => (
-          <SpaceMeetingRoom
-            {...props}
-            type={1}
-            heading="menu.desks"
-            modelTitle="space.add-desk"
-          />
-        )}
+        component={SpaceMeetingRoom}
+        initialLoad={{
+          type: 1,
+          heading: 'menu.desks',
+          modelTitle: 'space.add-desk',
+        }}
       />
-      <Route
+
+      <ProtectedRoute
         path={`${match.url}/meeting-room`}
-        render={(props) => (
-          <SpaceMeetingRoom
-            {...props}
-            type={5}
-            heading="menu.meeting-rooms"
-            modelTitle="space.add-meeting-room"
-          />
-        )}
+        component={SpaceMeetingRoom}
+        initialLoad={{
+          type: 5,
+          heading: 'menu.meeting-rooms',
+          modelTitle: 'space.add-meeting-room',
+        }}
       />
-      <Route
+
+      <ProtectedRoute
         path={`${match.url}/private-cabins`}
-        render={(props) => (
-          <SpaceMeetingRoom
-            {...props}
-            type={4}
-            heading="menu.private-cabins"
-            modelTitle="space.add-private-cabin"
-          />
-        )}
+        component={SpaceMeetingRoom}
+        initialLoad={{
+          type: 4,
+          heading: 'menu.private-cabins',
+          modelTitle: 'space.add-private-cabin',
+        }}
       />
-      <Route
+
+      <ProtectedRoute
         path={`${match.url}/conference-room`}
-        render={(props) => (
-          <SpaceMeetingRoom
-            {...props}
-            type={6}
-            heading="menu.conference-room"
-            modelTitle="space.add-conference-room"
-          />
-        )}
+        component={SpaceMeetingRoom}
+        initialLoad={{
+          type: 6,
+          heading: 'menu.conference-room',
+          modelTitle: 'space.add-conference-room',
+        }}
       />
+
       <Redirect to="/error" />
     </Switch>
   </Suspense>

@@ -19,32 +19,41 @@ import {
   addSpaceMeetingSuccess,
   addSpaceMeetingError,
 } from './actions';
-import { getCurrentUser } from '../../helpers/Utils';
+// import { getCurrentUser } from '../../helpers/Utils';
 import { api } from '../../constants/defaultValues';
 
-const currentUser = getCurrentUser();
-const token = `JWT ${currentUser?.token}`;
+// const currentUser = getCurrentUser();
+// const token = `JWT ${currentUser?.token}`;
 
-const axiosConfig = {
-  headers: {
-    Authorization: token,
-  },
+// const axiosConfig = {
+//   headers: {
+//     Authorization: token,
+//   },
+// };
+
+const axiosConfig = (token) => {
+  return {
+    headers: {
+      Authorization: token,
+    },
+  };
 };
 
-////////////----------- LOCATION -----------////////////
+//--------------------- LOCATION ---------------------//
 
-// --------- GET ---------//
-const getSpaceLocationListRequest = async () => {
+// GET
+const getSpaceLocationListRequest = async (token) => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(`${api}space/location/list/`, axiosConfig)
+    .get(`${api}space/location/list/`, axiosConfig(token))
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* getSpaceLocationListItems() {
+function* getSpaceLocationListItems(action) {
   try {
-    const response = yield call(getSpaceLocationListRequest);
+    const { token } = action;
+    const response = yield call(getSpaceLocationListRequest, token);
     yield put(getSpaceLocationListSuccess(response));
   } catch (error) {
     yield put(getSpaceLocationListError(error));
@@ -57,7 +66,7 @@ export function* watchGetLocationList() {
 }
 
 // --------- ADD ---------//
-const addSpaceLocationRequest = async (data, method) => {
+const addSpaceLocationRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
   if (method === 'POST') {
     // const form_data = new FormData();
@@ -65,7 +74,7 @@ const addSpaceLocationRequest = async (data, method) => {
     //   form_data.append(key, data[key]);
     // }
     return await axios
-      .post(`${api}space/location/`, data, axiosConfig)
+      .post(`${api}space/location/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -80,7 +89,7 @@ const addSpaceLocationRequest = async (data, method) => {
     // }
 
     return await axios
-      .put(`${api}space/location/update/${id}/`, data, axiosConfig)
+      .put(`${api}space/location/update/${id}/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -90,15 +99,21 @@ const addSpaceLocationRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(`${api}space/location/update/${id}/`, axiosConfig)
+      .delete(`${api}space/location/update/${id}/`, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
 };
 
-function* addSpaceLocation({ payload, method }) {
+function* addSpaceLocation(action) {
   try {
-    const response = yield call(addSpaceLocationRequest, payload, method);
+    const { payload, token, method } = action;
+    const response = yield call(
+      addSpaceLocationRequest,
+      payload,
+      token,
+      method
+    );
     yield put(addSpaceLocationSuccess(response));
     window.location.reload();
   } catch (error) {
@@ -112,12 +127,12 @@ export function* watchAddLocation() {
 }
 
 // --------- ADD FLOOR ---------//
-const addSpaceLocationFloorRequest = async (data, method) => {
+const addSpaceLocationFloorRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
 
   if (method === 'POST') {
     return await axios
-      .post(`${api}space/floor/`, data, axiosConfig)
+      .post(`${api}space/floor/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -127,7 +142,7 @@ const addSpaceLocationFloorRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(`${api}space/floor/update/${id}/`, data, axiosConfig)
+      .put(`${api}space/floor/update/${id}/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -137,15 +152,21 @@ const addSpaceLocationFloorRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(`${api}space/floor/update/${id}/`, axiosConfig)
+      .delete(`${api}space/floor/update/${id}/`, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
 };
 
-function* addSpaceLocationFloor({ payload, method }) {
+function* addSpaceLocationFloor(action) {
   try {
-    const response = yield call(addSpaceLocationFloorRequest, payload, method);
+    const { payload, token, method } = action;
+    const response = yield call(
+      addSpaceLocationFloorRequest,
+      payload,
+      token,
+      method
+    );
     yield put(addSpaceLocationFloorSuccess(response));
     window.location.reload();
   } catch (error) {
@@ -162,20 +183,23 @@ export function* watchAddLocationFloor() {
 
 ////////////----------- MEETING -----------////////////
 // --------- GET ---------//
-const getSpaceMeetingListRequest = async (data) => {
+const getSpaceMeetingListRequest = async (data, token) => {
   // eslint-disable-next-line no-return-await
   return await axios
     .get(`${api}space/objects/list/`, {
       params: data,
-      headers: axiosConfig.headers,
+      headers: {
+        Authorization: token,
+      },
     })
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* getSpaceMeetingListItems({ payload }) {
+function* getSpaceMeetingListItems(action) {
   try {
-    const response = yield call(getSpaceMeetingListRequest, payload);
+    const { payload, token } = action;
+    const response = yield call(getSpaceMeetingListRequest, payload, token);
     yield put(getSpaceMeetingListSuccess(response));
   } catch (error) {
     yield put(getSpaceMeetingListError(error));
@@ -188,12 +212,12 @@ export function* watchGetMeetingList() {
 }
 
 // --------- ADD ---------//
-const addSpaceMeetingRequest = async (data, method) => {
+const addSpaceMeetingRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
 
   if (method === 'POST') {
     return await axios
-      .post(`${api}space/objects/`, data, axiosConfig)
+      .post(`${api}space/objects/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -203,7 +227,7 @@ const addSpaceMeetingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(`${api}space/objects/update/${id}/`, data, axiosConfig)
+      .put(`${api}space/objects/update/${id}/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -213,15 +237,16 @@ const addSpaceMeetingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(`${api}space/objects/update/${id}/`, axiosConfig)
+      .delete(`${api}space/objects/update/${id}/`, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
 };
 
-function* addSpaceMeeting({ payload, method }) {
+function* addSpaceMeeting(action) {
   try {
-    const response = yield call(addSpaceMeetingRequest, payload, method);
+    const { payload, token, method } = action;
+    const response = yield call(addSpaceMeetingRequest, payload, token, method);
     yield put(addSpaceMeetingSuccess(response));
 
     window.location.reload();

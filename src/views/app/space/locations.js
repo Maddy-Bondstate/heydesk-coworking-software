@@ -15,12 +15,13 @@ const pageSizes = [4, 8, 12, 20];
 
 const SpaceLocations = ({
   match,
+  token,
   location,
-  loading,
   getSpaceLocationListAction,
   addSpaceLocationAction,
   addSpaceLocationFloorAction,
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(8);
   const [modalOpen, setModalOpen] = useState(false);
@@ -36,25 +37,27 @@ const SpaceLocations = ({
   const [modalDeleteIds, setModalDeleteIds] = useState('');
 
   useEffect(() => {
-    getSpaceLocationListAction();
-  }, [getSpaceLocationListAction]);
+    setIsLoaded(false);
+    getSpaceLocationListAction(token);
+  }, [getSpaceLocationListAction, token]);
 
   useLayoutEffect(() => {
     if (location?.data) {
       setTotalItemCount(location.data.count);
       setItems(location.data.results);
+      setIsLoaded(true);
     }
 
     if (!modalOpen) setModalId(null);
     if (!floorOpen) setFloorModalOpen(null);
 
     if (modalDeleteId !== '') {
-      addSpaceLocationAction({ id: modalDeleteId }, 'DELETE');
+      addSpaceLocationAction({ id: modalDeleteId }, token, 'DELETE');
       setModalDeleteId('');
     }
 
     if (modalDeleteIds !== '') {
-      addSpaceLocationFloorAction({ id: modalDeleteIds }, 'DELETE');
+      addSpaceLocationFloorAction({ id: modalDeleteIds }, token, 'DELETE');
       setModalDeleteIds('');
     }
   }, [
@@ -65,12 +68,13 @@ const SpaceLocations = ({
     modalDeleteIds,
     addSpaceLocationAction,
     addSpaceLocationFloorAction,
+    token,
   ]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return loading ? (
+  return !isLoaded ? (
     <div className="loading" />
   ) : (
     <div className="disable-text-selection">
@@ -98,7 +102,6 @@ const SpaceLocations = ({
         modalOpen={modalOpen}
         toggleModal={() => setModalOpen(!modalOpen)}
         item={modalId}
-        // handleGetSpaceLocation={handleGetSpaceLocation}
       />
       {items?.length > 0 && (
         <AddFloorModal

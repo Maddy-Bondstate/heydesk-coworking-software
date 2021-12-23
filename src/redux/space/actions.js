@@ -19,8 +19,9 @@ import {
 
 // ------------- LOCATION ------------- //
 // GET
-export const getSpaceLocationList = () => ({
+export const getSpaceLocationList = (token) => ({
   type: SPACE_GET_LOCATION_LIST,
+  token: token,
 });
 
 export const getSpaceLocationListSuccess = (items) => ({
@@ -34,9 +35,10 @@ export const getSpaceLocationListError = (error) => ({
 });
 
 // ADD
-export const addSpaceLocation = (data, method) => ({
+export const addSpaceLocation = (data, token, method) => ({
   type: SPACE_ADD_LOCATION,
   payload: data,
+  token: token,
   method,
 });
 
@@ -52,9 +54,10 @@ export const addSpaceLocationError = (error) => ({
 
 // ------------- FLOOR ------------- //
 // ADD
-export const addSpaceLocationFloor = (data, method) => ({
+export const addSpaceLocationFloor = (data, token, method) => ({
   type: SPACE_ADD_LOCATION_FLOOR,
   payload: data,
+  token: token,
   method,
 });
 
@@ -70,9 +73,10 @@ export const addSpaceLocationFloorError = (error) => ({
 
 // ------------- MEETING ROOM ------------- //
 // GET
-export const getSpaceMeetingList = (data) => ({
+export const getSpaceMeetingList = (data, token) => ({
   type: SPACE_GET_MEETING_LIST,
   payload: data,
+  token: token,
 });
 
 export const getSpaceMeetingListSuccess = (items) => ({
@@ -86,9 +90,10 @@ export const getSpaceMeetingListError = (error) => ({
 });
 
 // ADD
-export const addSpaceMeeting = (data, method) => ({
+export const addSpaceMeeting = (data, token, method) => ({
   type: SPACE_ADD_MEETING,
   payload: data,
+  token: token,
   method,
 });
 

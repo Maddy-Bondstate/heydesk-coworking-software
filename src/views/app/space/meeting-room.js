@@ -14,10 +14,9 @@ const pageSizes = [4, 8, 12, 20];
 
 const SpaceMeetingRoom = ({
   match,
+  token,
+  initialLoad,
   location,
-  type,
-  heading,
-  modelTitle,
   meeting,
   getSpaceMeetingListAction,
   addSpaceMeetingAction,
@@ -37,9 +36,17 @@ const SpaceMeetingRoom = ({
 
   useEffect(() => {
     setIsLoaded(false);
-    getSpaceMeetingListAction({ type });
-    getSpaceLocationListAction();
-  }, [getSpaceMeetingListAction, getSpaceLocationListAction, type]);
+    const data = {
+      type: initialLoad.type,
+    };
+    getSpaceMeetingListAction(data, token);
+    getSpaceLocationListAction(token);
+  }, [
+    getSpaceMeetingListAction,
+    getSpaceLocationListAction,
+    token,
+    initialLoad,
+  ]);
 
   useLayoutEffect(() => {
     if (!modalOpen) setDataEdit(null);
@@ -54,10 +61,18 @@ const SpaceMeetingRoom = ({
     }
 
     if (modalDeleteId !== '') {
-      addSpaceMeetingAction({ id: modalDeleteId }, 'DELETE');
+      const data = { id: modalDeleteId };
+      addSpaceMeetingAction(data, token, 'DELETE');
       setModalDeleteId('');
     }
-  }, [modalOpen, meeting, location, modalDeleteId, addSpaceMeetingAction]);
+  }, [
+    modalOpen,
+    meeting,
+    location,
+    token,
+    modalDeleteId,
+    addSpaceMeetingAction,
+  ]);
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -67,8 +82,8 @@ const SpaceMeetingRoom = ({
   ) : (
     <div className="disable-text-selection">
       <ListMeetingRoomHeading
-        heading={heading}
-        modelTitle={modelTitle}
+        heading={initialLoad.heading}
+        modelTitle={initialLoad.modelTitle}
         changePageSize={setSelectedPageSize}
         selectedPageSize={selectedPageSize}
         totalItemCount={totalItemCount}
@@ -86,12 +101,12 @@ const SpaceMeetingRoom = ({
       />
       {locationData && (
         <AddMeetingRoomModal
-          modelTitle={modelTitle}
+          modelTitle={initialLoad.modelTitle}
           modalOpen={modalOpen}
           toggleModal={() => setModalOpen(!modalOpen)}
           item={dataEdit}
           locationData={locationData}
-          type={type}
+          type={initialLoad.type}
         />
       )}
 
