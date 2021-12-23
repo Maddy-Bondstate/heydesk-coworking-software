@@ -44,9 +44,9 @@ function* loginWithEmailPassword({ payload }) {
       const item = { token: loginUser.data.token, ...loginUser.data.user };
       setCurrentUser(item);
       yield put(loginUserSuccess(item));
-      // history.push(adminRoot);
+      history.push(adminRoot);
 
-      window.location.href = adminRoot;
+      // window.location.href = adminRoot;
     } else {
       yield put(loginUserError('Username or password does not match'));
     }
@@ -97,8 +97,8 @@ function* registerWithEmailPassword({ payload }) {
       };
       setCurrentUser(item);
       yield put(registerUserSuccess(item));
-      // history.push(adminRoot);
-      window.location.href = adminRoot;
+      history.push(adminRoot);
+      // window.location.href = adminRoot;
     } else {
       yield put(registerUserError('Email is already registered'));
     }

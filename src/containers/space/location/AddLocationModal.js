@@ -52,10 +52,10 @@ const AddLocationModal = (props) => {
   const [endBusinessHour, setEndBusinessHour] = useState(
     new Date(moment().format('YYYY-MM-DDT17:00'))
   );
-  const [selectedTimezone, setSelectedTimezone] = useState({});
+  const [selectedTimezone, setSelectedTimezone] = useState('');
   const [files, setFiles] = useState(null);
 
-  const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
+  const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(true);
 
   const [state, setState] = useState({
     name: '',
@@ -83,7 +83,7 @@ const AddLocationModal = (props) => {
         zipcode: item.zipcode,
       });
 
-      setSelectedTimezone({ value: item.time_zone });
+      item.time_zone !== '' && setSelectedTimezone({ value: item.time_zone });
       item.start_time &&
         setStartBusinessHour(
           new Date(
@@ -117,17 +117,102 @@ const AddLocationModal = (props) => {
   };
 
   const handleSubmitLocation = () => {
-    const data = {
-      ...state,
-      image: files,
-      start_time: moment(startBusinessHour).format('HH:mm'),
-      end_time: moment(endBusinessHour).format('HH:mm'),
-      time_zone: selectedTimezone.value,
-      is_open: checkedPrimarySmall,
-    };
+    if (
+      state.name !== '' &&
+      state.unique_code !== '' &&
+      state.description !== '' &&
+      selectedTimezone &&
+      selectedTimezone !== '' &&
+      state.address &&
+      state.address !== '' &&
+      state.city !== '' &&
+      state.state !== '' &&
+      state.zipcode !== '' &&
+      state.country !== ''
+    ) {
+      const data = {
+        ...state,
+        image: files,
+        start_time: moment(startBusinessHour).format('HH:mm'),
+        end_time: moment(endBusinessHour).format('HH:mm'),
+        time_zone: selectedTimezone ? selectedTimezone.value : '',
+        is_open: checkedPrimarySmall,
+      };
 
-    if (item) addSpaceLocationAction({ ...data, id: item.id }, 'PUT');
-    else addSpaceLocationAction(data, 'POST');
+      if (item) addSpaceLocationAction({ ...data, id: item.id }, 'PUT');
+      else addSpaceLocationAction(data, 'POST');
+    } else {
+      document.getElementsByName('name')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('unique_code')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementsByName('description')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementById('time_zone').style.border = 'unset';
+      document.getElementsByName('address')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementsByName('city')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('state')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('zipcode')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementsByName('country')[0].style.border =
+        '1px solid #d7d7d7';
+
+      if (state.name === '') {
+        document.getElementsByName('name')[0].focus();
+        document.getElementsByName('name')[0].style.border = '1px solid orange';
+        return;
+      }
+      if (state.unique_code === '') {
+        document.getElementsByName('unique_code')[0].focus();
+        document.getElementsByName('unique_code')[0].style.border =
+          '1px solid orange';
+        return;
+      }
+      if (state.description === '') {
+        document.getElementsByName('description')[0].focus();
+        document.getElementsByName('description')[0].style.border =
+          '1px solid orange';
+        return;
+      }
+      if (selectedTimezone === '') {
+        document.getElementById('time_zone').style.border = '1px solid orange';
+        return;
+      }
+      if (state.address === '') {
+        document.getElementsByName('address')[0].focus();
+        document.getElementsByName('address')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.city === '') {
+        document.getElementsByName('city')[0].focus();
+        document.getElementsByName('city')[0].style.border = '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.state === '') {
+        document.getElementsByName('state')[0].focus();
+        document.getElementsByName('state')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.zipcode === '') {
+        document.getElementsByName('zipcode')[0].focus();
+        document.getElementsByName('zipcode')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.country === '') {
+        document.getElementsByName('country')[0].focus();
+        document.getElementsByName('country')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+    }
   };
 
   return (
@@ -260,6 +345,7 @@ const AddLocationModal = (props) => {
 
                 <div className="form-group has-float-label">
                   <TimezoneSelect
+                    id="time_zone"
                     value={selectedTimezone}
                     onChange={setSelectedTimezone}
                   />

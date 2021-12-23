@@ -39,7 +39,7 @@ const AddFloorModal = (props) => {
 
   const [selectedOption, setSelectedOption] = useState('');
   const [files, setFiles] = useState('');
-  const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(false);
+  const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(true);
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
@@ -91,17 +91,60 @@ const AddFloorModal = (props) => {
   };
 
   const handleSubmitLocationFloor = () => {
-    const data = {
-      ...state,
-      image: null,
-      location: selectedOption.value,
-      is_open: checkedPrimarySmall,
-    };
+    if (
+      state.name !== '' &&
+      state.floor !== '' &&
+      state.area !== '' &&
+      state.target !== '' &&
+      selectedOption &&
+      selectedOption !== ''
+    ) {
+      const data = {
+        ...state,
+        image: null,
+        location: selectedOption.value,
+        is_open: checkedPrimarySmall,
+      };
 
-    if (item) {
-      addSpaceLocationFloorAction({ ...data, id: item.id }, 'PUT');
+      if (item) {
+        addSpaceLocationFloorAction({ ...data, id: item.id }, 'PUT');
+      } else {
+        addSpaceLocationFloorAction(data, 'POST');
+      }
     } else {
-      addSpaceLocationFloorAction(data, 'POST');
+      document.getElementsByName('name')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('floor')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('area')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('target')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementById('location_field').style.border = 'unset';
+      if (state.name === '') {
+        document.getElementsByName('name')[0].focus();
+        document.getElementsByName('name')[0].style.border = '1px solid orange';
+        return;
+      }
+      if (selectedOption === '') {
+        document.getElementById('location_field').style.border =
+          '1px solid orange';
+        return;
+      }
+      if (state.floor === '') {
+        document.getElementsByName('floor')[0].focus();
+        document.getElementsByName('floor')[0].style.border =
+          '1px solid orange';
+        return;
+      }
+      if (state.area === '') {
+        document.getElementsByName('area')[0].focus();
+        document.getElementsByName('area')[0].style.border = '1px solid orange';
+        return;
+      }
+      if (state.target === '') {
+        document.getElementsByName('target')[0].focus();
+        document.getElementsByName('target')[0].style.border =
+          '1px solid orange';
+        return;
+      }
     }
   };
 
@@ -133,6 +176,7 @@ const AddFloorModal = (props) => {
             value={selectedOption}
             onChange={setSelectedOption}
             options={locationListData}
+            id="location_field"
           />
           <span>
             <IntlMessages id="label.location" />
@@ -155,12 +199,17 @@ const AddFloorModal = (props) => {
         <Label className="form-group has-float-label">
           <InputGroup className="mb-3">
             <Input
+              type="number"
               name="area"
               value={state.area}
               onChange={handleChangeValue}
               placeholder={messages['label.area']}
             />
-            <InputGroupAddon addonType="append">ft2</InputGroupAddon>
+            <InputGroupAddon addonType="append">
+              <span className="input-group-text">
+                ft<sup>2</sup>
+              </span>
+            </InputGroupAddon>
           </InputGroup>
           <span>
             <IntlMessages id="label.area" />
@@ -170,12 +219,13 @@ const AddFloorModal = (props) => {
         <Label className="form-group has-float-label">
           <InputGroup className="mb-3">
             <Input
+              type="number"
               name="target"
               value={state.target}
               onChange={handleChangeValue}
               placeholder={messages['label.target']}
             />
-            <InputGroupAddon addonType="append">EUR</InputGroupAddon>
+            <InputGroupAddon addonType="append">$</InputGroupAddon>
           </InputGroup>
           <span>
             <IntlMessages id="label.target" />
