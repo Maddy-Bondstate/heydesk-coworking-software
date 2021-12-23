@@ -5,9 +5,10 @@ import {
   DASHBOARD_GET_CALENDAR_LIST_ERROR,
 } from '../actions';
 
-export const getDashboardCalendarList = (data) => ({
+export const getDashboardCalendarList = (data, token) => ({
   type: DASHBOARD_GET_CALENDAR_LIST,
   payload: data,
+  token,
 });
 
 export const getDashboardCalendarListSuccess = (items) => ({

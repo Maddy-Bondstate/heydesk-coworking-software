@@ -5,13 +5,14 @@ import { isAuthGuardActive } from '../constants/defaultValues';
 
 const ProtectedRoute = ({
   component: Component,
-  roles = undefined,
+  // roles = undefined,
   ...rest
 }) => {
   const setComponent = (props) => {
     if (isAuthGuardActive) {
       const currentUser = getCurrentUser();
       if (currentUser) {
+        const token = `JWT ${currentUser?.token}`;
         // if (roles) {
         //   if (roles.includes(currentUser.role)) {
         //     return <Component {...props} />;
@@ -25,7 +26,7 @@ const ProtectedRoute = ({
         //     />
         //   );
         // }
-        return <Component {...props} />;
+        return <Component {...props} currentUser={currentUser} token={token} />;
       }
       return (
         <Redirect

@@ -28,12 +28,12 @@ import {
 
 import { MobileMenuIcon, MenuIcon } from '../../components/svg';
 
-import { getCurrentUser } from '../../helpers/Utils';
+// import { getCurrentUser } from '../../helpers/Utils';
 // import TopnavNotifications from './Topnav.Notifications';
 
 // import { getDirection, setDirection } from '../../helpers/Utils';
 
-const currentUser = getCurrentUser();
+// const currentUser = getCurrentUser();
 
 const TopNav = ({
   history,
@@ -45,6 +45,7 @@ const TopNav = ({
   clickOnMobileMenuAction,
   logoutUserAction,
   // changeLocaleAction,
+  currentUser,
 }) => {
   const [isInFullScreen, setIsInFullScreen] = useState(false);
 

@@ -8,12 +8,12 @@ const data = [
     to: `${adminRoot}/dashboards`,
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
-      {
-        icon: 'simple-icon-briefcase',
-        label: 'menu.overview',
-        to: `${adminRoot}/dashboards/overview`,
-        // roles: [UserRole.Admin],
-      },
+      // {
+      //   icon: 'simple-icon-briefcase',
+      //   label: 'menu.overview',
+      //   to: `${adminRoot}/dashboards/overview`,
+      //   // roles: [UserRole.Admin],
+      // },
       {
         icon: 'simple-icon-calendar',
         label: 'menu.calendar',

@@ -9,6 +9,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import { api } from '../../constants/defaultValues';
 
 const currentUser = getCurrentUser();
+
 const token = `JWT ${currentUser?.token}`;
 
 const axiosConfig = {
@@ -17,23 +18,32 @@ const axiosConfig = {
   },
 };
 
+console.log(axiosConfig);
 ////////////----------- CALENDAR -----------////////////
 
 // --------- GET ---------//
-const getDashboardCalendarListRequest = async (data) => {
+const getDashboardCalendarListRequest = async (data, token) => {
   // eslint-disable-next-line no-return-await
   return await axios
     .get(`${api}service/calender/list/`, {
       params: data,
-      headers: axiosConfig.headers,
+      headers: {
+        Authorization: token,
+      },
     })
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* getDashboardCalendarListItems({ payload }) {
+function* getDashboardCalendarListItems(action) {
   try {
-    const response = yield call(getDashboardCalendarListRequest, payload);
+    const { payload, token } = action;
+
+    const response = yield call(
+      getDashboardCalendarListRequest,
+      payload,
+      token
+    );
     yield put(getDashboardCalendarListSuccess(response));
   } catch (error) {
     yield put(getDashboardCalendarListError(error));

@@ -77,10 +77,6 @@ const AddBookingModal = (props) => {
       end_time: moment(dateTo).format('DD/MM/YYYY HH:mm'),
     };
 
-    // console.log(data);
-
-    // if (item) addClientBookingAction({ ...data, id: item.id }, 'PUT');
-    // else
     addClientBookingAction(data, 'POST');
   };
 
