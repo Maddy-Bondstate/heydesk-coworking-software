@@ -1,18 +1,18 @@
 body {
-  min-height: calc(100% - 100px);
+  min-height: calc(100% - ($navbar-height + $main-margin - 15px));
   position: relative;
   padding-bottom: 60px;
 
   @include respond-below(xl) {
-    min-height: calc(100% - 100px);
+    min-height: calc(100% - ($main-margin-lg + $navbar-height-lg - 10px));
   }
 
   @include respond-below(lg) {
-    min-height: calc(100% - 110px);
+    min-height: calc(100% - ($main-margin-md + $navbar-height-md - 10px));
   }
 
   @include respond-below(sm) {
-    min-height: calc(100% - 85px);
+    min-height: calc(100% - ($main-margin-xs + $navbar-height-xs));
   }
 
   @include respond-below(xs) {

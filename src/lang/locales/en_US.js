@@ -65,6 +65,7 @@ module.exports = {
   'menu.dashboards': 'Dashboard',
   'menu.space': 'Space',
   'menu.locations': 'Locations',
+  'menu.settings': 'Settings',
   'menu.desks': 'Desks',
   'menu.meeting-room': 'Meeting Room',
   'menu.meeting-rooms': 'Meeting Rooms',
@@ -279,6 +280,7 @@ module.exports = {
   /* 05.Pages */
   'pages.add-booking': 'ADD BOOKING',
   'pages.add-customer': 'ADD CUSTOMER',
+  'pages.edit-profile': 'Edit Profile',
 
   'pages.add-new': 'ADD NEW',
   'pages.add-new-modal-title': 'Add New Item',
@@ -329,6 +331,8 @@ module.exports = {
   'pages.followers': 'FOLLOWERS',
   'pages.recent-posts': 'Recent Posts',
   'pages.profile': 'PROFILE',
+  'menu.myprofile': 'My Profile',
+
   'pages.friends': 'FRIENDS',
   'pages.images': 'IMAGES',
   'pages.purchase': 'PURCHASE',

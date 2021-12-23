@@ -1,7 +1,12 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-import { SETTINGS_ADD_PROFILE } from '../actions';
-import { addSettingsProfileSuccess, addSettingsProfileError } from './actions';
+import { SETTINGS_GET_PROFILE_LIST, SETTINGS_ADD_PROFILE } from '../actions';
+import {
+  getSettingsProfileListSuccess,
+  getSettingsProfileListError,
+  addSettingsProfileSuccess,
+  addSettingsProfileError,
+} from './actions';
 import { getCurrentUser } from '../../helpers/Utils';
 import { api } from '../../constants/defaultValues';
 
@@ -16,41 +21,40 @@ const axiosConfig = {
 
 // ------------------------- SETTINGS ----------------------- //
 
-// ADD PROFILE
-const addSettingsProfileRequest = async (data, method) => {
+// GET PROFILE
+const getSettingsProfileListRequest = async () => {
   // eslint-disable-next-line no-return-await
-
-  //   if (method === 'POST') {
-  //     return await axios
-  //       .post(`${api}service/customer/`, data, axiosConfig)
-  //       .then((response) => response)
-  //       .catch((error) => error);
-  //   }
-
-  if (method === 'PUT') {
-    const id = data.id;
-    delete data['id'];
-
-    return await axios
-      .put(`${api}profile/update/${id}/`, data, axiosConfig)
-      .then((response) => response)
-      .catch((error) => error);
-  }
-
-  //   if (method === 'DELETE') {
-  //     const id = data.id;
-  //     delete data['id'];
-
-  //     return await axios
-  //       .delete(`${api}space/location/update/${id}/`, axiosConfig)
-  //       .then((response) => response)
-  //       .catch((error) => error);
-  //   }
+  return await axios
+    .get(`${api}auth/user/`, axiosConfig)
+    .then((response) => response)
+    .catch((error) => error);
 };
 
-function* addSettingsProfile({ payload, method }) {
+function* getSettingsProfileListItems() {
   try {
-    const response = yield call(addSettingsProfileRequest, payload, method);
+    const response = yield call(getSettingsProfileListRequest);
+    yield put(getSettingsProfileListSuccess(response));
+  } catch (error) {
+    yield put(getSettingsProfileListError(error));
+  }
+}
+
+export function* watchGetSettingsProfileList() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(SETTINGS_GET_PROFILE_LIST, getSettingsProfileListItems);
+}
+// ADD PROFILE
+const addSettingsProfileRequest = async (data) => {
+  // eslint-disable-next-line no-return-await
+  return await axios
+    .put(`${api}profile/update/`, data, axiosConfig)
+    .then((response) => response)
+    .catch((error) => error);
+};
+
+function* addSettingsProfile({ payload }) {
+  try {
+    const response = yield call(addSettingsProfileRequest, payload);
     yield put(addSettingsProfileSuccess(response));
     window.location.reload();
   } catch (error) {
@@ -64,5 +68,5 @@ export function* watchAddSettingsProfile() {
 }
 
 export default function* rootSaga() {
-  yield all([fork(watchAddSettingsProfile)]);
+  yield all([fork(watchAddSettingsProfile), fork(watchGetSettingsProfileList)]);
 }

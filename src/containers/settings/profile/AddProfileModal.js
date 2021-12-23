@@ -8,81 +8,52 @@ import {
   ModalBody,
   ModalFooter,
   Label,
+  Input,
 } from 'reactstrap';
 
-import moment from 'moment';
 import IntlMessages from '../../../helpers/IntlMessages';
 import { Colxx } from '../../../components/common/CustomBootstrap';
-import DatePicker from 'react-datepicker';
-import Select from 'react-select';
-import CustomSelectInput from '../../../components/common/CustomSelectInput';
 
 import { addSettingsProfile } from '../../../redux/actions';
 import { connect } from 'react-redux';
-
-import 'react-datepicker/dist/react-datepicker.css';
 
 const AddProfileModal = (props) => {
   const {
     modelTitle,
     modalOpen,
-    toggleModal,
+    item,
     intl,
+    toggleModal,
     loading,
-    customerData,
-    spaceData,
     addSettingsProfileAction,
   } = props;
 
   const { messages } = intl;
-
-  const [selectedOptionLocation, setSelectedOptionLocation] = useState('');
-  const [locationListData, setLocationListData] = useState([]);
-  const [selectedOptionSpace, setSelectedOptionSpace] = useState('');
-  const [spaceListData, setSpaceListData] = useState([]);
-
-  const [dateFrom, setDateFrom] = useState(moment().add(1, 'day').toDate());
-  const [dateTo, setDateTo] = useState();
+  const [state, setState] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+  });
 
   useLayoutEffect(() => {
-    if (customerData !== null) {
-      let custData = [];
-      customerData.map((c) =>
-        custData.push({
-          label: `${c.first_name} ${c.last_name}`,
-          value: c.id,
-        })
-      );
-      setLocationListData(custData);
-    }
+    setState({
+      ...state,
+      first_name: item.first_name,
+      last_name: item.last_name,
+      email: item.email,
+    });
+  }, [item]);
 
-    if (spaceData !== null) {
-      let custDatas = [];
-      spaceData.map((c) =>
-        custDatas.push({
-          label: `${c.name}`,
-          value: c.id,
-        })
-      );
-
-      setSpaceListData(custDatas);
-    }
-  }, [customerData, spaceData]);
-
-  const handleSubmitLocation = () => {
-    const data = {
-      customer: selectedOptionLocation.value,
-      space: selectedOptionSpace.value,
-      start_time: moment(dateFrom).format('DD/MM/YYYY HH:mm'),
-      end_time: moment(dateTo).format('DD/MM/YYYY HH:mm'),
-    };
-
-    // console.log(data);
-
-    // if (item)
-    addSettingsProfileAction({ ...data, id: item.id }, 'PUT');
-    // else
-    // addClientBookingAction(data, 'POST');
+  const handleChangeValue = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+  const handleSubmit = () => {
+    addSettingsProfileAction(state);
   };
 
   return (
@@ -94,74 +65,29 @@ const AddProfileModal = (props) => {
         <Row>
           <Colxx>
             <Label className="form-group has-float-label">
-              <Select
-                components={{ Input: CustomSelectInput }}
-                className="react-select"
-                classNamePrefix="react-select"
-                name="location"
-                value={selectedOptionLocation}
-                onChange={setSelectedOptionLocation}
-                options={locationListData}
+              <Input
+                type="text"
+                name="first_name"
+                value={state.first_name}
+                onChange={handleChangeValue}
+                placeholder={messages['label.first_name']}
               />
               <span>
-                <IntlMessages id="label.location" />
+                <IntlMessages id="label.first_name" />
               </span>
             </Label>
-
             <Label className="form-group has-float-label">
-              <Select
-                components={{ Input: CustomSelectInput }}
-                className="react-select"
-                classNamePrefix="react-select"
-                name="space"
-                value={selectedOptionSpace}
-                onChange={setSelectedOptionSpace}
-                options={spaceListData}
+              <Input
+                type="text"
+                name="last_name"
+                value={state.last_name}
+                onChange={handleChangeValue}
+                placeholder={messages['label.last_name']}
               />
               <span>
-                <IntlMessages id="label.space" />
+                <IntlMessages id="label.last_name" />
               </span>
             </Label>
-
-            <Row>
-              <Colxx>
-                <Label>
-                  <IntlMessages id="label.booking_date" />
-                </Label>
-              </Colxx>
-            </Row>
-
-            <Row>
-              <Colxx sm="6">
-                <div className="form-group has-float-label">
-                  <DatePicker
-                    name="start_time"
-                    selected={dateFrom}
-                    onChange={(val) => setDateFrom(val)}
-                    dateFormat="MMM dd, yyyy HH:mm"
-                    todayButton={messages['label.today']}
-                    minDate={moment().add(1, 'day').toDate()}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                  />
-                </div>
-              </Colxx>
-              <Colxx sm="6">
-                <div className="form-group has-float-label">
-                  <DatePicker
-                    name="end_time"
-                    selected={dateTo}
-                    onChange={(val) => setDateTo(val)}
-                    dateFormat="MMM dd, yyyy HH:mm"
-                    todayButton={messages['label.today']}
-                    minDate={dateFrom || moment().toDate()}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    required
-                  />
-                </div>
-              </Colxx>
-            </Row>
           </Colxx>
         </Row>
       </ModalBody>
@@ -172,7 +98,7 @@ const AddProfileModal = (props) => {
         {loading ? (
           <div className="loading" />
         ) : (
-          <Button color="primary" size="sm" onClick={handleSubmitLocation}>
+          <Button color="primary" size="sm" onClick={handleSubmit}>
             <IntlMessages id="model.add" />
           </Button>
         )}
@@ -181,9 +107,9 @@ const AddProfileModal = (props) => {
   );
 };
 
-const mapStateToProps = ({ client }) => {
-  const { loading, booking, addBooking, error } = client;
-  return { loading, booking, addBooking, error };
+const mapStateToProps = ({ settings }) => {
+  const { loading, profile, addProfile, error } = settings;
+  return { loading, profile, addProfile, error };
 };
 
 export default injectIntl(

@@ -65,6 +65,7 @@ module.exports = {
   'menu.app': 'Inicio',
   'menu.dashboards': 'Tablero',
   'menu.space': 'Espacio',
+  'menu.settings': 'Settings',
   'menu.locations': 'Locations',
   'menu.desks': 'Escritorios',
   'menu.meeting-room': 'Sala de Reuniones',
@@ -280,6 +281,7 @@ module.exports = {
   /* 05.Esquemas */
   'pages.add-booking': 'AGREGAR RESERVAS',
   'pages.add-customer': 'ADD CUSTOMER',
+  'pages.edit-profile': 'Edit Profile',
 
   'pages.add-new': 'AGREGAR NUEVO',
   'pages.add-new-modal-title': 'Agregar ítem nuevo',
@@ -330,6 +332,8 @@ module.exports = {
   'pages.followers': 'SEGUIDORES',
   'pages.recent-posts': 'Mensajes Recientes',
   'pages.profile': 'PERFIL',
+  'menu.myprofile': 'My Perfil',
+
   'pages.friends': 'AMIGOS',
   'pages.images': 'IMAGENES',
   'pages.purchase': 'COMPRA',

@@ -1,46 +1,22 @@
 import React from 'react';
 import { Row } from 'reactstrap';
-import Pagination from './Pagination';
-import BookingListView from './BookingListView';
+import ProfileListView from './ProfileListView';
 
 function collect(props) {
   return { data: props.data };
 }
 
-const ListBookingListing = ({
-  items,
-  currentPage,
-  totalPage,
-  // toggleModal,
-  onChangePage,
-  // setModalId,
-  // setModalDeleteId,
-  customerData,
-  spaceData,
-}) => {
+const ListProfileListing = ({ item, toggleModal }) => {
   return (
     <Row>
-      {items.map((item) => {
-        return (
-          <BookingListView
-            key={item.id}
-            item={item}
-            collect={collect}
-            customerData={customerData}
-            spaceData={spaceData}
-            // toggleModal={toggleModal}
-            // setModalId={setModalId}
-            // setModalDeleteId={setModalDeleteId}
-          />
-        );
-      })}
-      <Pagination
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onChangePage={(i) => onChangePage(i)}
+      <ProfileListView
+        key={item.id}
+        item={item}
+        toggleModal={toggleModal}
+        collect={collect}
       />
     </Row>
   );
 };
 
-export default React.memo(ListBookingListing);
+export default React.memo(ListProfileListing);
