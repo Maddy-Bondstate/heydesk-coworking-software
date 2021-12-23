@@ -92,6 +92,14 @@ export const CLIENT_ADD_CUSTOMER = 'CLIENT_ADD_CUSTOMER';
 export const CLIENT_ADD_CUSTOMER_SUCCESS = 'CLIENT_ADD_CUSTOMER_SUCCESS';
 export const CLIENT_ADD_CUSTOMER_ERROR = 'CLIENT_ADD_CUSTOMER_ERROR';
 
+/*----------------------------- SETTINGS -----------------------------*/
+
+// ------- PROFILE -----
+// ADD
+export const SETTINGS_ADD_PROFILE = 'SETTINGS_ADD_PROFILE';
+export const SETTINGS_ADD_PROFILE_SUCCESS = 'SETTINGS_ADD_PROFILE_SUCCESS';
+export const SETTINGS_ADD_PROFILE_ERROR = 'SETTINGS_ADD_PROFILE_ERROR';
+
 export * from './menu/actions';
 export * from './settings/actions';
 export * from './auth/actions';

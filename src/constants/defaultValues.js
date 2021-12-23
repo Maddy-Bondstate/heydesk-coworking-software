@@ -31,7 +31,7 @@ export const Noimage = '/assets/img/noimage.png';
 //   role: UserRole.Admin,
 // };
 
-export const adminRoot = '/app';
+export const adminRoot = 'https://hd-coworking.heydesk.com/app';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 export const servicePath = 'https://api.coloredstrategies.com';
 
