@@ -142,7 +142,7 @@ const SpaceLocations = ({
       <AddLocationModal
         modelTitle="space.add-location"
         modalOpen={modalOpen}
-        toggleModal={() => setModalOpen(!modalOpen)}
+        toggleModal={handleToggleModel}
         item={modalId}
         token={token}
         handleGetSpaceLocation={handleGetSpaceLocation}
@@ -153,7 +153,7 @@ const SpaceLocations = ({
         <AddFloorModal
           modelTitle="space.add-floor"
           modalOpen={floorOpen}
-          toggleModal={() => setFloorModalOpen(!floorOpen)}
+          toggleModal={handleToggleFloorModel}
           item={modalIds}
           locationList={items}
           token={token}

@@ -89,10 +89,10 @@ const AddFloorModal = (props) => {
         target: '',
       });
 
-      setFiles(files);
+      setFiles(null);
       setGetImage('');
-      setSelectedOption(selectedOption);
-      setCheckedPrimarySmall(checkedPrimarySmall);
+      setSelectedOption('');
+      setCheckedPrimarySmall(true);
     }
 
     if (locationList?.length > 0) {
@@ -252,7 +252,7 @@ const AddFloorModal = (props) => {
               name="area"
               value={state.area}
               onChange={handleChangeValue}
-              placeholder={messages['label.area']}
+              // placeholder={messages['label.area']}
             />
             <InputGroupAddon addonType="append">
               <span className="input-group-text">
@@ -272,7 +272,7 @@ const AddFloorModal = (props) => {
               name="target"
               value={state.target}
               onChange={handleChangeValue}
-              placeholder={messages['label.target']}
+              // placeholder={messages['label.target']}
             />
             <InputGroupAddon addonType="append">$</InputGroupAddon>
           </InputGroup>

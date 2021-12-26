@@ -114,10 +114,10 @@ const AddLocationModal = (props) => {
       });
 
       setGetImage('');
-      setSelectedTimezone(selectedTimezone);
-      setStartBusinessHour(startBusinessHour);
-      setEndBusinessHour(endBusinessHour);
-      setCheckedPrimarySmall(checkedPrimarySmall);
+      setSelectedTimezone('');
+      setStartBusinessHour(new Date(moment().format('YYYY-MM-DDT09:00')));
+      setEndBusinessHour(new Date(moment().format('YYYY-MM-DDT17:00')));
+      setCheckedPrimarySmall(true);
     }
 
     if (!loading && addlocation && !fetchSpace && !modalDeleteIdsw) {
