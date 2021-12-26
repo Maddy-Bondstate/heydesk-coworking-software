@@ -25,28 +25,36 @@ import { connect } from 'react-redux';
 
 const AddFloorModal = (props) => {
   const {
+    token,
     modelTitle,
     modalOpen,
     toggleModal,
     intl,
     loading,
+    addLocationFloor,
     addSpaceLocationFloorAction,
     item,
     locationList,
+    handleGetSpaceLocation,
+    modalDeleteIdsq,
+    setModalDeleteIdsrrq,
   } = props;
 
   const { messages } = intl;
 
   const [selectedOption, setSelectedOption] = useState('');
-  const [files, setFiles] = useState('');
+  const [files, setFiles] = useState(null);
+  const [getImage, setGetImage] = useState('');
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(true);
+  const [fetchSpace, setFetchSpace] = useState(false);
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
   };
 
   const removeFile = () => {
-    setFiles('');
+    if (getImage === '') setFiles(null);
+    else setGetImage('');
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
@@ -60,17 +68,31 @@ const AddFloorModal = (props) => {
   });
 
   useLayoutEffect(() => {
-    if (item !== null) {
+    // console.log('--', item);
+    if (item && item !== null) {
       setState({
-        ...state,
         name: item.name,
         floor: item.floor,
         area: item.area,
         target: item.target,
       });
 
+      item.image && setGetImage(item.image);
+
       setSelectedOption(item.location);
       setCheckedPrimarySmall(item.is_open);
+    } else {
+      setState({
+        name: '',
+        floor: '',
+        area: '',
+        target: '',
+      });
+
+      setFiles(files);
+      setGetImage('');
+      setSelectedOption(selectedOption);
+      setCheckedPrimarySmall(checkedPrimarySmall);
     }
 
     if (locationList?.length > 0) {
@@ -79,7 +101,28 @@ const AddFloorModal = (props) => {
 
       setLocationListData(selectData);
     }
-  }, [item, locationList]);
+
+    // console.log(modalDeleteIds);
+
+    if (!loading && addLocationFloor && !fetchSpace && !modalDeleteIdsq) {
+      // console.log('}}}}}}}}}}}}}}}}}}');
+      setFetchSpace(true);
+      handleGetSpaceLocation();
+      toggleModal(!modalOpen);
+    }
+
+    // if (modalDeleteIds) setModalDeleteIdsrr(false);
+  }, [
+    item,
+    locationList,
+    modalOpen,
+    toggleModal,
+    loading,
+    addLocationFloor,
+    handleGetSpaceLocation,
+    modalDeleteIdsq,
+    setModalDeleteIdsrrq,
+  ]);
 
   const handleChangeValue = (e) => {
     const name = e.target.name;
@@ -99,18 +142,24 @@ const AddFloorModal = (props) => {
       selectedOption &&
       selectedOption !== ''
     ) {
-      const data = {
+      let data = {
         ...state,
-        image: null,
         location: selectedOption.value,
         is_open: checkedPrimarySmall,
       };
 
-      if (item) {
-        addSpaceLocationFloorAction({ ...data, id: item.id }, 'PUT');
-      } else {
-        addSpaceLocationFloorAction(data, 'POST');
+      if (getImage === '' && files) {
+        data = {
+          ...data,
+          image: files,
+        };
       }
+
+      if (item)
+        addSpaceLocationFloorAction({ ...data, id: item.id }, token, 'PUT');
+      else addSpaceLocationFloorAction(data, token, 'POST');
+
+      setFetchSpace(false);
     } else {
       document.getElementsByName('name')[0].style.border = '1px solid #d7d7d7';
       document.getElementsByName('floor')[0].style.border = '1px solid #d7d7d7';
@@ -237,14 +286,18 @@ const AddFloorModal = (props) => {
             <Label className="mr-4">
               <IntlMessages id="label.image" />
             </Label>
-            {files === '' ? (
+            {!files && getImage === '' ? (
               <Label className="custom-image-attach-inline">
                 <Input type="file" id="fileupload" onChange={onChangeImage} />
                 <i className="fa fa-cloud-upload mr-2" /> Upload
               </Label>
             ) : (
               <Label>
-                <img src={URL.createObjectURL(files)} alt="" width="150" />
+                <img
+                  src={getImage !== '' ? getImage : URL.createObjectURL(files)}
+                  alt=""
+                  width="150"
+                />
                 <span onClick={removeFile} className="ml-3 cursor-pointer">
                   <i className="fa fa-times-circle fa-2x text-secondary" />
                 </span>

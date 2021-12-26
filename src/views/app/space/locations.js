@@ -17,6 +17,9 @@ const SpaceLocations = ({
   match,
   token,
   location,
+  loading,
+  addlocation,
+  addLocationFloor,
   getSpaceLocationListAction,
   addSpaceLocationAction,
   addSpaceLocationFloorAction,
@@ -34,12 +37,39 @@ const SpaceLocations = ({
   const [modalId, setModalId] = useState(null);
   const [modalIds, setModalIds] = useState(null);
   const [modalDeleteId, setModalDeleteId] = useState('');
-  const [modalDeleteIds, setModalDeleteIds] = useState('');
+  const [modalDeleteIds, setModalDeleteIds] = useState(false);
+  const [modalDeleteIdsrr, setModalDeleteIdsrr] = useState(false);
+  const [modalDeleteIdsrrrrrrrr, setModalDeleteIdsrrrrrrrr] = useState(false);
+  // const [fetchSpace, setFetchSpace] = useState(false);
 
   useEffect(() => {
     setIsLoaded(false);
     getSpaceLocationListAction(token);
   }, [getSpaceLocationListAction, token]);
+
+  const handleGetSpaceLocation = () => {
+    getSpaceLocationListAction(token);
+  };
+
+  const setModalDeleteIdsppppp = (id) => {
+    addSpaceLocationFloorAction({ id }, token, 'DELETE');
+    setModalDeleteIds(true);
+    setModalDeleteIdsrrrrrrrr(true);
+
+    setTimeout(() => {
+      setModalDeleteIdsrrrrrrrr(false);
+    }, 100);
+  };
+
+  const setModalDeleteIdsp = (id) => {
+    addSpaceLocationAction({ id }, token, 'DELETE');
+    setModalDeleteId(true);
+    setModalDeleteIdsrr(true);
+
+    setTimeout(() => {
+      setModalDeleteIdsrr(false);
+    }, 100);
+  };
 
   useLayoutEffect(() => {
     if (location?.data) {
@@ -48,28 +78,40 @@ const SpaceLocations = ({
       setIsLoaded(true);
     }
 
-    if (!modalOpen) setModalId(null);
-    if (!floorOpen) setFloorModalOpen(null);
-
-    if (modalDeleteId !== '') {
-      addSpaceLocationAction({ id: modalDeleteId }, token, 'DELETE');
-      setModalDeleteId('');
-    }
-
-    if (modalDeleteIds !== '') {
-      addSpaceLocationFloorAction({ id: modalDeleteIds }, token, 'DELETE');
-      setModalDeleteIds('');
+    if (!loading) {
+      // console.log('++++++++++++++++++++++');
+      if (addLocationFloor && modalDeleteIds) {
+        handleGetSpaceLocation();
+        setModalDeleteIds(false);
+      } else if (addlocation && modalDeleteId) {
+        handleGetSpaceLocation();
+        setModalDeleteId(false);
+      }
     }
   }, [
     location,
-    modalOpen,
-    floorOpen,
+    // modalOpen,
+    // floorOpen,
     modalDeleteId,
     modalDeleteIds,
     addSpaceLocationAction,
-    addSpaceLocationFloorAction,
+    // addSpaceLocationFloorAction,
     token,
+    handleGetSpaceLocation,
+    loading,
+    addlocation,
+    addLocationFloor,
   ]);
+
+  const handleToggleModel = () => {
+    setModalOpen(!modalOpen);
+    setModalId(null);
+  };
+
+  const handleToggleFloorModel = () => {
+    setFloorModalOpen(!floorOpen);
+    setModalIds(null);
+  };
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -93,8 +135,8 @@ const SpaceLocations = ({
           }
         }}
         pageSizes={pageSizes}
-        toggleModal={() => setModalOpen(!modalOpen)}
-        toggleFloor={() => setFloorModalOpen(!floorOpen)}
+        toggleModal={handleToggleModel}
+        toggleFloor={handleToggleFloorModel}
       />
 
       <AddLocationModal
@@ -102,6 +144,10 @@ const SpaceLocations = ({
         modalOpen={modalOpen}
         toggleModal={() => setModalOpen(!modalOpen)}
         item={modalId}
+        token={token}
+        handleGetSpaceLocation={handleGetSpaceLocation}
+        modalDeleteIdsw={modalDeleteIdsrr}
+        setModalDeleteIdsrrw={setModalDeleteIdsrr}
       />
       {items?.length > 0 && (
         <AddFloorModal
@@ -110,6 +156,10 @@ const SpaceLocations = ({
           toggleModal={() => setFloorModalOpen(!floorOpen)}
           item={modalIds}
           locationList={items}
+          token={token}
+          handleGetSpaceLocation={handleGetSpaceLocation}
+          modalDeleteIdsq={modalDeleteIdsrrrrrrrr}
+          setModalDeleteIdsrrq={setModalDeleteIdsrrrrrrrr}
         />
       )}
       <ListLocationListing
@@ -117,16 +167,12 @@ const SpaceLocations = ({
         currentPage={currentPage}
         totalPage={totalPage}
         onChangePage={setCurrentPage}
-        toggleModal={() => {
-          return setModalOpen(!modalOpen), setModalId(modalId);
-        }}
-        toggleFloor={() => {
-          return setFloorModalOpen(!floorOpen), setModalIds(modalIds);
-        }}
+        toggleModal={handleToggleModel}
+        toggleFloor={handleToggleFloorModel}
         setModalId={setModalId}
         setModalIds={setModalIds}
-        setModalDeleteId={setModalDeleteId}
-        setModalDeleteIds={setModalDeleteIds}
+        setModalDeleteId={setModalDeleteIdsp}
+        setModalDeleteIds={setModalDeleteIdsppppp}
       />
     </div>
   );

@@ -63,7 +63,7 @@ const LocationListView = ({
                           <i className="fa fa-pencil text-muted mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>
-                        <DropdownItem onClick={() => toggleFloor(item.id)}>
+                        <DropdownItem onClick={toggleFloor}>
                           <i className="fa fa-plus text-muted mr-2" />
                           <IntlMessages id="label.add_floor" />
                         </DropdownItem>

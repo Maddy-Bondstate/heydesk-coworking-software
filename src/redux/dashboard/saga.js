@@ -5,20 +5,20 @@ import {
   getDashboardCalendarListSuccess,
   getDashboardCalendarListError,
 } from './actions';
-import { getCurrentUser } from '../../helpers/Utils';
+// import { getCurrentUser } from '../../helpers/Utils';
 import { api } from '../../constants/defaultValues';
 
-const currentUser = getCurrentUser();
+// const currentUser = getCurrentUser();
 
-const token = `JWT ${currentUser?.token}`;
+// const token = `JWT ${currentUser?.token}`;
 
-const axiosConfig = {
-  headers: {
-    Authorization: token,
-  },
-};
+// const axiosConfig = {
+//   headers: {
+//     Authorization: token,
+//   },
+// };
 
-console.log(axiosConfig);
+// console.log(axiosConfig);
 ////////////----------- CALENDAR -----------////////////
 
 // --------- GET ---------//

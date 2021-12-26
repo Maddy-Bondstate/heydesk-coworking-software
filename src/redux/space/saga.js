@@ -69,12 +69,12 @@ export function* watchGetLocationList() {
 const addSpaceLocationRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
   if (method === 'POST') {
-    // const form_data = new FormData();
-    // for (var key in data) {
-    //   form_data.append(key, data[key]);
-    // }
+    const form_data = new FormData();
+    for (var key in data) {
+      form_data.append(key, data[key]);
+    }
     return await axios
-      .post(`${api}space/location/`, data, axiosConfig(token))
+      .post(`${api}space/location/`, form_data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -83,13 +83,13 @@ const addSpaceLocationRequest = async (data, token, method) => {
     const id = data.id;
     delete data['id'];
 
-    // const form_data = new FormData();
-    // for (var key in data) {
-    //   form_data.append(key, data[key]);
-    // }
+    const form_data = new FormData();
+    for (var key in data) {
+      form_data.append(key, data[key]);
+    }
 
     return await axios
-      .put(`${api}space/location/update/${id}/`, data, axiosConfig(token))
+      .put(`${api}space/location/update/${id}/`, form_data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -115,7 +115,7 @@ function* addSpaceLocation(action) {
       method
     );
     yield put(addSpaceLocationSuccess(response));
-    window.location.reload();
+    // window.location.reload();
   } catch (error) {
     yield put(addSpaceLocationError(error));
   }
@@ -131,8 +131,13 @@ const addSpaceLocationFloorRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
 
   if (method === 'POST') {
+    const form_data = new FormData();
+    for (var key in data) {
+      form_data.append(key, data[key]);
+    }
+
     return await axios
-      .post(`${api}space/floor/`, data, axiosConfig(token))
+      .post(`${api}space/floor/`, form_data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -141,8 +146,13 @@ const addSpaceLocationFloorRequest = async (data, token, method) => {
     const id = data.id;
     delete data['id'];
 
+    const form_data = new FormData();
+    for (var key in data) {
+      form_data.append(key, data[key]);
+    }
+
     return await axios
-      .put(`${api}space/floor/update/${id}/`, data, axiosConfig(token))
+      .put(`${api}space/floor/update/${id}/`, form_data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -168,7 +178,7 @@ function* addSpaceLocationFloor(action) {
       method
     );
     yield put(addSpaceLocationFloorSuccess(response));
-    window.location.reload();
+    // window.location.reload();
   } catch (error) {
     yield put(addSpaceLocationFloorError(error));
   }

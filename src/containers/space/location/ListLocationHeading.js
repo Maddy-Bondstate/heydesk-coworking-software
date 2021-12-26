@@ -44,7 +44,7 @@ const ListLocationHeading = ({
             <Button
               color="primary"
               className="top-right-button mr-2"
-              onClick={() => toggleModal()}
+              onClick={toggleModal}
             >
               <IntlMessages id="space.add-location" />
             </Button>
@@ -52,7 +52,7 @@ const ListLocationHeading = ({
             <Button
               color="primary"
               className="top-right-button"
-              onClick={() => toggleFloor()}
+              onClick={toggleFloor}
             >
               <IntlMessages id="space.add-floor" />
             </Button>

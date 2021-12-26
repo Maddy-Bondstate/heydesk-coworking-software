@@ -31,16 +31,19 @@ import { connect } from 'react-redux';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const AddLocationModal = (props) => {
-  const {
+  let {
+    token,
     modelTitle,
     modalOpen,
     toggleModal,
     intl,
-    // loading,
+    loading,
     addSpaceLocationAction,
     item,
-    // addlocation,
-    // handleGetSpaceLocation,
+    addlocation,
+    handleGetSpaceLocation,
+    modalDeleteIdsw,
+    setModalDeleteIdsrrw,
   } = props;
 
   const { messages } = intl;
@@ -54,8 +57,10 @@ const AddLocationModal = (props) => {
   );
   const [selectedTimezone, setSelectedTimezone] = useState('');
   const [files, setFiles] = useState(null);
+  const [getImage, setGetImage] = useState('');
 
   const [checkedPrimarySmall, setCheckedPrimarySmall] = useState(true);
+  const [fetchSpace, setFetchSpace] = useState(false);
 
   const [state, setState] = useState({
     name: '',
@@ -70,9 +75,8 @@ const AddLocationModal = (props) => {
 
   useLayoutEffect(() => {
     // console.log(item);
-    if (item !== null) {
+    if (item && item !== null) {
       setState({
-        ...state,
         name: item.name,
         unique_code: item.unique_code,
         description: item.description,
@@ -82,6 +86,8 @@ const AddLocationModal = (props) => {
         country: item.country,
         zipcode: item.zipcode,
       });
+
+      item.image && setGetImage(item.image);
 
       item.time_zone !== '' && setSelectedTimezone({ value: item.time_zone });
       item.start_time &&
@@ -95,15 +101,52 @@ const AddLocationModal = (props) => {
           new Date(moment(item.end_time, 'HH:mm:ss').format('YYYY-MM-DDTHH:mm'))
         );
       setCheckedPrimarySmall(item.is_open);
+    } else {
+      setState({
+        name: '',
+        unique_code: '',
+        description: '',
+        address: '',
+        city: '',
+        state: '',
+        country: '',
+        zipcode: '',
+      });
+
+      setGetImage('');
+      setSelectedTimezone(selectedTimezone);
+      setStartBusinessHour(startBusinessHour);
+      setEndBusinessHour(endBusinessHour);
+      setCheckedPrimarySmall(checkedPrimarySmall);
     }
-  }, [item]);
+
+    if (!loading && addlocation && !fetchSpace && !modalDeleteIdsw) {
+      // console.log(':::::::::::::::::::::');
+      setFetchSpace(true);
+      handleGetSpaceLocation();
+      toggleModal(!modalOpen);
+    }
+
+    // if (modalDeleteIds) setModalDeleteIdsrr(false);
+  }, [
+    item,
+    loading,
+    modalOpen,
+    toggleModal,
+    addlocation,
+    handleGetSpaceLocation,
+    modalDeleteIdsw,
+    setModalDeleteIdsrrw,
+  ]);
 
   const onChangeImage = (e) => {
     setFiles(e.target.files[0]);
   };
 
   const removeFile = () => {
-    setFiles(null);
+    if (getImage === '') setFiles(null);
+    else setGetImage('');
+
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
@@ -130,17 +173,25 @@ const AddLocationModal = (props) => {
       state.zipcode !== '' &&
       state.country !== ''
     ) {
-      const data = {
+      let data = {
         ...state,
-        image: files,
         start_time: moment(startBusinessHour).format('HH:mm'),
         end_time: moment(endBusinessHour).format('HH:mm'),
         time_zone: selectedTimezone ? selectedTimezone.value : '',
         is_open: checkedPrimarySmall,
       };
 
-      if (item) addSpaceLocationAction({ ...data, id: item.id }, 'PUT');
-      else addSpaceLocationAction(data, 'POST');
+      if (getImage === '' && files) {
+        data = {
+          ...data,
+          image: files,
+        };
+      }
+
+      if (item) addSpaceLocationAction({ ...data, id: item.id }, token, 'PUT');
+      else addSpaceLocationAction(data, token, 'POST');
+
+      setFetchSpace(false);
     } else {
       document.getElementsByName('name')[0].style.border = '1px solid #d7d7d7';
       document.getElementsByName('unique_code')[0].style.border =
@@ -215,7 +266,9 @@ const AddLocationModal = (props) => {
     }
   };
 
-  return (
+  return loading ? (
+    <div className="loading" />
+  ) : (
     <Modal isOpen={modalOpen} toggle={toggleModal} backdrop="static">
       <ModalHeader toggle={toggleModal}>
         <IntlMessages id={modelTitle} />
@@ -360,7 +413,7 @@ const AddLocationModal = (props) => {
                       <IntlMessages id="label.image" />
                     </Label>
 
-                    {!files ? (
+                    {!files && getImage === '' ? (
                       <Label className="custom-image-attach-inline">
                         <Input
                           type="file"
@@ -372,7 +425,11 @@ const AddLocationModal = (props) => {
                     ) : (
                       <Label>
                         <img
-                          src={URL.createObjectURL(files)}
+                          src={
+                            getImage !== ''
+                              ? getImage
+                              : URL.createObjectURL(files)
+                          }
                           alt=""
                           width="150"
                         />
@@ -486,21 +543,18 @@ const AddLocationModal = (props) => {
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        {/* {loading ? (
-          <div className="loading" />
-        ) : ( */}
+
         <Button color="primary" size="sm" onClick={handleSubmitLocation}>
           <IntlMessages id="model.add" />
         </Button>
-        {/* )} */}
       </ModalFooter>
     </Modal>
   );
 };
 
 const mapStateToProps = ({ space }) => {
-  const { addlocation } = space;
-  return { addlocation };
+  const { addlocation, loading } = space;
+  return { addlocation, loading };
 };
 
 export default injectIntl(
