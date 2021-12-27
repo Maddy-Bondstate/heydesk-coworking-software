@@ -16,32 +16,41 @@ import {
   addClientCustomerSuccess,
   addClientCustomerError,
 } from './actions';
-import { getCurrentUser } from '../../helpers/Utils';
+// import { getCurrentUser } from '../../helpers/Utils';
 import { api } from '../../constants/defaultValues';
 
-const currentUser = getCurrentUser();
-const token = `JWT ${currentUser?.token}`;
+// const currentUser = getCurrentUser();
+// const token = `JWT ${currentUser?.token}`;
 
-const axiosConfig = {
-  headers: {
-    Authorization: token,
-  },
+// const axiosConfig = {
+//   headers: {
+//     Authorization: token,
+//   },
+// };
+
+const axiosConfig = (token) => {
+  return {
+    headers: {
+      Authorization: token,
+    },
+  };
 };
 
 // ------------------------- BOOKING ----------------------- //
 
 // GET BOOKING
-const getClientBookingListRequest = async () => {
+const getClientBookingListRequest = async (token) => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(`${api}service/booking/list/`, axiosConfig)
+    .get(`${api}service/booking/list/`, axiosConfig(token))
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* getClientBookingListItems() {
+function* getClientBookingListItems(action) {
   try {
-    const response = yield call(getClientBookingListRequest);
+    const { token } = action;
+    const response = yield call(getClientBookingListRequest, token);
     yield put(getClientBookingListSuccess(response));
   } catch (error) {
     yield put(getClientBookingListError(error));
@@ -54,12 +63,12 @@ export function* watchGetClientBookingList() {
 }
 
 // ADD BOOKING
-const addClientBookingRequest = async (data, method) => {
+const addClientBookingRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
 
   if (method === 'POST') {
     return await axios
-      .post(`${api}service/booking/`, data, axiosConfig)
+      .post(`${api}service/booking/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -69,7 +78,7 @@ const addClientBookingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(`${api}service/booking/update/${id}/`, data, axiosConfig)
+      .put(`${api}service/booking/update/${id}/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -79,15 +88,21 @@ const addClientBookingRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(`${api}space/location/update/${id}/`, axiosConfig)
+      .delete(`${api}space/location/update/${id}/`, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
 };
 
-function* addClientBooking({ payload, method }) {
+function* addClientBooking(action) {
   try {
-    const response = yield call(addClientBookingRequest, payload, method);
+    const { payload, token, method } = action;
+    const response = yield call(
+      addClientBookingRequest,
+      payload,
+      token,
+      method
+    );
     yield put(addClientBookingSuccess(response));
     // window.location.reload();
   } catch (error) {
@@ -103,17 +118,18 @@ export function* watchAddClientBooking() {
 // ------------------------- CUSTOMER ----------------------- //
 
 // GET CUSTOMER
-const getClientCustomerListRequest = async () => {
+const getClientCustomerListRequest = async (token) => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(`${api}service/customer/list/`, axiosConfig)
+    .get(`${api}service/customer/list/`, axiosConfig(token))
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* getClientCustomerListItems() {
+function* getClientCustomerListItems(action) {
   try {
-    const response = yield call(getClientCustomerListRequest);
+    const { token } = action;
+    const response = yield call(getClientCustomerListRequest, token);
     yield put(getClientCustomerListSuccess(response));
   } catch (error) {
     yield put(getClientCustomerListError(error));
@@ -126,12 +142,12 @@ export function* watchGetClientCustomerList() {
 }
 
 // ADD CUSTOMER
-const addClientCustomerRequest = async (data, method) => {
+const addClientCustomerRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
 
   if (method === 'POST') {
     return await axios
-      .post(`${api}service/customer/`, data, axiosConfig)
+      .post(`${api}service/customer/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -141,7 +157,7 @@ const addClientCustomerRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .put(`${api}service/customer/update/${id}/`, data, axiosConfig)
+      .put(`${api}service/customer/update/${id}/`, data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -151,15 +167,21 @@ const addClientCustomerRequest = async (data, method) => {
     delete data['id'];
 
     return await axios
-      .delete(`${api}space/location/update/${id}/`, axiosConfig)
+      .delete(`${api}space/location/update/${id}/`, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
 };
 
-function* addClientCustomer({ payload, method }) {
+function* addClientCustomer(action) {
   try {
-    const response = yield call(addClientCustomerRequest, payload, method);
+    const { payload, token, method } = action;
+    const response = yield call(
+      addClientCustomerRequest,
+      payload,
+      token,
+      method
+    );
     yield put(addClientCustomerSuccess(response));
     // window.location.reload();
   } catch (error) {

@@ -20,6 +20,7 @@ const ClientBookings = ({
   loading,
   booking,
   customer,
+  token,
   meeting,
   getClientBookingListAction,
   getSpaceMeetingListAction,
@@ -39,9 +40,9 @@ const ClientBookings = ({
   // const [modalDeleteId, setModalDeleteId] = useState('');
 
   useEffect(() => {
-    getClientBookingListAction();
-    getClientCustomerListAction();
-    getSpaceMeetingListAction();
+    getClientBookingListAction(token);
+    getClientCustomerListAction(token);
+    getSpaceMeetingListAction({}, token);
   }, [
     getClientBookingListAction,
     getClientCustomerListAction,
@@ -100,6 +101,7 @@ const ClientBookings = ({
         // item={modalId}
         customerData={customerData}
         spaceData={spaceData}
+        token={token}
       />
 
       <ListBookingListing

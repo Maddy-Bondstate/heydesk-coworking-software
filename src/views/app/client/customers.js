@@ -15,6 +15,7 @@ const pageSizes = [4, 8, 12, 20];
 const ClientCustomers = ({
   match,
   loading,
+  token,
   customer,
   getClientCustomerListAction,
 }) => {
@@ -29,8 +30,12 @@ const ClientCustomers = ({
   const [modalId, setModalId] = useState(null);
 
   useEffect(() => {
-    getClientCustomerListAction();
+    getClientCustomerListAction(token);
   }, [getClientCustomerListAction]);
+
+  const handleGetClientCustomers = () => {
+    getClientCustomerListAction(token);
+  };
 
   useLayoutEffect(() => {
     if (customer?.data) {
@@ -69,6 +74,8 @@ const ClientCustomers = ({
         modalOpen={modalOpen}
         toggleModal={() => setModalOpen(!modalOpen)}
         item={modalId}
+        token={token}
+        handleGetClientCustomers={handleGetClientCustomers}
       />
 
       <ListCustomerListing

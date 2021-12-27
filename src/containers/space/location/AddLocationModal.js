@@ -112,7 +112,7 @@ const AddLocationModal = (props) => {
         country: '',
         zipcode: '',
       });
-
+      setActiveFirstTab('1');
       setGetImage('');
       setSelectedTimezone('');
       setStartBusinessHour(new Date(moment().format('YYYY-MM-DDT09:00')));

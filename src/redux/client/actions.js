@@ -15,8 +15,9 @@ import {
 } from '../actions';
 
 // GET BOOKING
-export const getClientBookingList = () => ({
+export const getClientBookingList = (token) => ({
   type: CLIENT_GET_BOOKING_LIST,
+  token: token,
 });
 
 export const getClientBookingListSuccess = (items) => ({
@@ -30,9 +31,10 @@ export const getClientBookingListError = (error) => ({
 });
 
 // ADD BOOKING
-export const addClientBooking = (data, method) => ({
+export const addClientBooking = (data, token, method) => ({
   type: CLIENT_ADD_BOOKING,
   payload: data,
+  token: token,
   method,
 });
 
@@ -49,8 +51,9 @@ export const addClientBookingError = (error) => ({
 // ----------------------- CUSTOMER ---------------------- //
 
 // GET CUSTOMER
-export const getClientCustomerList = () => ({
+export const getClientCustomerList = (token) => ({
   type: CLIENT_GET_CUSTOMER_LIST,
+  token: token,
 });
 
 export const getClientCustomerListSuccess = (items) => ({
@@ -64,9 +67,10 @@ export const getClientCustomerListError = (error) => ({
 });
 
 // ADD CUSTOMER
-export const addClientCustomer = (data, method) => ({
+export const addClientCustomer = (data, token, method) => ({
   type: CLIENT_ADD_CUSTOMER,
   payload: data,
+  token: token,
   method,
 });
 

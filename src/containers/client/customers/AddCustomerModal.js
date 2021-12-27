@@ -33,11 +33,15 @@ const AddCustomerModal = (props) => {
     loading,
     addClientCustomerAction,
     item,
+    token,
+    addCustomer,
+    handleGetClientCustomers,
   } = props;
 
   const { messages } = intl;
 
   const [activeFirstTab, setActiveFirstTab] = useState('1');
+  const [fetchSpace, setFetchSpace] = useState(false);
 
   const [state, setState] = useState({
     first_name: '',
@@ -54,7 +58,6 @@ const AddCustomerModal = (props) => {
   useLayoutEffect(() => {
     if (item !== null) {
       setState({
-        ...state,
         first_name: item.first_name,
         last_name: item.last_name,
         email: item.email,
@@ -66,7 +69,30 @@ const AddCustomerModal = (props) => {
         zipcode: item.zipcode,
       });
     }
-  }, [state, item]);
+    //  else {
+    //   setState({
+    //     first_name: '',
+    //     last_name: '',
+    //     email: '',
+    //     phone: '',
+    //     address: '',
+    //     city: '',
+    //     state: '',
+    //     zipcode: '',
+    //     country: '',
+    //   });
+    //   setActiveFirstTab('1');
+    // }
+
+    if (!loading && addCustomer && !fetchSpace) {
+      window.location.reload();
+      // console.log(loading, addCustomer, fetchSpace);
+      // console.log(':::::::::::::::::::::');
+      // setFetchSpace(true);
+      // handleGetClientCustomers();
+      // toggleModal(!modalOpen);
+    }
+  }, [item]);
 
   const handleChangeValue = (e) => {
     const name = e.target.name;
@@ -82,8 +108,11 @@ const AddCustomerModal = (props) => {
       ...state,
     };
 
-    if (item) addClientCustomerAction({ ...data, id: item.id }, 'PUT');
-    else addClientCustomerAction(data, 'POST');
+    if (item) addClientCustomerAction({ ...data, id: item.id }, token, 'PUT');
+    else addClientCustomerAction(data, token, 'POST');
+
+    setFetchSpace(false);
+    // toggleModal(!modalOpen);
   };
 
   return (

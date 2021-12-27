@@ -38,21 +38,26 @@ const AddMeetingRoomModal = ({
   toggleModal,
   intl,
   locationData,
+  addMeeting,
   loading,
   item,
   type,
   addSpaceMeetingAction,
+  handleGetSpaceMeeting,
+  setModalDelete_H,
 }) => {
   const { messages } = intl;
 
   const [activeFirstTab, setActiveFirstTab] = useState('1');
   const [availableFrom, setAvailableFrom] = useState(new Date());
-  const [availableTo, setAvailableTo] = useState();
-  const [files, setFiles] = useState('');
+  const [availableTo, setAvailableTo] = useState(new Date());
+  const [files, setFiles] = useState(null);
   const [selectedOptionLocation, setSelectedOptionLocation] = useState('');
   const [selectedOptionFloor, setSelectedOptionFloor] = useState('');
   const [locationListData, setLocationListData] = useState([]);
   const [floorListData, setFloorListData] = useState([]);
+  const [fetchSpace, setFetchSpace] = useState(false);
+  const [getImage, setGetImage] = useState('');
 
   const [state, setState] = useState({
     type: type,
@@ -61,9 +66,8 @@ const AddMeetingRoomModal = ({
     size: '',
     rate: '',
     description: '',
-    image: null,
-    color: '',
-    privacy: '',
+    color: '#000000',
+    privacy: '1',
   });
 
   const onChangeImage = (e) => {
@@ -71,7 +75,9 @@ const AddMeetingRoomModal = ({
   };
 
   const removeFile = () => {
-    setFiles('');
+    if (getImage === '') setFiles(null);
+    else setGetImage('');
+
     setTimeout(() => (document.getElementById('fileupload').value = ''), 50);
   };
 
@@ -85,37 +91,110 @@ const AddMeetingRoomModal = ({
   };
 
   const handleSubmitMeetingRoom = () => {
-    const data = {
-      ...state,
-      location: selectedOptionLocation.value,
-      floor: selectedOptionFloor.value,
-      start_data: moment(availableFrom).format('DD/MM/YYYY'),
-      end_data: moment(availableTo).format('DD/MM/YYYY'),
-    };
+    if (
+      state.name !== '' &&
+      selectedOptionLocation &&
+      selectedOptionLocation !== '' &&
+      selectedOptionFloor &&
+      selectedOptionFloor !== '' &&
+      state.size !== '' &&
+      state.area !== '' &&
+      state.rate !== '' &&
+      state.description !== ''
+    ) {
+      let data = {
+        ...state,
+        location: selectedOptionLocation.value,
+        floor: selectedOptionFloor.value,
+        start_data: moment(availableFrom).format('DD/MM/YYYY'),
+        end_data: moment(availableTo).format('DD/MM/YYYY'),
+      };
 
-    console.log(item, data);
+      if (getImage === '' && files) {
+        data = {
+          ...data,
+          image: files,
+        };
+      }
 
-    if (item) {
-      addSpaceMeetingAction({ ...data, id: item.id }, token, 'PUT');
+      // console.log(item, data);
+
+      if (item) addSpaceMeetingAction({ ...data, id: item.id }, token, 'PUT');
+      else addSpaceMeetingAction(data, token, 'POST');
+      setFetchSpace(false);
     } else {
-      addSpaceMeetingAction(data, token, 'POST');
+      // console.log(document.getElementsByName('name')[0]);
+      document.getElementsByName('name')[0].style.border = '1px solid #d7d7d7';
+      document.getElementById('location').style.border = '1px solid #d7d7d7';
+
+      console.log(selectedOptionLocation);
+      if (selectedOptionLocation && selectedOptionLocation !== '')
+        document.getElementById('floor').style.border = '1px solid #d7d7d7';
+      document.getElementsByName('size')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('area')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('rate')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('description')[0].style.border =
+        '1px solid #d7d7d7';
+
+      if (state.name === '') {
+        document.getElementsByName('name')[0].focus();
+        document.getElementsByName('name')[0].style.border = '1px solid orange';
+        return;
+      }
+      if (selectedOptionLocation === '') {
+        document.getElementById('location').focus();
+        document.getElementById('location').style.border = '1px solid orange';
+        return;
+      }
+      if (
+        selectedOptionFloor === '' &&
+        selectedOptionLocation &&
+        selectedOptionLocation !== ''
+      ) {
+        document.getElementById('floor').focus();
+        document.getElementById('floor').style.border = '1px solid orange';
+        return;
+      }
+      if (state.size === '') {
+        document.getElementsByName('size')[0].focus();
+        document.getElementsByName('size')[0].style.border = '1px solid orange';
+        return;
+      }
+      if (state.area === '') {
+        document.getElementsByName('area')[0].focus();
+        document.getElementsByName('area')[0].style.border = '1px solid orange';
+        return;
+      }
+      if (state.rate === '') {
+        document.getElementsByName('rate')[0].focus();
+        document.getElementsByName('rate')[0].style.border = '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.description === '') {
+        document.getElementsByName('description')[0].focus();
+        document.getElementsByName('description')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
     }
   };
 
   useLayoutEffect(() => {
-    if (item !== null) {
+    if (item && item !== null) {
       setState({
-        ...state,
         type: item.type,
         name: item.name,
         area: item.area,
         size: item.size,
         rate: item.rate,
         description: item.description,
-        image: null,
         color: item.color,
         privacy: item.privacy.toString(),
       });
+
+      item.image && setGetImage(item.image);
 
       item.start_time &&
         setAvailableFrom(new Date(moment(item.start_time, 'DD/MM/YYYY')));
@@ -126,6 +205,26 @@ const AddMeetingRoomModal = ({
       setSelectedOptionFloor(item.floor);
 
       handleFloorData(item.location);
+    } else {
+      setState({
+        type: type,
+        name: '',
+        area: '',
+        size: '',
+        rate: '',
+        description: '',
+        color: '#000000',
+        privacy: '1',
+      });
+
+      setActiveFirstTab('1');
+      setGetImage('');
+
+      setAvailableFrom(new Date());
+      setAvailableTo(new Date());
+
+      setSelectedOptionLocation('');
+      setSelectedOptionFloor('');
     }
 
     if (locationData) {
@@ -134,7 +233,23 @@ const AddMeetingRoomModal = ({
 
       setLocationListData(selectData);
     }
-  }, [item, locationData]);
+
+    if (!loading && addMeeting && !fetchSpace && !setModalDelete_H) {
+      // console.log(':::::::::::::::::::::');
+      setFetchSpace(true);
+      handleGetSpaceMeeting();
+      toggleModal(!modalOpen);
+    }
+  }, [
+    item,
+    addMeeting,
+    toggleModal,
+    handleGetSpaceMeeting,
+    loading,
+    modalOpen,
+    locationData,
+    setModalDelete_H,
+  ]);
 
   const handleFloorData = ({ value }) => {
     const objIndex = locationData.findIndex((obj) => obj.id === value);
@@ -209,6 +324,7 @@ const AddMeetingRoomModal = ({
                     className="react-select"
                     classNamePrefix="react-select"
                     name="location"
+                    id="location"
                     value={selectedOptionLocation}
                     onChange={(e) => {
                       return setSelectedOptionLocation(e), handleFloorData(e);
@@ -227,6 +343,7 @@ const AddMeetingRoomModal = ({
                       className="react-select"
                       classNamePrefix="react-select"
                       name="floor"
+                      id="floor"
                       value={selectedOptionFloor}
                       onChange={setSelectedOptionFloor}
                       options={floorListData}
@@ -242,6 +359,7 @@ const AddMeetingRoomModal = ({
                     <Label className="form-group has-float-label">
                       <InputGroup className="mb-3">
                         <Input
+                          type="number"
                           name="size"
                           value={state.size}
                           onChange={handleChangeValue}
@@ -260,6 +378,7 @@ const AddMeetingRoomModal = ({
                     <Label className="form-group has-float-label">
                       <InputGroup className="mb-3">
                         <Input
+                          type="number"
                           name="area"
                           value={state.area}
                           onChange={handleChangeValue}
@@ -317,6 +436,7 @@ const AddMeetingRoomModal = ({
                 <Label className="form-group has-float-label">
                   <InputGroup className="mb-3">
                     <Input
+                      type="number"
                       name="rate"
                       value={state.rate}
                       onChange={handleChangeValue}
@@ -348,7 +468,7 @@ const AddMeetingRoomModal = ({
                       <IntlMessages id="label.image" />
                     </Label>
 
-                    {files === '' ? (
+                    {!files && getImage === '' ? (
                       <Label className="custom-image-attach-inline">
                         <Input
                           type="file"
@@ -360,7 +480,11 @@ const AddMeetingRoomModal = ({
                     ) : (
                       <Label>
                         <img
-                          src={URL.createObjectURL(files)}
+                          src={
+                            getImage !== ''
+                              ? getImage
+                              : URL.createObjectURL(files)
+                          }
                           alt=""
                           width="150"
                         />

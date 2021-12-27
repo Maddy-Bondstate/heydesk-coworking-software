@@ -202,6 +202,7 @@ module.exports = {
   'label.add_floor': 'Add Floor',
   'label.delete': 'Delete',
   'label.location': 'Location',
+  'label.customer': 'Customer',
   'label.space': 'Space',
   'label.booking_date': 'Booking Date',
   'label.floor': 'Floor',

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 import { ProtectedRoute } from '../../../helpers/authHelper';
 
 const SpaceLocations = React.lazy(() =>

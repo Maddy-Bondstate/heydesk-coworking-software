@@ -226,8 +226,13 @@ const addSpaceMeetingRequest = async (data, token, method) => {
   // eslint-disable-next-line no-return-await
 
   if (method === 'POST') {
+    const form_data = new FormData();
+    for (var key in data) {
+      form_data.append(key, data[key]);
+    }
+
     return await axios
-      .post(`${api}space/objects/`, data, axiosConfig(token))
+      .post(`${api}space/objects/`, form_data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }
@@ -236,8 +241,13 @@ const addSpaceMeetingRequest = async (data, token, method) => {
     const id = data.id;
     delete data['id'];
 
+    const form_data = new FormData();
+    for (var key in data) {
+      form_data.append(key, data[key]);
+    }
+
     return await axios
-      .put(`${api}space/objects/update/${id}/`, data, axiosConfig(token))
+      .put(`${api}space/objects/update/${id}/`, form_data, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }

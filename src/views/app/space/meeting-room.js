@@ -16,14 +16,14 @@ const SpaceMeetingRoom = ({
   match,
   token,
   initialLoad,
-  loading,
+  // loading,
   location,
   meeting,
   getSpaceMeetingListAction,
   addSpaceMeetingAction,
   getSpaceLocationListAction,
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(8);
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,9 +34,10 @@ const SpaceMeetingRoom = ({
   const [locationData, setLocationData] = useState(null);
   const [dataEdit, setDataEdit] = useState(null);
   const [modalDeleteId, setModalDeleteId] = useState('');
+  const [modalDelete_H, setModalDelete_H] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(false);
+    // setIsLoaded(false);
     const data = {
       type: initialLoad.type,
     };
@@ -49,31 +50,60 @@ const SpaceMeetingRoom = ({
     initialLoad,
   ]);
 
+  const handleGetSpaceMeeting = () => {
+    const data = {
+      type: initialLoad.type,
+    };
+    getSpaceMeetingListAction(data, token);
+  };
+
   useLayoutEffect(() => {
     if (!modalOpen) setDataEdit(null);
 
     if (meeting?.data) {
       setItems(meeting.data.results);
-      setIsLoaded(true);
+      // setIsLoaded(true);
     }
 
     if (location?.data) {
       setLocationData(location.data.results);
     }
 
-    if (modalDeleteId !== '') {
-      const data = { id: modalDeleteId };
-      addSpaceMeetingAction(data, token, 'DELETE');
-      setModalDeleteId('');
-    }
+    // if (modalDeleteId !== '') {
+    //   const data = { id: modalDeleteId };
+    //   addSpaceMeetingAction(data, token, 'DELETE');
+    //   setModalDeleteId('');
+    // }
+
+    // if (!loading) {
+    //   // console.log('++++++++++++++++++++++');
+    //   if (addLocationFloor && modalDeleteIds) {
+    //     handleGetSpaceLocation();
+    //     setModalDeleteIds(false);
+    //   } else if (addlocation && modalDeleteId) {
+    //     handleGetSpaceLocation();
+    //     setModalDeleteId(false);
+    //   }
+    // }
   }, [
     modalOpen,
     meeting,
     location,
-    token,
-    modalDeleteId,
-    addSpaceMeetingAction,
+    // token,
+    // modalDeleteId,
+    // addSpaceMeetingAction,
   ]);
+
+  const handleModalDelete = (id) => {
+    addSpaceMeetingAction({ id }, token, 'DELETE');
+    setModalDeleteId('');
+    setModalDelete_H(true);
+
+    setTimeout(() => {
+      setModalDelete_H(false);
+      handleGetSpaceMeeting();
+    }, 100);
+  };
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -107,6 +137,8 @@ const SpaceMeetingRoom = ({
           locationData={locationData}
           type={initialLoad.type}
           token={token}
+          handleGetSpaceMeeting={handleGetSpaceMeeting}
+          setModalDelete_H={modalDelete_H}
         />
       )}
 
@@ -120,7 +152,7 @@ const SpaceMeetingRoom = ({
         }}
         locationData={locationData}
         setDataEdit={setDataEdit}
-        setModalDeleteId={setModalDeleteId}
+        setModalDeleteId={handleModalDelete}
       />
     </div>
   );

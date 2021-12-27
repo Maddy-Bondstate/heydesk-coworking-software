@@ -29,20 +29,22 @@ const AddBookingModal = (props) => {
     toggleModal,
     intl,
     loading,
+    token,
     customerData,
+    addBooking,
     spaceData,
     addClientBookingAction,
   } = props;
 
   const { messages } = intl;
 
-  const [selectedOptionLocation, setSelectedOptionLocation] = useState('');
-  const [locationListData, setLocationListData] = useState([]);
+  const [selectedOptionCustomer, setSelectedOptionCustomer] = useState('');
+  const [customerListData, setCustomerListData] = useState([]);
   const [selectedOptionSpace, setSelectedOptionSpace] = useState('');
   const [spaceListData, setSpaceListData] = useState([]);
 
   const [dateFrom, setDateFrom] = useState(moment().add(1, 'day').toDate());
-  const [dateTo, setDateTo] = useState();
+  const [dateTo, setDateTo] = useState('');
 
   useLayoutEffect(() => {
     if (customerData !== null) {
@@ -53,7 +55,7 @@ const AddBookingModal = (props) => {
           value: c.id,
         })
       );
-      setLocationListData(custData);
+      setCustomerListData(custData);
     }
 
     if (spaceData !== null) {
@@ -67,17 +69,49 @@ const AddBookingModal = (props) => {
 
       setSpaceListData(custDatas);
     }
-  }, [customerData, spaceData]);
+
+    if (!loading && addBooking) {
+      window.location.reload();
+    }
+  }, [customerData, spaceData, addBooking]);
 
   const handleSubmitLocation = () => {
-    const data = {
-      customer: selectedOptionLocation.value,
-      space: selectedOptionSpace.value,
-      start_time: moment(dateFrom).format('DD/MM/YYYY HH:mm'),
-      end_time: moment(dateTo).format('DD/MM/YYYY HH:mm'),
-    };
+    if (
+      selectedOptionCustomer &&
+      selectedOptionCustomer !== '' &&
+      selectedOptionSpace &&
+      selectedOptionSpace !== '' &&
+      dateTo !== ''
+    ) {
+      const data = {
+        customer: selectedOptionCustomer.value,
+        space: selectedOptionSpace.value,
+        start_time: moment(dateFrom).format('DD/MM/YYYY HH:mm'),
+        end_time: moment(dateTo).format('DD/MM/YYYY HH:mm'),
+      };
 
-    addClientBookingAction(data, 'POST');
+      addClientBookingAction(data, token, 'POST');
+    } else {
+      document.getElementById('customer').style.border = '1px solid #d7d7d7';
+      document.getElementById('space').style.border = '1px solid #d7d7d7';
+      document.getElementById('end_time').style.border = '1px solid #d7d7d7';
+
+      if (selectedOptionCustomer === '') {
+        document.getElementById('customer').focus();
+        document.getElementById('customer').style.border = '1px solid orange';
+        return;
+      }
+      if (selectedOptionSpace === '') {
+        document.getElementById('space').focus();
+        document.getElementById('space').style.border = '1px solid orange';
+        return;
+      }
+      if (dateTo === '') {
+        document.getElementById('end_time').focus();
+        document.getElementById('end_time').style.border = '1px solid orange';
+        return;
+      }
+    }
   };
 
   return (
@@ -93,13 +127,14 @@ const AddBookingModal = (props) => {
                 components={{ Input: CustomSelectInput }}
                 className="react-select"
                 classNamePrefix="react-select"
-                name="location"
-                value={selectedOptionLocation}
-                onChange={setSelectedOptionLocation}
-                options={locationListData}
+                id="customer"
+                name="customer"
+                value={selectedOptionCustomer}
+                onChange={setSelectedOptionCustomer}
+                options={customerListData}
               />
               <span>
-                <IntlMessages id="label.location" />
+                <IntlMessages id="label.customer" />
               </span>
             </Label>
 
@@ -108,6 +143,7 @@ const AddBookingModal = (props) => {
                 components={{ Input: CustomSelectInput }}
                 className="react-select"
                 classNamePrefix="react-select"
+                id="space"
                 name="space"
                 value={selectedOptionSpace}
                 onChange={setSelectedOptionSpace}
@@ -130,6 +166,7 @@ const AddBookingModal = (props) => {
               <Colxx sm="6">
                 <div className="form-group has-float-label">
                   <DatePicker
+                    id="start_time"
                     name="start_time"
                     selected={dateFrom}
                     onChange={(val) => setDateFrom(val)}
@@ -144,6 +181,7 @@ const AddBookingModal = (props) => {
               <Colxx sm="6">
                 <div className="form-group has-float-label">
                   <DatePicker
+                    id="end_time"
                     name="end_time"
                     selected={dateTo}
                     onChange={(val) => setDateTo(val)}
