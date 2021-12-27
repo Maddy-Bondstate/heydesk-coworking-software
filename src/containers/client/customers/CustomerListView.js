@@ -28,16 +28,16 @@ const CustomerListView = ({ item, collect, toggleModal, setModalId }) => {
                         </b>
                       </p>
                     </NavLink>
-                    <p className="list-item-heading truncate mb-0 text-sm">
+                    <p className="list-item-heading mb-0 text-sm">
                       {item.email}
                     </p>
-                    <p className="list-item-heading truncate mb-0 text-sm">
+                    <p className="list-item-heading mb-0 text-sm">
                       {item.phone}
                     </p>
-                    <p className="list-item-heading truncate mb-0 text-sm">
+                    <p className="list-item-heading mb-0 text-sm">
                       {item.address}, {item.city}, {item.state}
                     </p>
-                    <p className="list-item-heading truncate mb-0 text-sm">
+                    <p className="list-item-heading mb-0 text-sm">
                       {item.country} - {item.zipcode}
                     </p>
                   </div>

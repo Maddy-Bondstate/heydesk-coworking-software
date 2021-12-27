@@ -80,17 +80,17 @@ const BookingListView = ({
                   </div>
 
                   <div className="d-flex align-items-center">
-                    <p className="font-weight-bold truncate mb-0 ml-4 mt-1">
+                    <p className="font-weight-bold mb-0 ml-4 mt-1">
                       Type: {type[space.type - 1]}
                     </p>
                   </div>
 
                   <div className="d-flex align-items-center">
-                    <p className="truncate mb-0 ml-4 mt-1">Booking Date</p>
+                    <p className="mb-0 ml-4 mt-1">Booking Date</p>
                   </div>
 
                   <div className="d-flex align-items-center">
-                    <p className="truncate mb-0 ml-4 mt-1 text-small">
+                    <p className="mb-0 ml-4 mt-1 text-small">
                       Start Date:{' '}
                       {moment(item.start_time, 'DD/MM/YYYY HH:mm').format(
                         'MMM DD, YYYY HH:mm'
@@ -99,7 +99,7 @@ const BookingListView = ({
                   </div>
 
                   <div className="d-flex align-items-center">
-                    <p className="truncate mb-0 ml-4 mt-1  text-small">
+                    <p className="mb-0 ml-4 mt-1  text-small">
                       End Date:{' '}
                       {moment(item.end_time, 'DD/MM/YYYY HH:mm').format(
                         'MMM DD, YYYY HH:mm'
@@ -108,18 +108,18 @@ const BookingListView = ({
                   </div>
 
                   {/* <div className="d-flex align-items-center">
-                    <p className="truncate mb-0 ml-4 mt-1">
+                    <p className="mb-0 ml-4 mt-1">
                       Location: {locationName}
                     </p>
                   </div>
 
                   <div className="d-flex align-items-center">
-                    <p className="truncate mb-0 ml-4 mt-1">
+                    <p className="mb-0 ml-4 mt-1">
                       Floor: {floorName}
                     </p>
                   </div> */}
                   {/* <div className="d-flex align-items-center">
-                    <p className="truncate mb-0 ml-4 mt-1">
+                    <p className="mb-0 ml-4 mt-1">
                       Rate: $ {item.rate}
                     </p>
                   </div> */}
@@ -143,18 +143,14 @@ const BookingListView = ({
                   </div>
 
                   {/* <div className="d-flex align-items-center"> */}
-                  <p className="truncate mb-0 ml-2 mt-1 text-small">
-                    {customer.email}
-                  </p>
+                  <p className="mb-0 ml-2 mt-1 text-small">{customer.email}</p>
 
-                  <p className="truncate mb-0 ml-2 mt-1 text-small">
-                    {customer.phone}
-                  </p>
+                  <p className="mb-0 ml-2 mt-1 text-small">{customer.phone}</p>
 
-                  <p className="truncate mb-0 ml-2 mt-1 text-small">
+                  <p className="mb-0 ml-2 mt-1 text-small">
                     {customer.address}, {customer.city}, {customer.state}
                   </p>
-                  <p className="truncate mb-0 ml-2 mt-0 text-small">
+                  <p className="mb-0 ml-2 mt-0 text-small">
                     {customer.country} - {customer.zipcode}
                   </p>
                   {/* </div> */}
