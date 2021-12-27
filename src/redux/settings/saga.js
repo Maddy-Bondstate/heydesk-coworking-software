@@ -56,7 +56,7 @@ function* addSettingsProfile({ payload }) {
   try {
     const response = yield call(addSettingsProfileRequest, payload);
     yield put(addSettingsProfileSuccess(response));
-    window.location.reload();
+    // window.location.reload();
   } catch (error) {
     yield put(addSettingsProfileError(error));
   }

@@ -32,6 +32,7 @@ import { addSpaceMeeting } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 const AddMeetingRoomModal = ({
+  token,
   modelTitle,
   modalOpen,
   toggleModal,
@@ -92,10 +93,12 @@ const AddMeetingRoomModal = ({
       end_data: moment(availableTo).format('DD/MM/YYYY'),
     };
 
+    console.log(item, data);
+
     if (item) {
-      addSpaceMeetingAction({ ...data, id: item.id }, 'PUT');
+      addSpaceMeetingAction({ ...data, id: item.id }, token, 'PUT');
     } else {
-      addSpaceMeetingAction(data, 'POST');
+      addSpaceMeetingAction(data, token, 'POST');
     }
   };
 
@@ -435,13 +438,10 @@ const AddMeetingRoomModal = ({
         <Button color="secondary" size="sm" outline onClick={toggleModal}>
           <IntlMessages id="model.close" />
         </Button>
-        {loading ? (
-          <div className="loading" />
-        ) : (
-          <Button color="primary" size="sm" onClick={handleSubmitMeetingRoom}>
-            <IntlMessages id="model.add" />
-          </Button>
-        )}
+
+        <Button color="primary" size="sm" onClick={handleSubmitMeetingRoom}>
+          <IntlMessages id="model.add" />
+        </Button>
       </ModalFooter>
     </Modal>
   );

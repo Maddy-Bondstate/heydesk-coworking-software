@@ -508,7 +508,7 @@ const AddLocationModal = (props) => {
                   <Colxx sm="6">
                     <Label className="form-group has-float-label">
                       <Input
-                        type="text"
+                        type="number"
                         name="zipcode"
                         value={state.zipcode}
                         onChange={handleChangeValue}

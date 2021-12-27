@@ -16,6 +16,7 @@ const SpaceMeetingRoom = ({
   match,
   token,
   initialLoad,
+  loading,
   location,
   meeting,
   getSpaceMeetingListAction,
@@ -77,9 +78,7 @@ const SpaceMeetingRoom = ({
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return !isLoaded ? (
-    <div className="loading" />
-  ) : (
+  return (
     <div className="disable-text-selection">
       <ListMeetingRoomHeading
         heading={initialLoad.heading}
@@ -107,6 +106,7 @@ const SpaceMeetingRoom = ({
           item={dataEdit}
           locationData={locationData}
           type={initialLoad.type}
+          token={token}
         />
       )}
 

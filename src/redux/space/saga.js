@@ -259,7 +259,7 @@ function* addSpaceMeeting(action) {
     const response = yield call(addSpaceMeetingRequest, payload, token, method);
     yield put(addSpaceMeetingSuccess(response));
 
-    window.location.reload();
+    // window.location.reload();
   } catch (error) {
     yield put(addSpaceMeetingError(error));
   }
