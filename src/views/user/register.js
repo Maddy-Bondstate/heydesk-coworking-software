@@ -101,12 +101,10 @@ const Register = ({ history, loading, error, registerUserAction }) => {
           <div className="position-relative image-side">
             <p className="text-white h4">COWORKING PORTAL</p>
             <p className="white mb-0">
-              Please use this form to register. <br />
-              If you are a member, please{' '}
-              <NavLink to="/user/login" className="white separator">
-                login
+              Please use this form to register. If you are a member, please{' '}
+              <NavLink to="/user/login" className="btn btn-xs btn-primary">
+                Login Here
               </NavLink>
-              .
             </p>
           </div>
           <div className="form-side">

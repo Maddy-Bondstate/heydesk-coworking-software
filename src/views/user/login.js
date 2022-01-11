@@ -57,13 +57,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
           <div className="position-relative image-side">
             <p className="text-white h4">COWORKING PORTAL</p>
             <p className="white mb-0">
-              Please use your credentials to login.
-              <br />
-              If you are not a member, please{' '}
-              <NavLink to="/user/register" className="white separator">
-                register
+              Please use your credentials to login. If you are not a member,
+              please{' '}
+              <NavLink to="/user/register" className="btn btn-xs btn-primary">
+                Register Here
               </NavLink>
-              .
             </p>
           </div>
           <div className="form-side">
