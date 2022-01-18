@@ -442,7 +442,7 @@ const AddMeetingRoomModal = ({
                       onChange={handleChangeValue}
                       placeholder={messages['label.rate']}
                     />
-                    <InputGroupAddon addonType="append">ft2</InputGroupAddon>
+                    <InputGroupAddon addonType="append">$</InputGroupAddon>
                   </InputGroup>
                   <span>
                     <IntlMessages id="label.rate" />
@@ -513,7 +513,7 @@ const AddMeetingRoomModal = ({
                   </Colxx>
                 </Row>
 
-                <FormGroup row>
+                {/* <FormGroup row>
                   <Colxx sm="2">
                     <Label className="pt-0">
                       <IntlMessages id="label.privacy" />
@@ -552,7 +552,7 @@ const AddMeetingRoomModal = ({
                       </div>
                     </FormGroup>
                   </Colxx>
-                </FormGroup>
+                </FormGroup> */}
               </TabPane>
             </TabContent>
           </Colxx>
@@ -564,7 +564,7 @@ const AddMeetingRoomModal = ({
         </Button>
 
         <Button color="primary" size="sm" onClick={handleSubmitMeetingRoom}>
-          <IntlMessages id="model.add" />
+          <IntlMessages id="forms.save" />
         </Button>
       </ModalFooter>
     </Modal>

@@ -77,9 +77,18 @@ const MeetingRoomListView = ({
                         {meeting_room.name}
                       </p>
                     </NavLink>
-                    <UncontrolledDropdown className="ml-2">
+
+                    <Label className="ml-2 mb-0">
+                      <i className="fa fa-users text-muted" />{' '}
+                      {meeting_room.size}
+                    </Label>
+
+                    <UncontrolledDropdown className="ml-4">
                       <DropdownToggle color="none">
-                        <i className="fa fa-cog fa-lg text-muted" />
+                        <i
+                          className="fa fa-cog fa-2x text-success"
+                          title="settings"
+                        />
                       </DropdownToggle>
                       <DropdownMenu>
                         <DropdownItem
@@ -103,10 +112,6 @@ const MeetingRoomListView = ({
                         </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
-                    <Label className="ml-2 mb-0">
-                      <i className="fa fa-users fa-lg1 text-muted" />{' '}
-                      {meeting_room.size}
-                    </Label>
                   </div>
 
                   <div className="d-flex align-items-center">
@@ -124,59 +129,6 @@ const MeetingRoomListView = ({
                     <p className="truncate mb-0 ml-4 mt-1">
                       Rate: $ {meeting_room.rate}
                     </p>
-                  </div>
-                </div>
-              </Colxx>
-              <Colxx sm="6" className="d-flex">
-                {/* <NavLink to={`/`} className="d-flex">
-                  <img
-                    alt={meeting_room.name}
-                    src={meeting_room.image}
-                    className="list-thumbnail responsive border-0 card-img-left"
-                  />
-                </NavLink> */}
-                <div className="d-flex justify-content-center flex-column">
-                  <NavLink to={`/`}>
-                    <p className="list-item-heading truncate mb-3">
-                      {meeting_room.name}
-                    </p>
-                  </NavLink>
-                  <div className="d-flex align-items-center">
-                    {meeting_room.privacy === 1 ? (
-                      <Badge color="success badge-pill">
-                        Full Access / Public
-                      </Badge>
-                    ) : (
-                      <Badge color="primary badge-pill">
-                        Active Member / Private
-                      </Badge>
-                    )}
-                    <UncontrolledDropdown className="ml-3">
-                      <DropdownToggle color="none">
-                        <i className="fa fa-cog fa-2x text-muted" />
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem
-                          onClick={() => {
-                            return toggleModal(), setDataEdit(meeting_room);
-                          }}
-                        >
-                          <i className="fa fa-pencil text-muted mr-2" />
-                          <IntlMessages id="label.edit" />
-                        </DropdownItem>
-                        {/* <DropdownItem onClick={() => toggleFloor()}>
-                          <i className="fa fa-plus text-muted mr-2" />
-                          <IntlMessages id="label.add_floor" />
-                        </DropdownItem> */}
-                        <DropdownItem divider />
-                        <DropdownItem
-                          onClick={() => setModalDeleteId(meeting_room.id)}
-                        >
-                          <i className="fa fa-trash text-muted mr-2" />
-                          <IntlMessages id="label.delete" />
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
                   </div>
                 </div>
               </Colxx>
