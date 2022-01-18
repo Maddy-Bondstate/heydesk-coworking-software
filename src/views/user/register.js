@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Formik, Form, Field } from 'formik';
@@ -102,15 +101,14 @@ const Register = ({ history, loading, error, registerUserAction }) => {
             <p className="text-white h4">COWORKING PORTAL</p>
             <p className="white mb-0">
               Please use this form to register. If you are a member, please{' '}
-              <NavLink to="/user/login" className="btn btn-xs btn-primary">
+              <a href="/user/login" className="btn btn-xs btn-primary">
                 Login Here
-              </NavLink>
+              </a>
             </p>
           </div>
           <div className="form-side">
-            {/* <NavLink to="/" className="white"> */}
             <span className="logo-single" />
-            {/* </NavLink> */}
+
             <CardTitle className="mb-4">
               <IntlMessages id="label.register" />
             </CardTitle>
@@ -148,6 +146,7 @@ const Register = ({ history, loading, error, registerUserAction }) => {
                       </div>
                     )}
                   </FormGroup>
+
                   <FormGroup className="form-group has-float-label">
                     <Label>
                       <IntlMessages id="label.email" />
@@ -183,9 +182,6 @@ const Register = ({ history, loading, error, registerUserAction }) => {
                     )}
                   </FormGroup>
                   <div className="d-flex justify-content-end align-items-center">
-                    {/* <NavLink to="/user/forgot-password">
-                      <IntlMessages id="label.forgot-password" />
-                    </NavLink> */}
                     <Button
                       color="primary"
                       className={`btn-shadow btn-multiple-state ${

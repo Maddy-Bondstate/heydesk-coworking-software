@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Formik, Form, Field } from 'formik';
@@ -59,9 +58,9 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <p className="white mb-0">
               Please use your credentials to login. If you are not a member,
               please{' '}
-              <NavLink to="/user/register" className="btn btn-xs btn-primary">
+              <a href="/user/register" className="btn btn-xs btn-primary">
                 Register Here
-              </NavLink>
+              </a>
             </p>
           </div>
           <div className="form-side">
@@ -107,10 +106,10 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       </div>
                     )}
                   </FormGroup>
-                  <div className="d-flex justify-content-end align-items-center">
-                    {/* <NavLink to="/user/forgot-password">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <a href="/user/forgot-password">
                       <IntlMessages id="label.forgot-password" />
-                    </NavLink> */}
+                    </a>
                     <Button
                       type="submit"
                       color="primary"

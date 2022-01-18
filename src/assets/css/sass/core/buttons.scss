@@ -481,6 +481,7 @@ button {
   }
 
   &.show-spinner {
+    pointer-events: none;
     .label {
       opacity: 0;
     }

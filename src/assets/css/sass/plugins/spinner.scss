@@ -1,12 +1,12 @@
 .btn-multiple-state {
   .spinner {
-    width: 36px;
+    width: 50px;
     text-align: center;
   }
 
   .spinner > span {
-    width: 6px;
-    height: 6px;
+    width: 10px;
+    height: 10px;
     background-color: $button-text-color;
     border-radius: 100%;
     display: inline-block;
