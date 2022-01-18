@@ -34,7 +34,10 @@ const CustomerListView = ({ item, collect, toggleModal, setModalId }) => {
                     <p className="list-item-heading mb-0 text-sm">
                       {item.phone}
                     </p>
-                    <p className="list-item-heading mb-0 text-sm">
+                    <p
+                      className="list-item-heading mb-0 text-sm"
+                      style={{ overflowWrap: 'anywhere' }}
+                    >
                       {item.address}, {item.city}, {item.state}
                     </p>
                     <p className="list-item-heading mb-0 text-sm">
