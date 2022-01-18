@@ -21,8 +21,9 @@
     cursor: default;
   }
 
-  border-radius: calc(0.15rem - 1px);
-  @include depth(1);
+  border-radius: calc(0.5rem - 1px);
+  @include depth(2);
+  border: 1px solid $separator-color-medium;
 
   .card-body {
     padding: 1rem;

@@ -20,8 +20,9 @@ export const changeLocale = (locale) => {
 };
 
 // GET PROFILE
-export const getSettingsProfileList = () => ({
+export const getSettingsProfileList = (token) => ({
   type: SETTINGS_GET_PROFILE_LIST,
+  token: token,
 });
 
 export const getSettingsProfileListSuccess = (items) => ({
@@ -35,9 +36,10 @@ export const getSettingsProfileListError = (error) => ({
 });
 
 // ADD PROFILE
-export const addSettingsProfile = (data) => ({
+export const addSettingsProfile = (data, token) => ({
   type: SETTINGS_ADD_PROFILE,
   payload: data,
+  token: token,
 });
 
 export const addSettingsProfileSuccess = (items) => ({

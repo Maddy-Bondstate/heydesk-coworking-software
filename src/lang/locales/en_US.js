@@ -221,6 +221,17 @@ module.exports = {
   'label.lastName': 'Last Name',
   'label.email': 'Email',
   'label.password': 'Password',
+  'label.oldpassword': 'Old Password',
+  'label.newpassword': 'New Password',
+  'label.confirmpassword': 'Confirm Password',
+
+  /* User Profile */
+  'user.profile': 'User Profile',
+  'user.password': 'Change Password',
+  'label.insta': 'Instagram Id',
+  'label.company': 'Company',
+  'label.currency': 'Currency',
+  'label.birthday': 'Birthday',
 
   /* 04.Dashboards */
   'dashboards.bookings': 'Bookings',
@@ -541,6 +552,7 @@ module.exports = {
   'editors.quill-bubble': 'Quill Bubble',
 
   /* 07.10.Forms */
+  'forms.save': 'Save',
   'forms.basic': 'Basic',
   'forms.email': 'E-mail',
   'forms.email-muted': "We'll never share your email with anyone else.",

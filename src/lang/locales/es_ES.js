@@ -222,6 +222,17 @@ module.exports = {
   'label.lastName': 'Last Name',
   'label.email': 'Email',
   'label.password': 'Password',
+  'label.oldpassword': 'Old Password',
+  'label.newpassword': 'New Password',
+  'label.confirmpassword': 'Confirm Password',
+
+  /* User Profile */
+  'user.profile': 'User Profile',
+  'user.password': 'Change Password',
+  'label.insta': 'Instagram Id',
+  'label.company': 'Company',
+  'label.currency': 'Currency',
+  'label.birthday': 'Birthday',
 
   /* 04.Tableros */
   'dashboards.bookings': 'Reservaciones',
@@ -541,6 +552,7 @@ module.exports = {
   'editors.quill-bubble': 'Quill Burbuja',
 
   /* 07.10.Formularios */
+  'forms.save': 'Save',
   'forms.basic': 'Básico',
   'forms.email': 'Email',
   'forms.email-muted': 'Nunca compartiremos tu email con nadie más.',

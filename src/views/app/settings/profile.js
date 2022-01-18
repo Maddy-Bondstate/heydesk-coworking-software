@@ -2,7 +2,6 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 
 import ListProfileHeading from '../../../containers/settings/profile/ListProfileHeading';
 import AddProfileModal from '../../../containers/settings/profile/AddProfileModal';
-import ListProfileListing from '../../../containers/settings/profile/ListProfileListing';
 
 import {
   getSettingsProfileList,
@@ -11,16 +10,16 @@ import {
 import { connect } from 'react-redux';
 
 const SpaceLocations = ({
+  token,
   match,
   loading,
   profile,
   getSettingsProfileListAction,
   addSettingsProfileAction,
 }) => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [item, setItem] = useState([]);
   useEffect(() => {
-    getSettingsProfileListAction();
+    getSettingsProfileListAction(token);
   }, [getSettingsProfileListAction]);
 
   useLayoutEffect(() => {
@@ -36,16 +35,9 @@ const SpaceLocations = ({
       <ListProfileHeading heading="menu.myprofile" match={match} />
 
       <AddProfileModal
-        modelTitle="pages.edit-profile"
-        modalOpen={modalOpen}
-        toggleModal={() => setModalOpen(!modalOpen)}
+        token={token}
         item={item}
         addSettingsProfileAction={addSettingsProfileAction}
-      />
-
-      <ListProfileListing
-        item={item}
-        toggleModal={() => setModalOpen(!modalOpen)}
       />
     </div>
   );

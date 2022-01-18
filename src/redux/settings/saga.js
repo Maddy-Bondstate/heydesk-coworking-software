@@ -7,32 +7,41 @@ import {
   addSettingsProfileSuccess,
   addSettingsProfileError,
 } from './actions';
-import { getCurrentUser } from '../../helpers/Utils';
+// import { getCurrentUser } from '../../helpers/Utils';
 import { api } from '../../constants/defaultValues';
 
-const currentUser = getCurrentUser();
-const token = `JWT ${currentUser?.token}`;
+// const currentUser = getCurrentUser();
+// const token = `JWT ${currentUser?.token}`;
 
-const axiosConfig = {
-  headers: {
-    Authorization: token,
-  },
+// const axiosConfig = {
+//   headers: {
+//     Authorization: token,
+//   },
+// };
+
+const axiosConfig = (token) => {
+  return {
+    headers: {
+      Authorization: token,
+    },
+  };
 };
 
 // ------------------------- SETTINGS ----------------------- //
 
 // GET PROFILE
-const getSettingsProfileListRequest = async () => {
+const getSettingsProfileListRequest = async (token) => {
   // eslint-disable-next-line no-return-await
   return await axios
-    .get(`${api}auth/user/`, axiosConfig)
+    .get(`${api}auth/user/`, axiosConfig(token))
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* getSettingsProfileListItems() {
+function* getSettingsProfileListItems(action) {
   try {
-    const response = yield call(getSettingsProfileListRequest);
+    const { token } = action;
+    const response = yield call(getSettingsProfileListRequest, token);
     yield put(getSettingsProfileListSuccess(response));
   } catch (error) {
     yield put(getSettingsProfileListError(error));
@@ -44,17 +53,30 @@ export function* watchGetSettingsProfileList() {
   yield takeEvery(SETTINGS_GET_PROFILE_LIST, getSettingsProfileListItems);
 }
 // ADD PROFILE
-const addSettingsProfileRequest = async (data) => {
+const addSettingsProfileRequest = async (data, token) => {
   // eslint-disable-next-line no-return-await
+
+  const form_data = new FormData();
+  for (var key in data) {
+    form_data.append(key, data[key]);
+  }
+
   return await axios
-    .put(`${api}profile/update/`, data, axiosConfig)
+    .put(`${api}profile/update/`, form_data, axiosConfig(token))
     .then((response) => response)
     .catch((error) => error);
 };
 
-function* addSettingsProfile({ payload }) {
+// return await axios
+//   .put(`${api}profile/update/`, data, axiosConfig)
+//   .then((response) => response)
+//   .catch((error) => error);
+// };
+
+function* addSettingsProfile(action) {
   try {
-    const response = yield call(addSettingsProfileRequest, payload);
+    const { payload, token } = action;
+    const response = yield call(addSettingsProfileRequest, payload, token);
     yield put(addSettingsProfileSuccess(response));
     // window.location.reload();
   } catch (error) {

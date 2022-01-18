@@ -3,7 +3,8 @@
   height: $navbar-height;
   // padding: 1.5rem 0;
   padding: 0;
-  @include depth(1);
+  @include depth(2);
+  z-index: 10;
 
   #notificationDropdown {
     width: 260px;
@@ -364,119 +365,5 @@
   @include respond-below(sm) {
     height: $navbar-height-xs;
     padding: 10px 0;
-  }
-}
-
-.rtl {
-  .navbar {
-    .navbar-right {
-      text-align: left;
-    }
-
-    .menu-button-mobile {
-      margin-right: 15px;
-      margin-left: initial;
-    }
-
-    .menu-button {
-      text-align: center;
-    }
-
-    .icon-menu-item {
-      text-align: center;
-
-      i {
-        text-align: center;
-      }
-
-      span {
-        text-align: center;
-      }
-    }
-
-    .search {
-      .search-icon {
-        right: initial;
-        left: 5px;
-      }
-
-      @include respond-below(sm) {
-        margin-right: 0.6rem;
-        margin-left: initial;
-
-        input {
-          display: none;
-        }
-
-        &.mobile-view {
-          margin-left: initial;
-          margin-right: 15px;
-
-          input {
-            display: block;
-            width: 100%;
-            height: 70px;
-            padding-left: 0;
-          }
-
-          span {
-            left: 15px;
-            right: initial;
-          }
-        }
-      }
-    }
-
-    .navbar-right {
-      text-align: left;
-
-      .user {
-        margin-left: $main-margin;
-        margin-right: 0;
-
-        @include respond-below(xl) {
-          margin-left: $main-margin-lg;
-          margin-right: 0;
-        }
-
-        @include respond-below(lg) {
-          margin-left: $main-margin-md;
-          margin-right: 0;
-        }
-
-        @include respond-below(sm) {
-          margin-left: $main-margin-xs;
-          margin-right: 0;
-        }
-
-        img {
-          margin-right: 10px;
-          margin-left: initial;
-        }
-      }
-
-      .header-icons {
-        margin-right: initial;
-        margin-left: 0.5rem;
-        @include respond-below(xs) {
-          margin-left: 0;
-        }
-      }
-
-      #notificationButton {
-        .count {
-          text-align: center;
-
-          @include respond-below(xs) {
-            left: -1px;
-          }
-        }
-      }
-
-      #userDropdown,
-      #userDropdown * {
-        text-align: left;
-      }
-    }
   }
 }

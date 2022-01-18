@@ -33,6 +33,7 @@
     "react-intl": "5.10.15",
     "react-lines-ellipsis": "^0.14.1",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-phone-input-2": "^2.14.0",
     "react-quill": "^1.3.5",
     "react-rater": "^5.1.1",
     "react-redux": "^7.2.4",

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
 
 import {
@@ -15,6 +15,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
+  getSettingsProfileList,
   setContainerClassnames,
   clickOnMobileMenu,
   logoutUser,
@@ -36,6 +37,7 @@ import { MobileMenuIcon, MenuIcon } from '../../components/svg';
 // const currentUser = getCurrentUser();
 
 const TopNav = ({
+  token,
   history,
   containerClassnames,
   menuClickCount,
@@ -45,8 +47,13 @@ const TopNav = ({
   clickOnMobileMenuAction,
   logoutUserAction,
   // changeLocaleAction,
-  currentUser,
+  getSettingsProfileListAction,
+  profile,
+  // currentUser,
 }) => {
+  useEffect(() => {
+    getSettingsProfileListAction(token);
+  }, [getSettingsProfileListAction]);
   const [isInFullScreen, setIsInFullScreen] = useState(false);
 
   // const handleChangeLocale = (_locale, direction) => {
@@ -212,11 +219,11 @@ const TopNav = ({
               color="empty"
             >
               <span className="name mr-1 font-weight-bold text-capitalize">
-                {currentUser.first_name} {currentUser.last_name}
+                {profile?.data?.first_name} {profile?.data?.last_name}
               </span>
               <div className="d-inline-block">
-                {currentUser.profile ? (
-                  <img alt="Profile" src="/assets/img/profiles/l-2.jpg" />
+                {profile?.data?.image ? (
+                  <img alt="Profile" src={profile?.data?.image} />
                 ) : (
                   <div
                     className="d-inline-flex align-items-center justify-content-center"
@@ -232,10 +239,10 @@ const TopNav = ({
                       border: '1px solid #f1f1f1',
                     }}
                   >
-                    {currentUser.first_name[0].toUpperCase()}
-                    {currentUser.last_name !== ''
-                      ? currentUser.last_name[0].toUpperCase()
-                      : currentUser.first_name[1].toUpperCase()}
+                    {profile?.data?.first_name[0].toUpperCase()}
+                    {profile?.data?.last_name !== ''
+                      ? profile?.data?.last_name[0].toUpperCase()
+                      : profile?.data?.first_name[1].toUpperCase()}
                   </div>
                 )}
               </div>
@@ -261,12 +268,13 @@ const TopNav = ({
 
 const mapStateToProps = ({ menu, settings }) => {
   const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
-  const { locale } = settings;
+  const { locale, profile } = settings;
   return {
     containerClassnames,
     menuClickCount,
     selectedMenuHasSubItems,
     locale,
+    profile,
   };
 };
 export default injectIntl(
@@ -275,5 +283,6 @@ export default injectIntl(
     clickOnMobileMenuAction: clickOnMobileMenu,
     logoutUserAction: logoutUser,
     changeLocaleAction: changeLocale,
+    getSettingsProfileListAction: getSettingsProfileList,
   })(TopNav)
 );
