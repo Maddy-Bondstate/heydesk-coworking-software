@@ -136,7 +136,7 @@ const BookingListView = ({
                 <div className="ml-4 d-flex justify-content-center flex-column">
                   <div className="d-flex align-items-center">
                     <NavLink to={`/`}>
-                      <p className="font-weight-bold truncate mb-0 ml-2">
+                      <p className="font-weight-bold mb-0 ml-2">
                         {customer.first_name} {customer.last_name}
                       </p>
                     </NavLink>

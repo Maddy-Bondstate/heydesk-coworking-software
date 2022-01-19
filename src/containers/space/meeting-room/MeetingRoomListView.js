@@ -53,7 +53,7 @@ const MeetingRoomListView = ({
         <Card className="d-flex flex-row">
           <div className="card-body">
             <Row>
-              <Colxx sm="6" className="d-flex">
+              <Colxx sm="12" className="d-flex">
                 <NavLink to={`/`} className="d-flex">
                   <img
                     alt={meeting_room.name}
@@ -73,14 +73,14 @@ const MeetingRoomListView = ({
                       &nbsp;
                     </Badge>
                     <NavLink to={`/`}>
-                      <p className="font-weight-bold truncate mb-0 ml-2">
+                      <p className="font-weight-bold mb-0 ml-2">
                         {meeting_room.name}
                       </p>
                     </NavLink>
 
-                    <Label className="ml-2 mb-0">
-                      <i className="fa fa-users text-muted" />{' '}
-                      {meeting_room.size}
+                    <Label className="ml-4 mb-0">
+                      <i className="fa fa-users text-muted" />
+                      &nbsp; {meeting_room.size}
                     </Label>
 
                     <UncontrolledDropdown className="ml-4">
@@ -116,18 +116,19 @@ const MeetingRoomListView = ({
 
                   <div className="d-flex align-items-center">
                     <p className="truncate mb-0 ml-4 mt-1">
-                      Location: {locationName}
+                      <b className="text-theme-6">Location:</b> {locationName}
                     </p>
                   </div>
 
                   <div className="d-flex align-items-center">
                     <p className="truncate mb-0 ml-4 mt-1">
-                      Floor: {floorName}
+                      <b className="text-theme-6">Floor:</b> {floorName}
                     </p>
                   </div>
                   <div className="d-flex align-items-center">
                     <p className="truncate mb-0 ml-4 mt-1">
-                      Rate: $ {meeting_room.rate}
+                      <b className="text-theme-6">Rate:</b> ${' '}
+                      {meeting_room.rate}
                     </p>
                   </div>
                 </div>

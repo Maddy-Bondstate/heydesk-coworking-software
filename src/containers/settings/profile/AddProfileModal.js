@@ -127,7 +127,7 @@ const AddProfileModal = (props) => {
 
   return (
     <Row>
-      <Colxx xxs="6" className="mb-2">
+      <Colxx xxs="12" sm="9" md="8" lg="6" className="mb-2">
         <Nav tabs>
           <NavItem>
             <NavLink
