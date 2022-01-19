@@ -1,7 +1,7 @@
 // import { addLocaleData } from 'react-intl';
-import enLang from './entries/en-US';
-import esLang from './entries/es-ES';
-import enRtlLang from './entries/en-US-rtl';
+import EnLang from './entries/en-US';
+import EsLang from './entries/es-ES';
+// import enRtlLang from './entries/en-US-rtl';
 
 // import {createIntl, createIntlCache, RawIntlProvider} from 'react-intl'
 
@@ -15,9 +15,9 @@ import enRtlLang from './entries/en-US-rtl';
 // }, cache)
 
 const AppLocale = {
-  en: enLang,
-  es: esLang,
-  enrtl: enRtlLang,
+  en: EnLang,
+  es: EsLang,
+  // enrtl: enRtlLang,
 };
 // addLocaleData(AppLocale.en.data);
 // addLocaleData(AppLocale.es.data);
