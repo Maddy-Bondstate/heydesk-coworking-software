@@ -35,7 +35,7 @@ Table of Contents
   07.21.Wizards
 */
 
-module.exports = {
+export default {
   /* 01.General */
   'general.copyright': 'Heydesk Coworking Software © 2021 All Rights Reserved.',
 

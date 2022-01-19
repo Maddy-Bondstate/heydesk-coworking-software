@@ -35,7 +35,7 @@ Tabla de Contenido
   07.21.Tables
 */
 
-module.exports = {
+export default {
   /* 01.General */
   'general.copyright':
     'Heydesk Coworking Software ©2021 Todos los derechos reservados.',
