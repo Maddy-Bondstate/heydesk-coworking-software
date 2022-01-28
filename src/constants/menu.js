@@ -88,53 +88,53 @@ const data = [
       },
     ],
   },
-  {
-    id: 'billing',
-    icon: 'iconsminds-receipt-4',
-    label: 'menu.billing',
-    to: `${adminRoot}/billing`,
-    // roles: [UserRole.Admin, UserRole.Editor],
-    subs: [
-      {
-        icon: 'iconsminds-letter-open',
-        label: 'menu.invoices',
-        to: `${adminRoot}/billing/invoices`,
-        // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'simple-icon-list',
-        label: 'menu.plans',
-        to: `${adminRoot}/billing/plans`,
-        // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'iconsminds-coffee',
-        label: 'menu.amenities',
-        to: `${adminRoot}/billing/amenities`,
-        // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'iconsminds-ribbon',
-        label: 'menu.discounts',
-        to: `${adminRoot}/billing/discounts`,
-        // roles: [UserRole.Admin],
-      },
-    ],
-  },
-  {
-    id: 'collaboration',
-    icon: 'iconsminds-mail-read',
-    label: 'menu.collaboration',
-    to: `${adminRoot}/collaboration`,
-    // roles: [UserRole.Admin, UserRole.Editor],
-    subs: [
-      {
-        icon: 'iconsminds-mailbox-empty',
-        label: 'menu.tickets',
-        to: `${adminRoot}/collaboration/tickets`,
-        // roles: [UserRole.Admin],
-      },
-    ],
-  },
+  // {
+  //   id: 'billing',
+  //   icon: 'iconsminds-receipt-4',
+  //   label: 'menu.billing',
+  //   to: `${adminRoot}/billing`,
+  //   // roles: [UserRole.Admin, UserRole.Editor],
+  //   subs: [
+  //     {
+  //       icon: 'iconsminds-letter-open',
+  //       label: 'menu.invoices',
+  //       to: `${adminRoot}/billing/invoices`,
+  //       // roles: [UserRole.Admin],
+  //     },
+  //     {
+  //       icon: 'simple-icon-list',
+  //       label: 'menu.plans',
+  //       to: `${adminRoot}/billing/plans`,
+  //       // roles: [UserRole.Admin],
+  //     },
+  //     {
+  //       icon: 'iconsminds-coffee',
+  //       label: 'menu.amenities',
+  //       to: `${adminRoot}/billing/amenities`,
+  //       // roles: [UserRole.Admin],
+  //     },
+  //     {
+  //       icon: 'iconsminds-ribbon',
+  //       label: 'menu.discounts',
+  //       to: `${adminRoot}/billing/discounts`,
+  //       // roles: [UserRole.Admin],
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 'collaboration',
+  //   icon: 'iconsminds-mail-read',
+  //   label: 'menu.collaboration',
+  //   to: `${adminRoot}/collaboration`,
+  //   // roles: [UserRole.Admin, UserRole.Editor],
+  //   subs: [
+  //     {
+  //       icon: 'iconsminds-mailbox-empty',
+  //       label: 'menu.tickets',
+  //       to: `${adminRoot}/collaboration/tickets`,
+  //       // roles: [UserRole.Admin],
+  //     },
+  //   ],
+  // },
 ];
 export default data;

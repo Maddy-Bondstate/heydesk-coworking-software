@@ -46,6 +46,7 @@ const AddProfileModal = (props) => {
     address_data: '',
     zipcode: '',
     country: '',
+    state: '',
     city: '',
     company: '',
     currency: '',
@@ -67,6 +68,7 @@ const AddProfileModal = (props) => {
         zipcode: item.zipcode || '',
         country: item.country || '',
         city: item.city || '',
+        state: item.state || '',
         company: item.company || '',
         currency: item.currency || '',
         birthday: birth ? `${birth[2]}-${birth[1]}-${birth[0]}` : '0000-00-00',
@@ -324,6 +326,20 @@ const AddProfileModal = (props) => {
                   />
                   <span>
                     <IntlMessages id="label.country" />
+                  </span>
+                </Label>
+              </Colxx>
+              <Colxx sm="6">
+                <Label className="form-group has-float-label">
+                  <Input
+                    type="text"
+                    name="state"
+                    value={state.state}
+                    onChange={handleChangeValue}
+                    placeholder={messages['label.state']}
+                  />
+                  <span>
+                    <IntlMessages id="label.state" />
                   </span>
                 </Label>
               </Colxx>

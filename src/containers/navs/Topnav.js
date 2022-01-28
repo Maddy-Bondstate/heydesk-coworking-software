@@ -28,6 +28,7 @@ import {
 } from '../../constants/defaultValues';
 
 import { MobileMenuIcon, MenuIcon } from '../../components/svg';
+import IntlMessages from '../../helpers/IntlMessages';
 
 // import { getCurrentUser } from '../../helpers/Utils';
 // import TopnavNotifications from './Topnav.Notifications';
@@ -249,14 +250,15 @@ const TopNav = ({
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
               <DropdownItem>
-                <Link to={`/app/settings/profile`} className="d-block">
-                  My Profile
+                <Link to={`/app/settings/profile`} className="pd">
+                  <i className="fa fa-user-circle-o mr-2" />
+                  <IntlMessages id="menu.myprofile" />
                 </Link>
               </DropdownItem>
-              {/* <DropdownItem>Settings</DropdownItem> */}
               <DropdownItem divider />
-              <DropdownItem onClick={() => handleLogout()}>
-                Sign out
+              <DropdownItem onClick={() => handleLogout()} className="pd">
+                <i className="fa fa-sign-out mr-2" />
+                <IntlMessages id="menu.signout" />
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>

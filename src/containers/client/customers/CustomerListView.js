@@ -19,48 +19,44 @@ const CustomerListView = ({ item, collect, toggleModal, setModalId }) => {
           <div className="flex-grow-1 min-width-zero">
             <div className="card-body">
               <div className="d-flex">
-                <div className="d-flex justify-content-center">
-                  <div>
+                <div>
+                  <div className="d-flex align-items-center">
                     <NavLink to={`/`}>
-                      <p className="list-item-heading truncate mb-0">
+                      <p className="list-item-heading mb-0">
                         <b>
                           {item.first_name} {item.last_name}
                         </b>
                       </p>
                     </NavLink>
-                    <p className="list-item-heading mb-0 text-sm">
-                      {item.email}
-                    </p>
-                    <p className="list-item-heading mb-0 text-sm">
-                      {item.phone}
-                    </p>
-                    <p
-                      className="list-item-heading mb-0 text-sm"
-                      style={{ overflowWrap: 'anywhere' }}
-                    >
-                      {item.address}, {item.city}, {item.state}
-                    </p>
-                    <p className="list-item-heading mb-0 text-sm">
-                      {item.country} - {item.zipcode}
-                    </p>
+                    <div className="d-flex align-items-center">
+                      <UncontrolledDropdown className="ml-3">
+                        <DropdownToggle color="none">
+                          <i className="fa fa-cog fa-2x text-muted" />
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem
+                            onClick={() => {
+                              return toggleModal(), setModalId(item);
+                            }}
+                          >
+                            <i className="fa fa-pencil text-muted mr-2" />
+                            <IntlMessages id="label.edit" />
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </div>
                   </div>
-                  <div className="d-flex align-items-center">
-                    <UncontrolledDropdown className="ml-5">
-                      <DropdownToggle color="none">
-                        <i className="fa fa-cog fa-2x text-muted" />
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem
-                          onClick={() => {
-                            return toggleModal(), setModalId(item);
-                          }}
-                        >
-                          <i className="fa fa-pencil text-muted mr-2" />
-                          <IntlMessages id="label.edit" />
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </div>
+                  <p className="list-item-heading mb-0 text-sm">{item.email}</p>
+                  <p className="list-item-heading mb-0 text-sm">{item.phone}</p>
+                  <p
+                    className="list-item-heading mb-0 text-sm"
+                    style={{ overflowWrap: 'anywhere' }}
+                  >
+                    {item.address}, {item.city}, {item.state}
+                  </p>
+                  <p className="list-item-heading mb-0 text-sm">
+                    {item.country} - {item.zipcode}
+                  </p>
                 </div>
               </div>
             </div>

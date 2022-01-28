@@ -61,7 +61,7 @@ const BookingListView = ({
                     className="list-thumbnail responsive border-0 card-img-left"
                   />
                 </NavLink>
-                <div className="ml-4 d-flex justify-content-center flex-column">
+                <div className="ml-4 d-flex flex-column">
                   <div className="d-flex align-items-center">
                     <Badge
                       color="success badge-pill"
@@ -73,9 +73,7 @@ const BookingListView = ({
                       &nbsp;
                     </Badge>
                     <NavLink to={`/`}>
-                      <p className="font-weight-bold truncate mb-0 ml-2">
-                        {space.name}
-                      </p>
+                      <p className="font-weight-bold mb-0 ml-2">{space.name}</p>
                     </NavLink>
                   </div>
 
@@ -133,7 +131,7 @@ const BookingListView = ({
                     className="list-thumbnail responsive border-0 card-img-left"
                   />
                 </NavLink>
-                <div className="ml-4 d-flex justify-content-center flex-column">
+                <div className="ml-4 d-flex flex-column">
                   <div className="d-flex align-items-center">
                     <NavLink to={`/`}>
                       <p className="font-weight-bold mb-0 ml-2">

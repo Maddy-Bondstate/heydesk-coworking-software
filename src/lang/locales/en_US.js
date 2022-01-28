@@ -37,7 +37,7 @@ Table of Contents
 
 export default {
   /* 01.General */
-  'general.copyright': 'Heydesk Coworking Software © 2021 All Rights Reserved.',
+  'general.copyright': 'Heydesk Coworking Software © 2022 All Rights Reserved.',
 
   'unauthorized.title': 'Unauthorized Access Attempt',
   'unauthorized.detail':
@@ -344,6 +344,7 @@ export default {
   'pages.recent-posts': 'Recent Posts',
   'pages.profile': 'PROFILE',
   'menu.myprofile': 'My Profile',
+  'menu.signout': 'Sign out',
 
   'pages.friends': 'FRIENDS',
   'pages.images': 'IMAGES',

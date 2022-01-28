@@ -12,3 +12,34 @@ html {
     background-color: $theme-color-1 !important;
 }
 */
+
+.dropdown-menu {
+  padding: 0;
+  min-width: 8rem;
+  border-radius: 0.25rem;
+
+  .dropdown-divider {
+    margin: 0;
+  }
+
+  button {
+    &.dropdown-item {
+      padding: 0;
+    }
+
+    &.pd {
+      padding: 0.6rem;
+    }
+
+    a {
+      &.pd {
+        padding: 0.6rem;
+        display: block;
+      }
+    }
+
+    &:hover {
+      color: $theme-color-1;
+    }
+  }
+}

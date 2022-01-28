@@ -38,7 +38,7 @@ Tabla de Contenido
 export default {
   /* 01.General */
   'general.copyright':
-    'Heydesk Coworking Software ©2021 Todos los derechos reservados.',
+    'Heydesk Coworking Software ©2022 Todos los derechos reservados.',
   'unauthorized.title': 'Unauthorized Access Attempt',
   'unauthorized.detail':
     'You are not authorized to view the page you are trying to access.',
@@ -345,6 +345,7 @@ export default {
   'pages.recent-posts': 'Mensajes Recientes',
   'pages.profile': 'PERFIL',
   'menu.myprofile': 'My Perfil',
+  'menu.signout': 'Sign out',
 
   'pages.friends': 'AMIGOS',
   'pages.images': 'IMAGENES',
