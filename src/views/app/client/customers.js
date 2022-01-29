@@ -18,6 +18,7 @@ const ClientCustomers = ({
   token,
   customer,
   getClientCustomerListAction,
+  addClientCustomerAction,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(8);
@@ -43,6 +44,13 @@ const ClientCustomers = ({
       setItems(customer.data.results);
     }
   }, [customer]);
+
+  const handleModalDelete = (id) => {
+    addClientCustomerAction({ id }, token, 'DELETE');
+    setTimeout(() => {
+      handleGetClientCustomers();
+    }, 100);
+  };
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -72,7 +80,9 @@ const ClientCustomers = ({
       <AddCustomerModal
         modelTitle="pages.add-customer"
         modalOpen={modalOpen}
-        toggleModal={() => setModalOpen(!modalOpen)}
+        toggleModal={() => {
+          return setModalId(null), setModalOpen(!modalOpen);
+        }}
         item={modalId}
         token={token}
         handleGetClientCustomers={handleGetClientCustomers}
@@ -87,14 +97,15 @@ const ClientCustomers = ({
           return setModalOpen(!modalOpen), setModalId(modalId);
         }}
         setModalId={setModalId}
+        setModalDeleteId={handleModalDelete}
       />
     </div>
   );
 };
 
 const mapStateToProps = ({ client }) => {
-  const { loading, booking, addBooking, customer, addCustomer, error } = client;
-  return { loading, booking, addBooking, customer, addCustomer, error };
+  const { loading, customer, addCustomer, error } = client;
+  return { loading, customer, addCustomer, error };
 };
 
 export default connect(mapStateToProps, {

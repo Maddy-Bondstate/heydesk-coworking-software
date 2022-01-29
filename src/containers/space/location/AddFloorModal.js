@@ -334,7 +334,7 @@ const AddFloorModal = (props) => {
           <div className="loading" />
         ) : (
           <Button color="primary" size="sm" onClick={handleSubmitLocationFloor}>
-            <IntlMessages id="model.add" />
+            <IntlMessages id="forms.save" />
           </Button>
         )}
       </ModalFooter>

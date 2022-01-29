@@ -35,7 +35,7 @@ const AddCustomerModal = (props) => {
     item,
     token,
     addCustomer,
-    handleGetClientCustomers,
+    // handleGetClientCustomers,
   } = props;
 
   const { messages } = intl;
@@ -68,28 +68,29 @@ const AddCustomerModal = (props) => {
         country: item.country,
         zipcode: item.zipcode,
       });
+    } else {
+      setState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        country: '',
+      });
+      setActiveFirstTab('1');
     }
-    //  else {
-    //   setState({
-    //     first_name: '',
-    //     last_name: '',
-    //     email: '',
-    //     phone: '',
-    //     address: '',
-    //     city: '',
-    //     state: '',
-    //     zipcode: '',
-    //     country: '',
-    //   });
-    //   setActiveFirstTab('1');
-    // }
 
     if (!loading && addCustomer && !fetchSpace) {
       window.location.reload();
+      // console.log('+++++++++++++++++++++');
       // console.log(loading, addCustomer, fetchSpace);
       // console.log(':::::::::::::::::::::');
       // setFetchSpace(true);
-      // handleGetClientCustomers();
+      // console.log(fetchSpace);
+      // handleGetClientCustomerssdd();
       // toggleModal(!modalOpen);
     }
   }, [item]);
@@ -103,16 +104,118 @@ const AddCustomerModal = (props) => {
     });
   };
 
-  const handleSubmitLocation = () => {
-    const data = {
-      ...state,
+  const handleSubmit = () => {
+    const validateEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
     };
 
-    if (item) addClientCustomerAction({ ...data, id: item.id }, token, 'PUT');
-    else addClientCustomerAction(data, token, 'POST');
+    if (
+      state.first_name !== '' &&
+      state.last_name !== '' &&
+      state.email !== '' &&
+      validateEmail(state.email) &&
+      state.phone !== '' &&
+      state.phone.length >= 8 &&
+      /^[0-9]+$/.test(state.phone) &&
+      state.address !== '' &&
+      state.city !== '' &&
+      state.state !== '' &&
+      state.zipcode !== '' &&
+      state.country !== ''
+    ) {
+      const data = {
+        ...state,
+      };
 
-    setFetchSpace(false);
-    // toggleModal(!modalOpen);
+      if (item) addClientCustomerAction({ ...data, id: item.id }, token, 'PUT');
+      else addClientCustomerAction(data, token, 'POST');
+
+      setActiveFirstTab('1');
+
+      setFetchSpace(false);
+    } else {
+      document.getElementsByName('first_name')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementsByName('last_name')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementsByName('email')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('phone')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('address')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementsByName('city')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('state')[0].style.border = '1px solid #d7d7d7';
+      document.getElementsByName('zipcode')[0].style.border =
+        '1px solid #d7d7d7';
+      document.getElementsByName('country')[0].style.border =
+        '1px solid #d7d7d7';
+
+      if (state.first_name === '') {
+        document.getElementsByName('first_name')[0].focus();
+        document.getElementsByName('first_name')[0].style.border =
+          '1px solid orange';
+        return;
+      }
+      if (state.last_name === '') {
+        document.getElementsByName('last_name')[0].focus();
+        document.getElementsByName('last_name')[0].style.border =
+          '1px solid orange';
+        return;
+      }
+      if (state.email === '' || !validateEmail(state.email)) {
+        document.getElementsByName('email')[0].focus();
+        document.getElementsByName('email')[0].style.border =
+          '1px solid orange';
+        return;
+      }
+      if (
+        state.phone === '' ||
+        state.phone.length < 8 ||
+        !/^[0-9]+$/.test(state.phone)
+      ) {
+        document.getElementsByName('phone')[0].focus();
+        document.getElementsByName('phone')[0].style.border =
+          '1px solid orange';
+        return;
+      }
+      if (state.address === '') {
+        document.getElementsByName('address')[0].focus();
+        document.getElementsByName('address')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.city === '') {
+        document.getElementsByName('city')[0].focus();
+        document.getElementsByName('city')[0].style.border = '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.state === '') {
+        document.getElementsByName('state')[0].focus();
+        document.getElementsByName('state')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.zipcode === '') {
+        document.getElementsByName('zipcode')[0].focus();
+        document.getElementsByName('zipcode')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+      if (state.country === '') {
+        document.getElementsByName('country')[0].focus();
+        document.getElementsByName('country')[0].style.border =
+          '1px solid orange';
+        setActiveFirstTab('2');
+        return;
+      }
+    }
   };
 
   return (
@@ -306,8 +409,8 @@ const AddCustomerModal = (props) => {
         {loading ? (
           <div className="loading" />
         ) : (
-          <Button color="primary" size="sm" onClick={handleSubmitLocation}>
-            <IntlMessages id="model.add" />
+          <Button color="primary" size="sm" onClick={handleSubmit}>
+            <IntlMessages id="forms.save" />
           </Button>
         )}
       </ModalFooter>
@@ -316,8 +419,8 @@ const AddCustomerModal = (props) => {
 };
 
 const mapStateToProps = ({ client }) => {
-  const { loading, booking, addBooking, customer, addCustomer, error } = client;
-  return { loading, booking, addBooking, customer, addCustomer, error };
+  const { loading, customer, addCustomer, error } = client;
+  return { loading, customer, addCustomer, error };
 };
 
 export default injectIntl(

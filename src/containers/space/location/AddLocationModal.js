@@ -545,7 +545,7 @@ const AddLocationModal = (props) => {
         </Button>
 
         <Button color="primary" size="sm" onClick={handleSubmitLocation}>
-          <IntlMessages id="model.add" />
+          <IntlMessages id="forms.save" />
         </Button>
       </ModalFooter>
     </Modal>

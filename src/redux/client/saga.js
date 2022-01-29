@@ -167,7 +167,7 @@ const addClientCustomerRequest = async (data, token, method) => {
     delete data['id'];
 
     return await axios
-      .delete(`${api}space/location/update/${id}/`, axiosConfig(token))
+      .delete(`${api}service/customer/delete/${id}/`, axiosConfig(token))
       .then((response) => response)
       .catch((error) => error);
   }

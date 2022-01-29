@@ -25,6 +25,11 @@ html {
   button {
     &.dropdown-item {
       padding: 0;
+
+      &.active,
+      &:active {
+        background-color: unset;
+      }
     }
 
     &.pd {

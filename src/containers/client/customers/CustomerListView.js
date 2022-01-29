@@ -11,9 +11,15 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from '../../../components/common/CustomBootstrap';
 import IntlMessages from '../../../helpers/IntlMessages';
 
-const CustomerListView = ({ item, collect, toggleModal, setModalId }) => {
+const CustomerListView = ({
+  item,
+  collect,
+  toggleModal,
+  setModalId,
+  setModalDeleteId,
+}) => {
   return (
-    <Colxx xxs="6" key={item.id} className="mb-4">
+    <Colxx xxs="4" key={item.id} className="mb-4">
       <ContextMenuTrigger id="menu_id" data={item.id} collect={collect}>
         <Card className="d-flex flex-row">
           <div className="flex-grow-1 min-width-zero">
@@ -38,9 +44,18 @@ const CustomerListView = ({ item, collect, toggleModal, setModalId }) => {
                             onClick={() => {
                               return toggleModal(), setModalId(item);
                             }}
+                            className="pd"
                           >
                             <i className="fa fa-pencil text-muted mr-2" />
                             <IntlMessages id="label.edit" />
+                          </DropdownItem>
+                          <DropdownItem divider />
+                          <DropdownItem
+                            onClick={() => setModalDeleteId(item.id)}
+                            className="pd"
+                          >
+                            <i className="fa fa-trash mr-2" />
+                            <IntlMessages id="label.delete" />
                           </DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
