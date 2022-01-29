@@ -90,24 +90,23 @@ const MeetingRoomListView = ({
                           title="settings"
                         />
                       </DropdownToggle>
+
                       <DropdownMenu>
                         <DropdownItem
                           onClick={() => {
                             return toggleModal(), setDataEdit(meeting_room);
                           }}
+                          className="pd"
                         >
-                          <i className="fa fa-pencil text-muted mr-2" />
+                          <i className="fa fa-pencil mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>
-                        {/* <DropdownItem onClick={() => toggleFloor()}>
-                          <i className="fa fa-plus text-muted mr-2" />
-                          <IntlMessages id="label.add_floor" />
-                        </DropdownItem> */}
                         <DropdownItem divider />
                         <DropdownItem
                           onClick={() => setModalDeleteId(meeting_room.id)}
+                          className="pd"
                         >
-                          <i className="fa fa-trash text-muted mr-2" />
+                          <i className="fa fa-trash mr-2" />
                           <IntlMessages id="label.delete" />
                         </DropdownItem>
                       </DropdownMenu>

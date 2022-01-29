@@ -66,7 +66,7 @@ const BookingListView = ({
                     <Badge
                       color="success badge-pill"
                       style={{
-                        background: `${item.color}`,
+                        background: `${space.color}`,
                         padding: '2px 6px',
                       }}
                     >
@@ -123,37 +123,43 @@ const BookingListView = ({
                   </div> */}
                 </div>
               </Colxx>
-              <Colxx sm="6" className="d-flex">
-                <NavLink to={`/`} className="d-flex">
+              {customer.first_name && (
+                <Colxx sm="6" className="d-flex">
+                  {/* <NavLink to={`/`} className="d-flex">
                   <img
                     alt={space.name}
                     src={space.image ? space.image : Noimage}
                     className="list-thumbnail responsive border-0 card-img-left"
                   />
-                </NavLink>
-                <div className="ml-4 d-flex flex-column">
-                  <div className="d-flex align-items-center">
-                    <NavLink to={`/`}>
-                      <p className="font-weight-bold mb-0 ml-2">
-                        {customer.first_name} {customer.last_name}
-                      </p>
-                    </NavLink>
+                </NavLink> */}
+                  <div className="d-flex flex-column">
+                    <div className="d-flex align-items-center">
+                      <NavLink to={`/`}>
+                        <p className="font-weight-bold mb-0 ml-2">
+                          {customer.first_name} {customer.last_name}
+                        </p>
+                      </NavLink>
+                    </div>
+
+                    {/* <div className="d-flex align-items-center"> */}
+                    <p className="mb-0 ml-2 mt-1 text-small">
+                      {customer.email}
+                    </p>
+
+                    <p className="mb-0 ml-2 mt-1 text-small">
+                      {customer.phone}
+                    </p>
+
+                    <p className="mb-0 ml-2 mt-1 text-small">
+                      {customer.address}, {customer.city}, {customer.state}
+                    </p>
+                    <p className="mb-0 ml-2 mt-0 text-small">
+                      {customer.country} - {customer.zipcode}
+                    </p>
+                    {/* </div> */}
                   </div>
-
-                  {/* <div className="d-flex align-items-center"> */}
-                  <p className="mb-0 ml-2 mt-1 text-small">{customer.email}</p>
-
-                  <p className="mb-0 ml-2 mt-1 text-small">{customer.phone}</p>
-
-                  <p className="mb-0 ml-2 mt-1 text-small">
-                    {customer.address}, {customer.city}, {customer.state}
-                  </p>
-                  <p className="mb-0 ml-2 mt-0 text-small">
-                    {customer.country} - {customer.zipcode}
-                  </p>
-                  {/* </div> */}
-                </div>
-              </Colxx>
+                </Colxx>
+              )}
             </Row>
           </div>
         </Card>

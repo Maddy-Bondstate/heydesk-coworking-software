@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 const pageSizes = [4, 8, 12, 20];
 
 const SpaceMeetingRoom = ({
+  history,
   match,
   token,
   initialLoad,
@@ -85,6 +86,11 @@ const SpaceMeetingRoom = ({
     //     setModalDeleteId(false);
     //   }
     // }
+
+    if (match.params.id === 'add') {
+      history.push(`/app/space/${initialLoad.name}`);
+      setModalOpen(true);
+    }
   }, [
     modalOpen,
     meeting,

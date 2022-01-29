@@ -46,7 +46,7 @@ const CustomerListView = ({
                             }}
                             className="pd"
                           >
-                            <i className="fa fa-pencil text-muted mr-2" />
+                            <i className="fa fa-pencil mr-2" />
                             <IntlMessages id="label.edit" />
                           </DropdownItem>
                           <DropdownItem divider />

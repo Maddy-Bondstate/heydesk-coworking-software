@@ -13,6 +13,7 @@ import ListCustomerHeading from '../../../containers/client/customers/ListCustom
 const pageSizes = [4, 8, 12, 20];
 
 const ClientCustomers = ({
+  history,
   match,
   loading,
   token,
@@ -43,7 +44,12 @@ const ClientCustomers = ({
       setTotalItemCount(customer.data.count);
       setItems(customer.data.results);
     }
-  }, [customer]);
+
+    if (match.params.id === 'add') {
+      history.push('/app/client/customers');
+      setModalOpen(true);
+    }
+  }, [customer, match]);
 
   const handleModalDelete = (id) => {
     addClientCustomerAction({ id }, token, 'DELETE');

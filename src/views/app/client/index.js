@@ -5,9 +5,6 @@ import { ProtectedRoute } from '../../../helpers/authHelper';
 const ClientBookings = React.lazy(() =>
   import(/* webpackChunkName: "client-client" */ './bookings')
 );
-const ClientCompanies = React.lazy(() =>
-  import(/* webpackChunkName: "client-companies" */ './companies')
-);
 const ClientCustomers = React.lazy(() =>
   import(/* webpackChunkName: "client-customers" */ './customers')
 );
@@ -17,7 +14,7 @@ const Client = ({ match }) => (
       <Redirect exact from={`${match.url}/`} to={`${match.url}/bookings`} />
 
       <ProtectedRoute
-        path={`${match.url}/bookings/:ids`}
+        path={`${match.url}/bookings/:id`}
         component={ClientBookings}
       />
       <ProtectedRoute
@@ -25,13 +22,17 @@ const Client = ({ match }) => (
         component={ClientBookings}
       />
       <ProtectedRoute
-        path={`${match.url}/companies`}
-        component={ClientCompanies}
+        path={`${match.url}/customers/:id`}
+        component={ClientCustomers}
       />
       <ProtectedRoute
         path={`${match.url}/customers`}
         component={ClientCustomers}
       />
+      {/* <ProtectedRoute
+        path={`${match.url}/companies`}
+        component={ClientCompanies}
+      /> */}
 
       {/* <Route
         path={`${match.url}/bookings/:id`}

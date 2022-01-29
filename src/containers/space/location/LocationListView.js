@@ -54,22 +54,28 @@ const LocationListView = ({
                       <DropdownToggle color="none">
                         <i className="fa fa-cog fa-2x text-muted" />
                       </DropdownToggle>
+
                       <DropdownMenu>
                         <DropdownItem
                           onClick={() => {
                             return toggleModal(), setModalId(item);
                           }}
+                          className="pd"
                         >
-                          <i className="fa fa-pencil text-muted mr-2" />
+                          <i className="fa fa-pencil mr-2" />
                           <IntlMessages id="label.edit" />
                         </DropdownItem>
-                        <DropdownItem onClick={toggleFloor}>
-                          <i className="fa fa-plus text-muted mr-2" />
+
+                        <DropdownItem onClick={toggleFloor} className="pd">
+                          <i className="fa fa-plus mr-2" />
                           <IntlMessages id="label.add_floor" />
                         </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem onClick={() => setModalDeleteId(item.id)}>
-                          <i className="fa fa-trash text-muted mr-2" />
+                        <DropdownItem
+                          onClick={() => setModalDeleteId(item.id)}
+                          className="pd"
+                        >
+                          <i className="fa fa-trash mr-2" />
                           <IntlMessages id="label.delete" />
                         </DropdownItem>
                       </DropdownMenu>
@@ -104,20 +110,23 @@ const LocationListView = ({
                           <DropdownToggle color="none">
                             <i className="fa fa-cog fa-lg text-muted" />
                           </DropdownToggle>
+
                           <DropdownMenu>
                             <DropdownItem
                               onClick={() => {
                                 return toggleFloor(), setModalIds(floor);
                               }}
+                              className="pd"
                             >
-                              <i className="fa fa-pencil text-muted mr-2" />
+                              <i className="fa fa-pencil  mr-2" />
                               <IntlMessages id="label.edit" />
                             </DropdownItem>
                             <DropdownItem divider />
                             <DropdownItem
                               onClick={() => setModalDeleteIds(floor.id)}
+                              className="pd"
                             >
-                              <i className="fa fa-trash text-muted mr-2" />
+                              <i className="fa fa-trash mr-2" />
                               <IntlMessages id="label.delete" />
                             </DropdownItem>
                           </DropdownMenu>
