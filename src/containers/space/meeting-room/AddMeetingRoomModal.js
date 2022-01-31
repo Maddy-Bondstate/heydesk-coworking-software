@@ -98,8 +98,11 @@ const AddMeetingRoomModal = ({
       selectedOptionFloor &&
       selectedOptionFloor !== '' &&
       state.size !== '' &&
+      state.size >= 1 &&
       state.area !== '' &&
+      state.area >= 100 &&
       state.rate !== '' &&
+      state.rate >= 1 &&
       state.description !== ''
     ) {
       let data = {
@@ -127,7 +130,7 @@ const AddMeetingRoomModal = ({
       document.getElementsByName('name')[0].style.border = '1px solid #d7d7d7';
       document.getElementById('location').style.border = '1px solid #d7d7d7';
 
-      console.log(selectedOptionLocation);
+      // console.log(selectedOptionLocation);
       if (selectedOptionLocation && selectedOptionLocation !== '')
         document.getElementById('floor').style.border = '1px solid #d7d7d7';
       document.getElementsByName('size')[0].style.border = '1px solid #d7d7d7';
@@ -155,17 +158,17 @@ const AddMeetingRoomModal = ({
         document.getElementById('floor').style.border = '1px solid orange';
         return;
       }
-      if (state.size === '') {
+      if (state.size === '' || state.size < 1) {
         document.getElementsByName('size')[0].focus();
         document.getElementsByName('size')[0].style.border = '1px solid orange';
         return;
       }
-      if (state.area === '') {
+      if (state.area === '' || state.area < 100) {
         document.getElementsByName('area')[0].focus();
         document.getElementsByName('area')[0].style.border = '1px solid orange';
         return;
       }
-      if (state.rate === '') {
+      if (state.rate === '' || state.rate < 1) {
         document.getElementsByName('rate')[0].focus();
         document.getElementsByName('rate')[0].style.border = '1px solid orange';
         setActiveFirstTab('2');
@@ -364,6 +367,7 @@ const AddMeetingRoomModal = ({
                           value={state.size}
                           onChange={handleChangeValue}
                           placeholder={messages['label.size']}
+                          min={1}
                         />
                         <InputGroupAddon addonType="append">
                           people
@@ -383,9 +387,12 @@ const AddMeetingRoomModal = ({
                           value={state.area}
                           onChange={handleChangeValue}
                           placeholder={messages['label.area']}
+                          min={100}
                         />
                         <InputGroupAddon addonType="append">
-                          ft2
+                          <span className="input-group-text">
+                            ft<sup>2</sup>
+                          </span>
                         </InputGroupAddon>
                       </InputGroup>
                       <span>
@@ -441,6 +448,7 @@ const AddMeetingRoomModal = ({
                       value={state.rate}
                       onChange={handleChangeValue}
                       placeholder={messages['label.rate']}
+                      min={1}
                     />
                     <InputGroupAddon addonType="append">$</InputGroupAddon>
                   </InputGroup>
