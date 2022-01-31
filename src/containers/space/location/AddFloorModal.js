@@ -138,7 +138,9 @@ const AddFloorModal = (props) => {
       state.name !== '' &&
       state.floor !== '' &&
       state.area !== '' &&
+      state.area >= 100 &&
       state.target !== '' &&
+      state.target >= 1 &&
       selectedOption &&
       selectedOption !== ''
     ) {
@@ -183,12 +185,12 @@ const AddFloorModal = (props) => {
           '1px solid orange';
         return;
       }
-      if (state.area === '') {
+      if (state.area === '' || state.area < 100) {
         document.getElementsByName('area')[0].focus();
         document.getElementsByName('area')[0].style.border = '1px solid orange';
         return;
       }
-      if (state.target === '') {
+      if (state.target === '' || state.target < 1) {
         document.getElementsByName('target')[0].focus();
         document.getElementsByName('target')[0].style.border =
           '1px solid orange';
@@ -253,6 +255,7 @@ const AddFloorModal = (props) => {
               value={state.area}
               onChange={handleChangeValue}
               // placeholder={messages['label.area']}
+              min={100}
             />
             <InputGroupAddon addonType="append">
               <span className="input-group-text">
@@ -273,8 +276,9 @@ const AddFloorModal = (props) => {
               value={state.target}
               onChange={handleChangeValue}
               // placeholder={messages['label.target']}
+              min={1}
             />
-            <InputGroupAddon addonType="append">$</InputGroupAddon>
+            <InputGroupAddon addonType="append">People</InputGroupAddon>
           </InputGroup>
           <span>
             <IntlMessages id="label.target" />

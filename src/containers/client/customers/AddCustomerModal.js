@@ -120,8 +120,10 @@ const AddCustomerModal = (props) => {
       validateEmail(state.email) &&
       state.phone !== '' &&
       state.phone.length >= 8 &&
+      state.phone.length <= 15 &&
       /^[0-9]+$/.test(state.phone) &&
       state.address !== '' &&
+      state.address.length <= 200 &&
       state.city !== '' &&
       state.state !== '' &&
       state.zipcode !== '' &&
@@ -174,14 +176,15 @@ const AddCustomerModal = (props) => {
       if (
         state.phone === '' ||
         state.phone.length < 8 ||
-        !/^[0-9]+$/.test(state.phone)
+        !/^[0-9]+$/.test(state.phone) ||
+        state.phone.length > 15
       ) {
         document.getElementsByName('phone')[0].focus();
         document.getElementsByName('phone')[0].style.border =
           '1px solid orange';
         return;
       }
-      if (state.address === '') {
+      if (state.address === '' || state.address.length > 200) {
         document.getElementsByName('address')[0].focus();
         document.getElementsByName('address')[0].style.border =
           '1px solid orange';

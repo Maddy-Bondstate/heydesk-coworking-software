@@ -171,6 +171,7 @@ const AddLocationModal = (props) => {
       state.city !== '' &&
       state.state !== '' &&
       state.zipcode !== '' &&
+      state.zipcode.length >= 4 &&
       state.country !== ''
     ) {
       let data = {
@@ -249,7 +250,7 @@ const AddLocationModal = (props) => {
         setActiveFirstTab('2');
         return;
       }
-      if (state.zipcode === '') {
+      if (state.zipcode === '' || state.zipcode.length < 4) {
         document.getElementsByName('zipcode')[0].focus();
         document.getElementsByName('zipcode')[0].style.border =
           '1px solid orange';
@@ -513,6 +514,7 @@ const AddLocationModal = (props) => {
                         value={state.zipcode}
                         onChange={handleChangeValue}
                         placeholder={messages['label.zip']}
+                        min={0}
                       />
                       <span>
                         <IntlMessages id="label.zip" />

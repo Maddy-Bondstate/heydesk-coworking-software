@@ -61,8 +61,18 @@ const CustomerListView = ({
                       </UncontrolledDropdown>
                     </div>
                   </div>
-                  <p className="list-item-heading mb-0 text-sm">{item.email}</p>
-                  <p className="list-item-heading mb-0 text-sm">{item.phone}</p>
+                  <p
+                    className="list-item-heading mb-0 text-sm"
+                    style={{ overflowWrap: 'anywhere' }}
+                  >
+                    {item.email}
+                  </p>
+                  <p
+                    className="list-item-heading mb-0 text-sm"
+                    style={{ overflowWrap: 'anywhere' }}
+                  >
+                    {item.phone}
+                  </p>
                   <p
                     className="list-item-heading mb-0 text-sm"
                     style={{ overflowWrap: 'anywhere' }}
